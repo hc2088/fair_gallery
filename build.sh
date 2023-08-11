@@ -13,6 +13,7 @@ for file in build/fair/*
 do
     if [ "${file##*.}"x = "json"x ] || [ "${file##*.}"x = "js"x ] || [ "${file##*.}"x = "bin"x ]
     then
+    echo "cp $file assets/fair"
     cp $file assets/fair    
     fi
 done

@@ -1,7 +1,7 @@
-// flutterVersion = '3.3.9'
-// dartVersion = '2.18.5'
-// widgetCount = 498
-// apiCount = 12681
+// flutterVersion = '3.7.12'
+// dartVersion = '2.19.6'
+// widgetCount = 568
+// apiCount = 13079
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports, unused_shown_name, deprecated_member_use, prefer_single_quotes, unused_element, unused_field, duplicate_import, prefer_const_constructors, invalid_use_of_visible_for_testing_member
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -17,7 +17,39 @@ import 'package:flutter/services.dart';
 
 import 'package:fair/fair.dart';
 
+
+
+const double _kIndicatorHeight = 32;
+const double _kIndicatorWidth = 64;
+const double _borderRadius = 40;
+const double _magnification = 1.25;
+const double _kDrag = 0.0000135;
+const Size kDefaultSize = Size(80, 47.5);
+const Duration _kInOutAnimationDuration = Duration(milliseconds: 150);
+const double _kLeadingSize = 28.0;
+const double _kNotchedLeadingSize = 30.0;
+const double _kMinHeight = _kLeadingSize + 2 * 8.0;
+const double _kMinHeightWithSubtitle = _kLeadingSize + 2 * 10.0;
+const double _kNotchedMinHeight = _kNotchedLeadingSize + 2 * 12.0;
+const double _kNotchedMinHeightWithoutLeading = _kNotchedLeadingSize + 2 * 10.0;
+const EdgeInsetsDirectional _kPadding = EdgeInsetsDirectional.only(start: 20.0, end: 14.0);
+const EdgeInsetsDirectional _kPaddingWithSubtitle = EdgeInsetsDirectional.only(start: 20.0, end: 14.0);
+const EdgeInsets _kNotchedPadding = EdgeInsets.symmetric(horizontal: 14.0);
+const EdgeInsetsDirectional _kNotchedPaddingWithoutLeading = EdgeInsetsDirectional.fromSTEB(28.0, 10.0, 14.0, 10.0);
+const double _kLeadingToTitle = 16.0;
+const double _kNotchedLeadingToTitle = 12.0;
+const double _kNotchedTitleToSubtitle = 3.0;
+const double _kAdditionalInfoToTrailing = 6.0;
+const double _kNotchedTitleWithSubtitleFontSize = 16.0;
+const double _kSubtitleFontSize = 12.0;
+const double _kNotchedSubtitleFontSize = 14.0;
+const double _kInsetDividerMargin = 14.0;
+const double _kMarginTop = 22.0;
+const EdgeInsets _kDefaultRowsMargin = EdgeInsets.only(bottom: 8.0);
+const double _kBaseDividerMargin = 20.0;
+const EdgeInsetsDirectional _kFormDefaultInsetGroupedRowsMargin = EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0);
 const double _kDefaultIndicatorRadius = 10.0;
+const double strokeAlignInside = -1.0;
 const Color _kDefaultTabBarInactiveColor = CupertinoColors.inactiveGray;
 const Color _kDefaultTabBarBorderColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x4C000000),
@@ -586,10 +618,10 @@ const Border _kDefaultRoundedBorder = Border(
   right: _kDefaultRoundedBorderSide,
 );
 
-const String flutterVersion = '3.3.9';
-const String dartVersion = '2.18.5';
-const int widgetCount = 498;
-const int apiCount = 12681;
+const String flutterVersion = '3.7.12';
+const String dartVersion = '2.19.6';
+const int widgetCount = 568;
+const int apiCount = 13079;
 
 /// flutterComponents
 Map<String, dynamic> flutterComponents = {
@@ -664,6 +696,45 @@ Map<String, dynamic> flutterComponents = {
       Actions.maybeInvoke<Intent>(props['pa'][0], props['pa'][1]),
   'Actions.of': (props) => Actions.of(props['pa'][0]),
   'ActivateIntent': (props) => const ActivateIntent(),
+  'AdaptiveTextSelectionToolbar': (props) => AdaptiveTextSelectionToolbar(
+      key: props['key'],
+      children: as<Widget>(props['children']) ?? const [],
+      anchors: props['anchors']),
+  'AdaptiveTextSelectionToolbar.buttonItems': (props) =>
+      AdaptiveTextSelectionToolbar.buttonItems(
+          key: props['key'],
+          buttonItems:
+              as<ContextMenuButtonItem>(props['buttonItems']) ?? const [],
+          anchors: props['anchors']),
+  'AdaptiveTextSelectionToolbar.editable': (props) =>
+      AdaptiveTextSelectionToolbar.editable(
+          key: props['key'],
+          clipboardStatus: props['clipboardStatus'],
+          onCopy: props['onCopy'],
+          onCut: props['onCut'],
+          onPaste: props['onPaste'],
+          onSelectAll: props['onSelectAll'],
+          anchors: props['anchors']),
+  'AdaptiveTextSelectionToolbar.editableText': (props) =>
+      AdaptiveTextSelectionToolbar.editableText(
+          key: props['key'], editableTextState: props['editableTextState']),
+  'AdaptiveTextSelectionToolbar.getAdaptiveButtons': (props) =>
+      AdaptiveTextSelectionToolbar.getAdaptiveButtons(
+          props['pa'][0], props['pa'][1]),
+  'AdaptiveTextSelectionToolbar.getButtonLabel': (props) =>
+      AdaptiveTextSelectionToolbar.getButtonLabel(
+          props['pa'][0], props['pa'][1]),
+  'AdaptiveTextSelectionToolbar.selectable': (props) =>
+      AdaptiveTextSelectionToolbar.selectable(
+          key: props['key'],
+          onCopy: props['onCopy'],
+          onSelectAll: props['onSelectAll'],
+          selectionGeometry: props['selectionGeometry'],
+          anchors: props['anchors']),
+  'AdaptiveTextSelectionToolbar.selectableRegion': (props) =>
+      AdaptiveTextSelectionToolbar.selectableRegion(
+          key: props['key'],
+          selectableRegionState: props['selectableRegionState']),
   'AlertDialog': (props) => AlertDialog(
       key: props['key'],
       icon: props['icon'],
@@ -685,6 +756,8 @@ Map<String, dynamic> flutterComponents = {
       buttonPadding: props['buttonPadding'],
       backgroundColor: props['backgroundColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       semanticLabel: props['semanticLabel'],
       clipBehavior: props['clipBehavior'] ?? Clip.none,
       shape: props['shape'],
@@ -863,6 +936,20 @@ Map<String, dynamic> flutterComponents = {
       curve: props['curve'] ?? Curves.linear,
       duration: props['duration'],
       onEnd: props['onEnd']),
+  'AnimatedGrid': (props) => AnimatedGrid(
+      key: props['key'],
+      itemBuilder: props['itemBuilder'],
+      gridDelegate: props['gridDelegate'],
+      initialItemCount: props['initialItemCount'] ?? 0,
+      scrollDirection: props['scrollDirection'] ?? Axis.vertical,
+      reverse: props['reverse'] ?? false,
+      controller: props['controller'],
+      primary: props['primary'],
+      physics: props['physics'],
+      padding: props['padding'],
+      clipBehavior: props['clipBehavior'] ?? Clip.hardEdge),
+  'AnimatedGrid.maybeOf': (props) => AnimatedGrid.maybeOf(props['pa'][0]),
+  'AnimatedGrid.of': (props) => AnimatedGrid.of(props['pa'][0]),
   'AnimatedIcon': (props) => AnimatedIcon(
       key: props['key'],
       icon: props['icon'],
@@ -1048,8 +1135,9 @@ Map<String, dynamic> flutterComponents = {
   'AnnotationEntry': (props) => AnnotationEntry(
       annotation: props['annotation'], localPosition: props['localPosition']),
   'AnnotationResult': (props) => AnnotationResult(),
-  'AnnounceSemanticsEvent': (props) =>
-      AnnounceSemanticsEvent(props['pa'][0], props['pa'][1]),
+  'AnnounceSemanticsEvent': (props) => AnnounceSemanticsEvent(
+      props['pa'][0], props['pa'][1],
+      assertiveness: props['assertiveness'] ?? Assertiveness.polite),
   'AppBar': (props) => AppBar(
       key: props['key'],
       leading: props['leading'],
@@ -1119,6 +1207,9 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       aspectRatio: props['aspectRatio']?.toDouble() ?? 0,
       child: props['child']),
+  'Assertiveness.assertive': Assertiveness.assertive,
+  'Assertiveness.polite': Assertiveness.polite,
+  'Assertiveness.values': Assertiveness.values,
   'AssetBundleImageKey': (props) => AssetBundleImageKey(
       bundle: props['bundle'],
       name: props['name'],
@@ -1177,6 +1268,7 @@ Map<String, dynamic> flutterComponents = {
       child: props['child'],
       onDisposeAction:
           props['onDisposeAction'] ?? AutofillContextAction.commit),
+  'AutofillGroup.maybeOf': (props) => AutofillGroup.maybeOf(props['pa'][0]),
   'AutofillGroup.of': (props) => AutofillGroup.of(props['pa'][0]),
   'AutofillHints.addressCity': AutofillHints.addressCity,
   'AutofillHints.addressCityAndState': AutofillHints.addressCityAndState,
@@ -1286,8 +1378,49 @@ Map<String, dynamic> flutterComponents = {
   'BackdropFilterLayer': (props) => BackdropFilterLayer(
       filter: props['filter'],
       blendMode: props['blendMode'] ?? BlendMode.srcOver),
-  'BallisticScrollActivity': (props) =>
-      BallisticScrollActivity(props['pa'][0], props['pa'][1], props['pa'][2]),
+  // 'BackgroundIsolateBinaryMessenger': (props) =>
+  //     BackgroundIsolateBinaryMessenger(),
+  // 'BackgroundIsolateBinaryMessenger.instance':
+  //     BackgroundIsolateBinaryMessenger.instance,
+  'Badge': (props) => Badge(
+      key: props['key'],
+      backgroundColor: props['backgroundColor'],
+      textColor: props['textColor'],
+      smallSize: props['smallSize']?.toDouble(),
+      largeSize: props['largeSize']?.toDouble(),
+      textStyle: props['textStyle'],
+      padding: props['padding'],
+      alignment: props['alignment'],
+      label: props['label'],
+      isLabelVisible: props['isLabelVisible'] ?? true,
+      child: props['child']),
+  'Badge.count': (props) => Badge.count(
+      key: props['key'],
+      backgroundColor: props['backgroundColor'],
+      textColor: props['textColor'],
+      smallSize: props['smallSize']?.toDouble(),
+      largeSize: props['largeSize']?.toDouble(),
+      textStyle: props['textStyle'],
+      padding: props['padding'],
+      alignment: props['alignment'],
+      count: props['count'],
+      isLabelVisible: props['isLabelVisible'] ?? true,
+      child: props['child']),
+  'BadgeTheme': (props) =>
+      BadgeTheme(key: props['key'], data: props['data'], child: props['child']),
+  'BadgeTheme.of': (props) => BadgeTheme.of(props['pa'][0]),
+  'BadgeThemeData': (props) => BadgeThemeData(
+      backgroundColor: props['backgroundColor'],
+      textColor: props['textColor'],
+      smallSize: props['smallSize']?.toDouble(),
+      largeSize: props['largeSize']?.toDouble(),
+      textStyle: props['textStyle'],
+      padding: props['padding'],
+      alignment: props['alignment']),
+  'BadgeThemeData.lerp': (props) => BadgeThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'BallisticScrollActivity': (props) => BallisticScrollActivity(
+      props['pa'][0], props['pa'][1], props['pa'][2], props['pa'][3]),
   'Banner': (props) => Banner(
       key: props['key'],
       child: props['child'],
@@ -1371,7 +1504,8 @@ Map<String, dynamic> flutterComponents = {
       color: props['color'] ?? const Color(0xFF000000),
       width: props['width']?.toDouble() ?? 1.0,
       style: props['style'] ?? BorderStyle.solid,
-      strokeAlign: props['strokeAlign'] ?? StrokeAlign.inside),
+      strokeAlign:
+          props['strokeAlign']?.toDouble() ?? BorderSide.strokeAlignInside),
   'Border.fromBorderSide': (props) => Border.fromBorderSide(props['pa'][0]),
   'Border.lerp': (props) =>
       Border.lerp(props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
@@ -1429,7 +1563,7 @@ Map<String, dynamic> flutterComponents = {
       color: props['color'] ?? const Color(0xFF000000),
       width: props['width']?.toDouble() ?? 1.0,
       style: props['style'] ?? BorderStyle.solid,
-      strokeAlign: props['strokeAlign'] ?? StrokeAlign.inside),
+      strokeAlign: props['strokeAlign']?.toDouble() ?? strokeAlignInside),
   'BorderSide.canMerge': (props) =>
       BorderSide.canMerge(props['pa'][0], props['pa'][1]),
   'BorderSide.lerp': (props) => BorderSide.lerp(
@@ -1437,6 +1571,9 @@ Map<String, dynamic> flutterComponents = {
   'BorderSide.merge': (props) =>
       BorderSide.merge(props['pa'][0], props['pa'][1]),
   'BorderSide.none': BorderSide.none,
+  'BorderSide.strokeAlignCenter': BorderSide.strokeAlignCenter,
+  'BorderSide.strokeAlignInside': BorderSide.strokeAlignInside,
+  'BorderSide.strokeAlignOutside': BorderSide.strokeAlignOutside,
   'BorderStyle.none': BorderStyle.none,
   'BorderStyle.solid': BorderStyle.solid,
   'BorderStyle.values': BorderStyle.values,
@@ -1449,11 +1586,17 @@ Map<String, dynamic> flutterComponents = {
       shape: props['shape'],
       clipBehavior: props['clipBehavior'] ?? Clip.none,
       notchMargin: props['notchMargin']?.toDouble() ?? 4.0,
-      child: props['child']),
+      child: props['child'],
+      padding: props['padding'],
+      surfaceTintColor: props['surfaceTintColor'],
+      height: props['height']?.toDouble()),
   'BottomAppBarTheme': (props) => BottomAppBarTheme(
       color: props['color'],
       elevation: props['elevation']?.toDouble(),
-      shape: props['shape']),
+      shape: props['shape'],
+      height: props['height']?.toDouble(),
+      surfaceTintColor: props['surfaceTintColor'],
+      padding: props['padding']),
   'BottomAppBarTheme.lerp': (props) => BottomAppBarTheme.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'BottomAppBarTheme.of': (props) => BottomAppBarTheme.of(props['pa'][0]),
@@ -1479,7 +1622,8 @@ Map<String, dynamic> flutterComponents = {
       showUnselectedLabels: props['showUnselectedLabels'],
       mouseCursor: props['mouseCursor'],
       enableFeedback: props['enableFeedback'],
-      landscapeLayout: props['landscapeLayout']),
+      landscapeLayout: props['landscapeLayout'],
+      useLegacyColorScheme: props['useLegacyColorScheme'] ?? true),
   'BottomNavigationBarItem': (props) => BottomNavigationBarItem(
       icon: props['icon'],
       label: props['label'],
@@ -1536,22 +1680,27 @@ Map<String, dynamic> flutterComponents = {
       BottomSheet.createAnimationController(props['pa'][0]),
   'BottomSheetThemeData': (props) => BottomSheetThemeData(
       backgroundColor: props['backgroundColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       elevation: props['elevation']?.toDouble(),
       modalBackgroundColor: props['modalBackgroundColor'],
+      modalBarrierColor: props['modalBarrierColor'],
       modalElevation: props['modalElevation']?.toDouble(),
       shape: props['shape'],
       clipBehavior: props['clipBehavior'],
       constraints: props['constraints']),
   'BottomSheetThemeData.lerp': (props) => BottomSheetThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
-  'BouncingScrollPhysics': (props) =>
-      BouncingScrollPhysics(parent: props['parent']),
+  'BouncingScrollPhysics': (props) => BouncingScrollPhysics(
+      decelerationRate:
+          props['decelerationRate'] ?? ScrollDecelerationRate.normal,
+      parent: props['parent']),
   'BouncingScrollSimulation': (props) => BouncingScrollSimulation(
       position: props['position']?.toDouble() ?? 0,
       velocity: props['velocity']?.toDouble() ?? 0,
       leadingExtent: props['leadingExtent']?.toDouble() ?? 0,
       trailingExtent: props['trailingExtent']?.toDouble() ?? 0,
       spring: props['spring'],
+      constantDeceleration: props['constantDeceleration']?.toDouble() ?? 0,
       tolerance: props['tolerance'] ?? Tolerance.defaultTolerance),
   'BouncingScrollSimulation.maxSpringTransferVelocity':
       BouncingScrollSimulation.maxSpringTransferVelocity,
@@ -1667,6 +1816,11 @@ Map<String, dynamic> flutterComponents = {
       overflowDirection: props['overflowDirection']),
   'ButtonBarThemeData.lerp': (props) => ButtonBarThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'ButtonSegment': (props) => ButtonSegment(
+      value: props['value'],
+      icon: props['icon'],
+      label: props['label'],
+      enabled: props['enabled'] ?? true),
   'ButtonStyle': (props) => ButtonStyle(
       textStyle: props['textStyle'],
       backgroundColor: props['backgroundColor'],
@@ -1679,6 +1833,8 @@ Map<String, dynamic> flutterComponents = {
       minimumSize: props['minimumSize'],
       fixedSize: props['fixedSize'],
       maximumSize: props['maximumSize'],
+      iconColor: props['iconColor'],
+      iconSize: props['iconSize'],
       side: props['side'],
       shape: props['shape'],
       mouseCursor: props['mouseCursor'],
@@ -1805,7 +1961,12 @@ Map<String, dynamic> flutterComponents = {
   'ChannelBuffers': (props) => ChannelBuffers(),
   'ChannelBuffers.kControlChannelName': ChannelBuffers.kControlChannelName,
   'ChannelBuffers.kDefaultBufferSize': ChannelBuffers.kDefaultBufferSize,
-  'CharacterActivator': (props) => CharacterActivator(props['pa'][0]),
+  'CharacterActivator': (props) => CharacterActivator(props['pa'][0],
+      alt: props['alt'] ?? false,
+      control: props['control'] ?? false,
+      meta: props['meta'] ?? false,
+      includeRepeats: props['includeRepeats'] ?? true),
+  'CharacterBoundary': (props) => CharacterBoundary(props['pa'][0]),
   'Checkbox': (props) => Checkbox(
       key: props['key'],
       value: props['value'],
@@ -1824,7 +1985,8 @@ Map<String, dynamic> flutterComponents = {
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       shape: props['shape'],
-      side: props['side']),
+      side: props['side'],
+      isError: props['isError'] ?? false),
   'Checkbox.width': Checkbox.width,
   'CheckboxListTile': (props) => CheckboxListTile(
       key: props['key'],
@@ -1851,7 +2013,23 @@ Map<String, dynamic> flutterComponents = {
       side: props['side'],
       visualDensity: props['visualDensity'],
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       enableFeedback: props['enableFeedback']),
+  'CheckboxMenuButton': (props) => CheckboxMenuButton(
+      key: props['key'],
+      value: props['value'],
+      tristate: props['tristate'] ?? false,
+      isError: props['isError'] ?? false,
+      onChanged: props['onChanged'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      focusNode: props['focusNode'],
+      shortcut: props['shortcut'],
+      style: props['style'],
+      statesController: props['statesController'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      trailingIcon: props['trailingIcon'],
+      child: props['child']),
   'CheckboxTheme': (props) => CheckboxTheme(
       key: props['key'], data: props['data'], child: props['child']),
   'CheckboxTheme.of': (props) => CheckboxTheme.of(props['pa'][0]),
@@ -1978,8 +2156,9 @@ Map<String, dynamic> flutterComponents = {
       radius: props['radius']?.toDouble(),
       minRadius: props['minRadius']?.toDouble(),
       maxRadius: props['maxRadius']?.toDouble()),
-  'CircleBorder': (props) =>
-      CircleBorder(side: props['side'] ?? BorderSide.none),
+  'CircleBorder': (props) => CircleBorder(
+      side: props['side'] ?? BorderSide.none,
+      eccentricity: props['eccentricity']?.toDouble() ?? 0.0),
   'CircularNotchedRectangle': (props) => const CircularNotchedRectangle(),
   'CircularProgressIndicator': (props) => CircularProgressIndicator(
       key: props['key'],
@@ -2126,7 +2305,9 @@ Map<String, dynamic> flutterComponents = {
       surfaceVariant: props['surfaceVariant'],
       onSurfaceVariant: props['onSurfaceVariant'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       inverseSurface: props['inverseSurface'],
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
@@ -2158,7 +2339,9 @@ Map<String, dynamic> flutterComponents = {
       surfaceVariant: props['surfaceVariant'],
       onSurfaceVariant: props['onSurfaceVariant'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       inverseSurface: props['inverseSurface'],
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
@@ -2185,6 +2368,7 @@ Map<String, dynamic> flutterComponents = {
       errorContainer: props['errorContainer'],
       onErrorContainer: props['onErrorContainer'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       background: props['background'],
       onBackground: props['onBackground'],
       surface: props['surface'],
@@ -2195,6 +2379,7 @@ Map<String, dynamic> flutterComponents = {
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       surfaceTint: props['surfaceTint']),
   'ColorScheme.fromSwatch': (props) => ColorScheme.fromSwatch(
       primarySwatch: props['primarySwatch'] ?? Colors.blue,
@@ -2229,7 +2414,9 @@ Map<String, dynamic> flutterComponents = {
       surfaceVariant: props['surfaceVariant'],
       onSurfaceVariant: props['onSurfaceVariant'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       inverseSurface: props['inverseSurface'],
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
@@ -2261,7 +2448,9 @@ Map<String, dynamic> flutterComponents = {
       surfaceVariant: props['surfaceVariant'],
       onSurfaceVariant: props['onSurfaceVariant'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       inverseSurface: props['inverseSurface'],
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
@@ -2295,7 +2484,9 @@ Map<String, dynamic> flutterComponents = {
       surfaceVariant: props['surfaceVariant'],
       onSurfaceVariant: props['onSurfaceVariant'],
       outline: props['outline'],
+      outlineVariant: props['outlineVariant'],
       shadow: props['shadow'],
+      scrim: props['scrim'],
       inverseSurface: props['inverseSurface'],
       onInverseSurface: props['onInverseSurface'],
       inversePrimary: props['inversePrimary'],
@@ -2430,6 +2621,20 @@ Map<String, dynamic> flutterComponents = {
       child: props['child'],
       clipBehavior: props['clipBehavior'] ?? Clip.none),
   'ContainerLayer': (props) => ContainerLayer(),
+  'ContextMenuButtonItem': (props) => ContextMenuButtonItem(
+      onPressed: props['onPressed'],
+      type: props['type'] ?? ContextMenuButtonType.custom,
+      label: props['label']),
+  'ContextMenuButtonType.copy': ContextMenuButtonType.copy,
+  'ContextMenuButtonType.custom': ContextMenuButtonType.custom,
+  'ContextMenuButtonType.cut': ContextMenuButtonType.cut,
+  'ContextMenuButtonType.paste': ContextMenuButtonType.paste,
+  'ContextMenuButtonType.selectAll': ContextMenuButtonType.selectAll,
+  'ContextMenuButtonType.values': ContextMenuButtonType.values,
+  'ContextMenuController': (props) =>
+      ContextMenuController(onRemove: props['onRemove']),
+  'ContextMenuController.removeAny': (props) =>
+      ContextMenuController.removeAny(),
   'ContinuousRectangleBorder': (props) => ContinuousRectangleBorder(
       side: props['side'] ?? BorderSide.none,
       borderRadius: props['borderRadius'] ?? BorderRadius.zero),
@@ -2480,6 +2685,39 @@ Map<String, dynamic> flutterComponents = {
           color: props['color'],
           radius: props['radius']?.toDouble() ?? _kDefaultIndicatorRadius,
           progress: props['progress']?.toDouble() ?? 1.0),
+  'CupertinoAdaptiveTextSelectionToolbar': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar(
+          key: props['key'],
+          children: as<Widget>(props['children']) ?? const [],
+          anchors: props['anchors']),
+  'CupertinoAdaptiveTextSelectionToolbar.buttonItems': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar.buttonItems(
+          key: props['key'],
+          buttonItems:
+              as<ContextMenuButtonItem>(props['buttonItems']) ?? const [],
+          anchors: props['anchors']),
+  'CupertinoAdaptiveTextSelectionToolbar.editable': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar.editable(
+          key: props['key'],
+          clipboardStatus: props['clipboardStatus'],
+          onCopy: props['onCopy'],
+          onCut: props['onCut'],
+          onPaste: props['onPaste'],
+          onSelectAll: props['onSelectAll'],
+          anchors: props['anchors']),
+  'CupertinoAdaptiveTextSelectionToolbar.editableText': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar.editableText(
+          key: props['key'], editableTextState: props['editableTextState']),
+  'CupertinoAdaptiveTextSelectionToolbar.getAdaptiveButtons': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar.getAdaptiveButtons(
+          props['pa'][0], props['pa'][1]),
+  'CupertinoAdaptiveTextSelectionToolbar.selectable': (props) =>
+      CupertinoAdaptiveTextSelectionToolbar.selectable(
+          key: props['key'],
+          onCopy: props['onCopy'],
+          onSelectAll: props['onSelectAll'],
+          selectionGeometry: props['selectionGeometry'],
+          anchors: props['anchors']),
   'CupertinoAlertDialog': (props) => CupertinoAlertDialog(
       key: props['key'],
       title: props['title'],
@@ -2636,7 +2874,16 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       actions: as<Widget>(props['actions']) ?? const [],
       child: props['child'],
-      previewBuilder: props['previewBuilder']),
+      previewBuilder: props['previewBuilder'] ?? _defaultPreviewBuilder),
+  'CupertinoContextMenu.animationOpensAt':
+      CupertinoContextMenu.animationOpensAt,
+  'CupertinoContextMenu.builder': (props) => CupertinoContextMenu.builder(
+      key: props['key'],
+      actions: as<Widget>(props['actions']) ?? const [],
+      builder: props['builder']),
+  'CupertinoContextMenu.kEndBoxShadow': CupertinoContextMenu.kEndBoxShadow,
+  'CupertinoContextMenu.kOpenBorderRadius':
+      CupertinoContextMenu.kOpenBorderRadius,
   'CupertinoContextMenuAction': (props) => CupertinoContextMenuAction(
       key: props['key'],
       child: props['child'],
@@ -2661,6 +2908,27 @@ Map<String, dynamic> flutterComponents = {
   'CupertinoDatePickerMode.dateAndTime': CupertinoDatePickerMode.dateAndTime,
   'CupertinoDatePickerMode.time': CupertinoDatePickerMode.time,
   'CupertinoDatePickerMode.values': CupertinoDatePickerMode.values,
+  'CupertinoDesktopTextSelectionControls': (props) =>
+      CupertinoDesktopTextSelectionControls(),
+  'CupertinoDesktopTextSelectionToolbar': (props) =>
+      CupertinoDesktopTextSelectionToolbar(
+          key: props['key'],
+          anchor: props['anchor'],
+          children: as<Widget>(props['children']) ?? const []),
+  'CupertinoDesktopTextSelectionToolbarButton': (props) =>
+      CupertinoDesktopTextSelectionToolbarButton(
+          key: props['key'],
+          onPressed: props['onPressed'],
+          child: props['child']),
+  'CupertinoDesktopTextSelectionToolbarButton.buttonItem': (props) =>
+      CupertinoDesktopTextSelectionToolbarButton.buttonItem(
+          key: props['key'], buttonItem: props['buttonItem']),
+  'CupertinoDesktopTextSelectionToolbarButton.text': (props) =>
+      CupertinoDesktopTextSelectionToolbarButton.text(
+          key: props['key'],
+          context: props['context'],
+          onPressed: props['onPressed'],
+          text: props['text']),
   'CupertinoDialogAction': (props) => CupertinoDialogAction(
       key: props['key'],
       onPressed: props['onPressed'],
@@ -2729,7 +2997,7 @@ Map<String, dynamic> flutterComponents = {
           children: as<Widget>(props['children']) ?? const [],
           header: props['header'],
           footer: props['footer'],
-          margin: props['margin'] ?? _kDefaultInsetGroupedRowsMargin,
+          margin: props['margin'] ?? _kFormDefaultInsetGroupedRowsMargin,
           backgroundColor: props['backgroundColor'] ??
               CupertinoColors.systemGroupedBackground,
           decoration: props['decoration'],
@@ -2742,9 +3010,13 @@ Map<String, dynamic> flutterComponents = {
           child: props['child'],
           linearTransition: props['linearTransition']),
   'CupertinoIconThemeData': (props) => CupertinoIconThemeData(
+      size: props['size']?.toDouble(),
+      fill: props['fill']?.toDouble(),
+      weight: props['weight']?.toDouble(),
+      grade: props['grade']?.toDouble(),
+      opticalSize: props['opticalSize']?.toDouble(),
       color: props['color'],
       opacity: props['opacity']?.toDouble(),
-      size: props['size']?.toDouble(),
       shadows: as<Shadow>(props['shadows'])),
   'CupertinoIcons.add': CupertinoIcons.add,
   'CupertinoIcons.add_circled': CupertinoIcons.add_circled,
@@ -4305,6 +4577,86 @@ Map<String, dynamic> flutterComponents = {
   'CupertinoIcons.zoom_in': CupertinoIcons.zoom_in,
   'CupertinoIcons.zoom_out': CupertinoIcons.zoom_out,
   'CupertinoIcons.zzz': CupertinoIcons.zzz,
+  'CupertinoListSection': (props) => CupertinoListSection(
+      key: props['key'],
+      children: as<Widget>(props['children']),
+      header: props['header'],
+      footer: props['footer'],
+      margin: props['margin'] ?? _kDefaultRowsMargin,
+      backgroundColor:
+          props['backgroundColor'] ?? CupertinoColors.systemGroupedBackground,
+      decoration: props['decoration'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      dividerMargin: props['dividerMargin']?.toDouble() ?? _kBaseDividerMargin,
+      additionalDividerMargin: props['additionalDividerMargin']?.toDouble(),
+      topMargin: props['topMargin']?.toDouble() ?? _kMarginTop,
+      hasLeading: props['hasLeading'] ?? true),
+  'CupertinoListSection.insetGrouped': (props) =>
+      CupertinoListSection.insetGrouped(
+          key: props['key'],
+          children: as<Widget>(props['children']),
+          header: props['header'],
+          footer: props['footer'],
+          margin: props['margin'] ?? _kDefaultRowsMargin,
+          backgroundColor: props['backgroundColor'] ??
+              CupertinoColors.systemGroupedBackground,
+          decoration: props['decoration'],
+          clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
+          dividerMargin:
+              props['dividerMargin']?.toDouble() ?? _kInsetDividerMargin,
+          additionalDividerMargin: props['additionalDividerMargin']?.toDouble(),
+          topMargin: props['topMargin']?.toDouble() ?? _kMarginTop,
+          hasLeading: props['hasLeading'] ?? true),
+  'CupertinoListSectionType.base': CupertinoListSectionType.base,
+  'CupertinoListSectionType.insetGrouped':
+      CupertinoListSectionType.insetGrouped,
+  'CupertinoListSectionType.values': CupertinoListSectionType.values,
+  'CupertinoListTile': (props) => CupertinoListTile(
+      key: props['key'],
+      title: props['title'],
+      subtitle: props['subtitle'],
+      additionalInfo: props['additionalInfo'],
+      leading: props['leading'],
+      trailing: props['trailing'],
+      onTap: props['onTap'],
+      backgroundColor: props['backgroundColor'],
+      backgroundColorActivated: props['backgroundColorActivated'],
+      padding: props['padding'],
+      leadingSize: props['leadingSize']?.toDouble() ?? _kLeadingSize,
+      leadingToTitle: props['leadingToTitle']?.toDouble() ?? _kLeadingToTitle),
+  'CupertinoListTile.notched': (props) => CupertinoListTile.notched(
+      key: props['key'],
+      title: props['title'],
+      subtitle: props['subtitle'],
+      additionalInfo: props['additionalInfo'],
+      leading: props['leading'],
+      trailing: props['trailing'],
+      onTap: props['onTap'],
+      backgroundColor: props['backgroundColor'],
+      backgroundColorActivated: props['backgroundColorActivated'],
+      padding: props['padding'],
+      leadingSize: props['leadingSize']?.toDouble() ?? _kNotchedLeadingSize,
+      leadingToTitle:
+          props['leadingToTitle']?.toDouble() ?? _kNotchedLeadingToTitle),
+  'CupertinoListTileChevron': (props) =>
+      CupertinoListTileChevron(key: props['key']),
+  'CupertinoMagnifier': (props) => CupertinoMagnifier(
+      key: props['key'],
+      size: props['size'] ?? kDefaultSize,
+      borderRadius: props['borderRadius'] ??
+          const BorderRadius.all(Radius.elliptical(60, 50)),
+      additionalFocalPointOffset:
+          props['additionalFocalPointOffset'] ?? Offset.zero,
+      shadows: as<BoxShadow>(props['shadows']) ??
+          const <BoxShadow>[
+            BoxShadow(
+                color: Color.fromARGB(25, 0, 0, 0),
+                blurRadius: 11,
+                spreadRadius: 0.2)
+          ],
+      borderSide: props['borderSide'] ??
+          const BorderSide(color: Color.fromARGB(255, 232, 232, 232)),
+      inOutAnimation: props['inOutAnimation']),
   'CupertinoModalPopupRoute': (props) => CupertinoModalPopupRoute(
       builder: props['builder'],
       barrierLabel: props['barrierLabel'] ?? 'Dismiss',
@@ -4339,6 +4691,7 @@ Map<String, dynamic> flutterComponents = {
       maintainState: props['maintainState'] ?? true,
       title: props['title'],
       fullscreenDialog: props['fullscreenDialog'] ?? false,
+      allowSnapshotting: props['allowSnapshotting'] ?? true,
       key: props['key'],
       name: props['name'],
       arguments: props['arguments'],
@@ -4348,7 +4701,8 @@ Map<String, dynamic> flutterComponents = {
       title: props['title'],
       settings: props['settings'],
       maintainState: props['maintainState'] ?? true,
-      fullscreenDialog: props['fullscreenDialog'] ?? false),
+      fullscreenDialog: props['fullscreenDialog'] ?? false,
+      allowSnapshotting: props['allowSnapshotting'] ?? true),
   'CupertinoPageScaffold': (props) => CupertinoPageScaffold(
       key: props['key'],
       navigationBar: props['navigationBar'],
@@ -4437,12 +4791,13 @@ Map<String, dynamic> flutterComponents = {
       decoration: props['decoration'],
       backgroundColor: props['backgroundColor'],
       borderRadius: props['borderRadius'],
+      keyboardType: props['keyboardType'] ?? TextInputType.text,
       padding: props['padding'] ??
-          const EdgeInsetsDirectional.fromSTEB(3.8, 8, 5, 8),
+          const EdgeInsetsDirectional.fromSTEB(5.5, 8, 5.5, 8),
       itemColor: props['itemColor'] ?? CupertinoColors.secondaryLabel,
       itemSize: props['itemSize']?.toDouble() ?? 20.0,
       prefixInsets: props['prefixInsets'] ??
-          const EdgeInsetsDirectional.fromSTEB(6, 0, 0, 4),
+          const EdgeInsetsDirectional.fromSTEB(6, 0, 0, 3),
       prefixIcon: props['prefixIcon'] ?? const Icon(CupertinoIcons.search),
       suffixInsets: props['suffixInsets'] ??
           const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 2),
@@ -4495,6 +4850,7 @@ Map<String, dynamic> flutterComponents = {
       leading: props['leading'],
       automaticallyImplyLeading: props['automaticallyImplyLeading'] ?? true,
       automaticallyImplyTitle: props['automaticallyImplyTitle'] ?? true,
+      alwaysShowMiddle: props['alwaysShowMiddle'] ?? true,
       previousPageTitle: props['previousPageTitle'],
       middle: props['middle'],
       trailing: props['trailing'],
@@ -4568,7 +4924,7 @@ Map<String, dynamic> flutterComponents = {
       controller: props['controller'],
       focusNode: props['focusNode'],
       decoration: props['decoration'] ?? _kDefaultRoundedBorderDecoration,
-      padding: props['padding'] ?? const EdgeInsets.all(6.0),
+      padding: props['padding'] ?? const EdgeInsets.all(7.0),
       placeholder: props['placeholder'],
       placeholderStyle: props['placeholderStyle'] ??
           const TextStyle(
@@ -4606,6 +4962,7 @@ Map<String, dynamic> flutterComponents = {
       onChanged: props['onChanged'],
       onEditingComplete: props['onEditingComplete'],
       onSubmitted: props['onSubmitted'],
+      onTapOutside: props['onTapOutside'],
       inputFormatters: as<TextInputFormatter>(props['inputFormatters']),
       enabled: props['enabled'],
       cursorWidth: props['cursorWidth']?.toDouble() ?? 2.0,
@@ -4629,13 +4986,17 @@ Map<String, dynamic> flutterComponents = {
       restorationId: props['restorationId'],
       scribbleEnabled: props['scribbleEnabled'] ?? true,
       enableIMEPersonalizedLearning:
-          props['enableIMEPersonalizedLearning'] ?? true),
+          props['enableIMEPersonalizedLearning'] ?? true,
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      spellCheckConfiguration: props['spellCheckConfiguration'],
+      magnifierConfiguration: props['magnifierConfiguration']),
   'CupertinoTextField.borderless': (props) => CupertinoTextField.borderless(
       key: props['key'],
       controller: props['controller'],
       focusNode: props['focusNode'],
       decoration: props['decoration'] ?? _kDefaultRoundedBorderDecoration,
-      padding: props['padding'] ?? const EdgeInsets.all(6.0),
+      padding: props['padding'] ?? const EdgeInsets.all(7.0),
       placeholder: props['placeholder'],
       placeholderStyle: props['placeholderStyle'] ?? _kDefaultPlaceholderStyle,
       prefix: props['prefix'],
@@ -4670,6 +5031,7 @@ Map<String, dynamic> flutterComponents = {
       onChanged: props['onChanged'],
       onEditingComplete: props['onEditingComplete'],
       onSubmitted: props['onSubmitted'],
+      onTapOutside: props['onTapOutside'],
       inputFormatters: as<TextInputFormatter>(props['inputFormatters']),
       enabled: props['enabled'],
       cursorWidth: props['cursorWidth']?.toDouble() ?? 2.0,
@@ -4693,7 +5055,13 @@ Map<String, dynamic> flutterComponents = {
       restorationId: props['restorationId'],
       scribbleEnabled: props['scribbleEnabled'] ?? true,
       enableIMEPersonalizedLearning:
-          props['enableIMEPersonalizedLearning'] ?? true),
+          props['enableIMEPersonalizedLearning'] ?? true,
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      spellCheckConfiguration: props['spellCheckConfiguration'],
+      magnifierConfiguration: props['magnifierConfiguration']),
+  'CupertinoTextField.cupertinoMisspelledTextStyle':
+      CupertinoTextField.cupertinoMisspelledTextStyle,
   'CupertinoTextFormFieldRow': (props) => CupertinoTextFormFieldRow(
       key: props['key'],
       prefix: props['prefix'],
@@ -4747,7 +5115,18 @@ Map<String, dynamic> flutterComponents = {
       placeholderStyle: props['placeholderStyle'] ??
           const TextStyle(
               fontWeight: FontWeight.w400,
-              color: CupertinoColors.placeholderText)),
+              color: CupertinoColors.placeholderText),
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder),
+  'CupertinoTextMagnifier': (props) => CupertinoTextMagnifier(
+      key: props['key'],
+      animationCurve: props['animationCurve'] ?? Curves.easeOut,
+      controller: props['controller'],
+      dragResistance: props['dragResistance']?.toDouble() ?? 10.0,
+      hideBelowThreshold: props['hideBelowThreshold']?.toDouble() ?? 48.0,
+      horizontalScreenEdgePadding:
+          props['horizontalScreenEdgePadding']?.toDouble() ?? 10.0,
+      magnifierInfo: props['magnifierInfo']),
   'CupertinoTextSelectionControls': (props) => CupertinoTextSelectionControls(),
   'CupertinoTextSelectionToolbar': (props) => CupertinoTextSelectionToolbar(
       key: props['key'],
@@ -4755,11 +5134,19 @@ Map<String, dynamic> flutterComponents = {
       anchorBelow: props['anchorBelow'],
       children: as<Widget>(props['children']) ?? const [],
       toolbarBuilder: props['toolbarBuilder'] ?? _defaultToolbarBuilder),
+  'CupertinoTextSelectionToolbar.kToolbarScreenPadding':
+      CupertinoTextSelectionToolbar.kToolbarScreenPadding,
   'CupertinoTextSelectionToolbarButton': (props) =>
       CupertinoTextSelectionToolbarButton(
           key: props['key'],
           onPressed: props['onPressed'],
           child: props['child']),
+  'CupertinoTextSelectionToolbarButton.buttonItem': (props) =>
+      CupertinoTextSelectionToolbarButton.buttonItem(
+          key: props['key'], buttonItem: props['buttonItem']),
+  'CupertinoTextSelectionToolbarButton.getButtonLabel': (props) =>
+      CupertinoTextSelectionToolbarButton.getButtonLabel(
+          props['pa'][0], props['pa'][1]),
   'CupertinoTextSelectionToolbarButton.text': (props) =>
       CupertinoTextSelectionToolbarButton.text(
           key: props['key'],
@@ -4926,6 +5313,11 @@ Map<String, dynamic> flutterComponents = {
           hint: props['hint'], action: props['action']),
   'CustomSingleChildLayout': (props) => CustomSingleChildLayout(
       key: props['key'], delegate: props['delegate'], child: props['child']),
+  'DartPerformanceMode.balanced': DartPerformanceMode.balanced,
+  'DartPerformanceMode.latency': DartPerformanceMode.latency,
+  'DartPerformanceMode.memory': DartPerformanceMode.memory,
+  'DartPerformanceMode.throughput': DartPerformanceMode.throughput,
+  'DartPerformanceMode.values': DartPerformanceMode.values,
   'DartPluginRegistrant': (props) => DartPluginRegistrant(),
   'DartPluginRegistrant.ensureInitialized': (props) =>
       DartPluginRegistrant.ensureInitialized(),
@@ -4977,7 +5369,8 @@ Map<String, dynamic> flutterComponents = {
       dividerThickness: props['dividerThickness']?.toDouble(),
       rows: as<DataRow>(props['rows']) ?? const [],
       checkboxHorizontalMargin: props['checkboxHorizontalMargin']?.toDouble(),
-      border: props['border']),
+      border: props['border'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none),
   'DataTableTheme': (props) => DataTableTheme(
       key: props['key'], data: props['data'], child: props['child']),
   'DataTableTheme.of': (props) => DataTableTheme.of(props['pa'][0]),
@@ -5136,16 +5529,22 @@ Map<String, dynamic> flutterComponents = {
       cursorColor: props['cursorColor'],
       selectionColor: props['selectionColor'],
       child: props['child']),
+  'DefaultSelectionStyle.defaultColor': DefaultSelectionStyle.defaultColor,
   'DefaultSelectionStyle.fallback': (props) =>
       DefaultSelectionStyle.fallback(key: props['key']),
   'DefaultSelectionStyle.of': (props) =>
       DefaultSelectionStyle.of(props['pa'][0]),
+  'DefaultSpellCheckService': (props) => DefaultSpellCheckService(),
+  'DefaultSpellCheckService.mergeResults': (props) =>
+      DefaultSpellCheckService.mergeResults(props['pa'][0], props['pa'][1]),
   'DefaultTabController': (props) => DefaultTabController(
       key: props['key'],
       length: props['length'],
       initialIndex: props['initialIndex'] ?? 0,
       child: props['child'],
       animationDuration: props['animationDuration']),
+  'DefaultTabController.maybeOf': (props) =>
+      DefaultTabController.maybeOf(props['pa'][0]),
   'DefaultTabController.of': (props) => DefaultTabController.of(props['pa'][0]),
   'DefaultTextEditingShortcuts': (props) =>
       DefaultTextEditingShortcuts(key: props['key'], child: props['child']),
@@ -5153,6 +5552,8 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       textHeightBehavior: props['textHeightBehavior'],
       child: props['child']),
+  'DefaultTextHeightBehavior.maybeOf': (props) =>
+      DefaultTextHeightBehavior.maybeOf(props['pa'][0]),
   'DefaultTextHeightBehavior.of': (props) =>
       DefaultTextHeightBehavior.of(props['pa'][0]),
   'DefaultTextStyle': (props) => DefaultTextStyle(
@@ -5208,6 +5609,22 @@ Map<String, dynamic> flutterComponents = {
       DeleteToLineBreakIntent(forward: props['forward']),
   'DeleteToNextWordBoundaryIntent': (props) =>
       DeleteToNextWordBoundaryIntent(forward: props['forward']),
+  'DesktopTextSelectionControls': (props) => DesktopTextSelectionControls(),
+  'DesktopTextSelectionToolbar': (props) => DesktopTextSelectionToolbar(
+      key: props['key'],
+      anchor: props['anchor'],
+      children: as<Widget>(props['children']) ?? const []),
+  'DesktopTextSelectionToolbarButton': (props) =>
+      DesktopTextSelectionToolbarButton(
+          key: props['key'],
+          onPressed: props['onPressed'],
+          child: props['child']),
+  'DesktopTextSelectionToolbarButton.text': (props) =>
+      DesktopTextSelectionToolbarButton.text(
+          key: props['key'],
+          context: props['context'],
+          onPressed: props['onPressed'],
+          text: props['text']),
   'DesktopTextSelectionToolbarLayoutDelegate': (props) =>
       DesktopTextSelectionToolbarLayoutDelegate(anchor: props['anchor']),
   'DeviceGestureSettings': (props) =>
@@ -5307,12 +5724,20 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       backgroundColor: props['backgroundColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       insetAnimationDuration:
           props['insetAnimationDuration'] ?? const Duration(milliseconds: 100),
       insetAnimationCurve: props['insetAnimationCurve'] ?? Curves.decelerate,
       clipBehavior: props['clipBehavior'] ?? Clip.none,
       shape: props['shape'],
       alignment: props['alignment'],
+      child: props['child']),
+  'Dialog.fullscreen': (props) => Dialog.fullscreen(
+      key: props['key'],
+      backgroundColor: props['backgroundColor'],
+      insetAnimationDuration: props['insetAnimationDuration'] ?? Duration.zero,
+      insetAnimationCurve: props['insetAnimationCurve'] ?? Curves.decelerate,
       child: props['child']),
   'DialogRoute': (props) => DialogRoute(
       context: props['context'],
@@ -5327,6 +5752,8 @@ Map<String, dynamic> flutterComponents = {
   'DialogTheme': (props) => DialogTheme(
       backgroundColor: props['backgroundColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       shape: props['shape'],
       alignment: props['alignment'],
       iconColor: props['iconColor'],
@@ -5347,6 +5774,11 @@ Map<String, dynamic> flutterComponents = {
       child: props['child']),
   'Directionality.maybeOf': (props) => Directionality.maybeOf(props['pa'][0]),
   'Directionality.of': (props) => Directionality.of(props['pa'][0]),
+  'DirectionallyExtendSelectionEvent': (props) =>
+      DirectionallyExtendSelectionEvent(
+          dx: props['dx']?.toDouble() ?? 0,
+          isEnd: props['isEnd'],
+          direction: props['direction']),
   'DismissDirection.down': DismissDirection.down,
   'DismissDirection.endToStart': DismissDirection.endToStart,
   'DismissDirection.horizontal': DismissDirection.horizontal,
@@ -5356,6 +5788,8 @@ Map<String, dynamic> flutterComponents = {
   'DismissDirection.values': DismissDirection.values,
   'DismissDirection.vertical': DismissDirection.vertical,
   'DismissIntent': (props) => const DismissIntent(),
+  'DismissMenuAction': (props) =>
+      DismissMenuAction(controller: props['controller']),
   'DismissUpdateDetails': (props) => DismissUpdateDetails(
       direction: props['direction'] ?? DismissDirection.horizontal,
       reached: props['reached'] ?? false,
@@ -5432,7 +5866,30 @@ Map<String, dynamic> flutterComponents = {
   'DoNothingAndStopPropagationTextIntent': (props) =>
       const DoNothingAndStopPropagationTextIntent(),
   'DoNothingIntent': (props) => const DoNothingIntent(),
+  'DocumentBoundary': (props) => DocumentBoundary(props['pa'][0]),
   'DocumentationIcon': (props) => DocumentationIcon(props['pa'][0]),
+  // 'DomCSSStyleDeclaration': (props) => DomCSSStyleDeclaration(),
+  // 'DomCSSStyleSheet': (props) => DomCSSStyleSheet(),
+  // 'DomDocument': (props) => DomDocument(),
+  // 'DomElement': (props) => DomElement(),
+  // 'DomEvent': (props) => DomEvent(),
+  // 'DomEventTarget': (props) => DomEventTarget(),
+  // 'DomHTMLDivElement': (props) => DomHTMLDivElement(),
+  // 'DomHTMLElement': (props) => DomHTMLElement(),
+  // 'DomHTMLHeadElement': (props) => DomHTMLHeadElement(),
+  // 'DomHTMLStyleElement': (props) => DomHTMLStyleElement(),
+  // 'DomMediaQueryList': (props) => DomMediaQueryList(),
+  // 'DomMouseEvent': (props) => DomMouseEvent(),
+  // 'DomNavigator': (props) => DomNavigator(),
+  // 'DomNode': (props) => DomNode(),
+  // 'DomProgressEvent': (props) => DomProgressEvent(),
+  // 'DomRange': (props) => DomRange(),
+  // 'DomSelection': (props) => DomSelection(),
+  // 'DomStyleSheet': (props) => DomStyleSheet(),
+  // 'DomTokenList': (props) => DomTokenList(),
+  // 'DomUIEvent': (props) => DomUIEvent(),
+  // 'DomWindow': (props) => DomWindow(),
+  // 'DomXMLHttpRequest': (props) => DomXMLHttpRequest(),
   'DoubleProperty': (props) => DoubleProperty(
       props['pa'][0], props['pa'][1]?.toDouble(),
       ifNull: props['ifNull'],
@@ -5495,8 +5952,8 @@ Map<String, dynamic> flutterComponents = {
       axis: props['axis'],
       childWhenDragging: props['childWhenDragging'],
       feedbackOffset: props['feedbackOffset'] ?? Offset.zero,
-      dragAnchor: props['dragAnchor'] ?? DragAnchor.child,
-      dragAnchorStrategy: props['dragAnchorStrategy'],
+      dragAnchorStrategy:
+          props['dragAnchorStrategy'] ?? childDragAnchorStrategy,
       affinity: props['affinity'],
       maxSimultaneousDrags: props['maxSimultaneousDrags'],
       onDragStarted: props['onDragStarted'],
@@ -5532,12 +5989,15 @@ Map<String, dynamic> flutterComponents = {
       expand: props['expand'] ?? true,
       snap: props['snap'] ?? false,
       snapSizes: as<double>(props['snapSizes']),
+      snapAnimationDuration: props['snapAnimationDuration'],
       controller: props['controller'],
       builder: props['builder']),
   'Drawer': (props) => Drawer(
       key: props['key'],
       backgroundColor: props['backgroundColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       shape: props['shape'],
       width: props['width']?.toDouble(),
       child: props['child'],
@@ -5555,6 +6015,9 @@ Map<String, dynamic> flutterComponents = {
       scrimColor: props['scrimColor'],
       edgeDragWidth: props['edgeDragWidth']?.toDouble(),
       enableOpenDragGesture: props['enableOpenDragGesture'] ?? true),
+  'DrawerController.maybeOf': (props) =>
+      DrawerController.maybeOf(props['pa'][0]),
+  'DrawerController.of': (props) => DrawerController.of(props['pa'][0]),
   'DrawerHeader': (props) => DrawerHeader(
       key: props['key'],
       decoration: props['decoration'],
@@ -5571,7 +6034,10 @@ Map<String, dynamic> flutterComponents = {
       backgroundColor: props['backgroundColor'],
       scrimColor: props['scrimColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       shape: props['shape'],
+      endShape: props['endShape'],
       width: props['width']?.toDouble()),
   'DrawerThemeData.lerp': (props) => DrawerThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
@@ -5581,6 +6047,8 @@ Map<String, dynamic> flutterComponents = {
       duration: props['duration'],
       curve: props['curve'],
       vsync: props['vsync']),
+  'DropSliderValueIndicatorShape': (props) =>
+      const DropSliderValueIndicatorShape(),
   'DropdownButton': (props) => DropdownButton(
       key: props['key'],
       items: as<DropdownMenuItem>(props['items']) ?? const [],
@@ -5642,6 +6110,33 @@ Map<String, dynamic> flutterComponents = {
       DropdownButtonHideUnderline(key: props['key'], child: props['child']),
   'DropdownButtonHideUnderline.at': (props) =>
       DropdownButtonHideUnderline.at(props['pa'][0]),
+  'DropdownMenu': (props) => DropdownMenu(
+      key: props['key'],
+      enabled: props['enabled'] ?? true,
+      width: props['width']?.toDouble(),
+      menuHeight: props['menuHeight']?.toDouble(),
+      leadingIcon: props['leadingIcon'],
+      trailingIcon: props['trailingIcon'],
+      label: props['label'],
+      hintText: props['hintText'],
+      selectedTrailingIcon: props['selectedTrailingIcon'],
+      enableFilter: props['enableFilter'] ?? false,
+      enableSearch: props['enableSearch'] ?? true,
+      textStyle: props['textStyle'],
+      inputDecorationTheme: props['inputDecorationTheme'],
+      menuStyle: props['menuStyle'],
+      controller: props['controller'],
+      initialSelection: props['initialSelection'],
+      onSelected: props['onSelected'],
+      dropdownMenuEntries:
+          as<DropdownMenuEntry>(props['dropdownMenuEntries']) ?? const []),
+  'DropdownMenuEntry': (props) => DropdownMenuEntry(
+      value: props['value'],
+      label: props['label'],
+      leadingIcon: props['leadingIcon'],
+      trailingIcon: props['trailingIcon'],
+      enabled: props['enabled'] ?? true,
+      style: props['style']),
   'DropdownMenuItem': (props) => DropdownMenuItem(
       key: props['key'],
       onTap: props['onTap'],
@@ -5649,6 +6144,17 @@ Map<String, dynamic> flutterComponents = {
       enabled: props['enabled'] ?? true,
       alignment: props['alignment'] ?? AlignmentDirectional.centerStart,
       child: props['child']),
+  'DropdownMenuTheme': (props) => DropdownMenuTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'DropdownMenuTheme.maybeOf': (props) =>
+      DropdownMenuTheme.maybeOf(props['pa'][0]),
+  'DropdownMenuTheme.of': (props) => DropdownMenuTheme.of(props['pa'][0]),
+  'DropdownMenuThemeData': (props) => DropdownMenuThemeData(
+      textStyle: props['textStyle'],
+      inputDecorationTheme: props['inputDecorationTheme'],
+      menuStyle: props['menuStyle']),
+  'DropdownMenuThemeData.lerp': (props) => DropdownMenuThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'DualTransitionBuilder': (props) => DualTransitionBuilder(
       key: props['key'],
       animation: props['animation'],
@@ -5695,6 +6201,9 @@ Map<String, dynamic> flutterComponents = {
       top: props['top']?.toDouble() ?? 0.0,
       end: props['end']?.toDouble() ?? 0.0,
       bottom: props['bottom']?.toDouble() ?? 0.0),
+  'EdgeInsetsDirectional.symmetric': (props) => EdgeInsetsDirectional.symmetric(
+      horizontal: props['horizontal']?.toDouble() ?? 0.0,
+      vertical: props['vertical']?.toDouble() ?? 0.0),
   'EdgeInsetsDirectional.zero': EdgeInsetsDirectional.zero,
   'EdgeInsetsGeometryTween': (props) =>
       EdgeInsetsGeometryTween(begin: props['begin'], end: props['end']),
@@ -5740,6 +6249,7 @@ Map<String, dynamic> flutterComponents = {
       onAppPrivateCommand: props['onAppPrivateCommand'],
       onSelectionChanged: props['onSelectionChanged'],
       onSelectionHandleTapped: props['onSelectionHandleTapped'],
+      onTapOutside: props['onTapOutside'],
       inputFormatters: as<TextInputFormatter>(props['inputFormatters']),
       mouseCursor: props['mouseCursor'],
       rendererIgnoresPointer: props['rendererIgnoresPointer'] ?? false,
@@ -5768,9 +6278,20 @@ Map<String, dynamic> flutterComponents = {
       scrollBehavior: props['scrollBehavior'],
       scribbleEnabled: props['scribbleEnabled'] ?? true,
       enableIMEPersonalizedLearning:
-          props['enableIMEPersonalizedLearning'] ?? true),
+          props['enableIMEPersonalizedLearning'] ?? true,
+      contextMenuBuilder: props['contextMenuBuilder'],
+      spellCheckConfiguration: props['spellCheckConfiguration'],
+      magnifierConfiguration: props['magnifierConfiguration'] ??
+          TextMagnifierConfiguration.disabled),
   'EditableText.debugDeterministicCursor':
       EditableText.debugDeterministicCursor,
+  'EditableText.getEditableButtonItems': (props) =>
+      EditableText.getEditableButtonItems(
+          clipboardStatus: props['clipboardStatus'],
+          onCopy: props['onCopy'],
+          onCut: props['onCut'],
+          onPaste: props['onPaste'],
+          onSelectAll: props['onSelectAll']),
   'ElasticInCurve': (props) => ElasticInCurve(
       (props['pa'].length > 0 ? props['pa'][0] : null)?.toDouble() ?? 0.4),
   'ElasticInOutCurve': (props) => ElasticInOutCurve(
@@ -5799,6 +6320,7 @@ Map<String, dynamic> flutterComponents = {
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
       icon: props['icon'],
       label: props['label']),
   'ElevatedButton.styleFrom': (props) => ElevatedButton.styleFrom(
@@ -5844,6 +6366,7 @@ Map<String, dynamic> flutterComponents = {
           props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'ElevationOverlay.overlayColor': (props) =>
       ElevationOverlay.overlayColor(props['pa'][0], props['pa'][1]?.toDouble()),
+  'EmptyTextSelectionControls': (props) => EmptyTextSelectionControls(),
   'EnumProperty': (props) => EnumProperty(props['pa'][0], props['pa'][1],
       defaultValue: props['defaultValue'] ?? kNoDefaultValue,
       level: props['level'] ?? DiagnosticLevel.info),
@@ -5940,6 +6463,9 @@ Map<String, dynamic> flutterComponents = {
       collapsedTextColor: props['collapsedTextColor'],
       iconColor: props['iconColor'],
       collapsedIconColor: props['collapsedIconColor'],
+      shape: props['shape'],
+      collapsedShape: props['collapsedShape'],
+      clipBehavior: props['clipBehavior'],
       controlAffinity: props['controlAffinity']),
   'ExpansionTileTheme': (props) => ExpansionTileTheme(
       key: props['key'], data: props['data'], child: props['child']),
@@ -5953,13 +6479,18 @@ Map<String, dynamic> flutterComponents = {
       iconColor: props['iconColor'],
       collapsedIconColor: props['collapsedIconColor'],
       textColor: props['textColor'],
-      collapsedTextColor: props['collapsedTextColor']),
+      collapsedTextColor: props['collapsedTextColor'],
+      shape: props['shape'],
+      collapsedShape: props['collapsedShape'],
+      clipBehavior: props['clipBehavior']),
   'ExpansionTileThemeData.lerp': (props) => ExpansionTileThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'ExtendSelectionByCharacterIntent': (props) =>
       ExtendSelectionByCharacterIntent(
           forward: props['forward'],
           collapseSelection: props['collapseSelection']),
+  'ExtendSelectionByPageIntent': (props) =>
+      ExtendSelectionByPageIntent(forward: props['forward']),
   'ExtendSelectionToDocumentBoundaryIntent': (props) =>
       ExtendSelectionToDocumentBoundaryIntent(
           forward: props['forward'],
@@ -5981,6 +6512,10 @@ Map<String, dynamic> flutterComponents = {
       ExtendSelectionVerticallyToAdjacentLineIntent(
           forward: props['forward'],
           collapseSelection: props['collapseSelection']),
+  'ExtendSelectionVerticallyToAdjacentPageIntent': (props) =>
+      ExtendSelectionVerticallyToAdjacentPageIntent(
+          forward: props['forward'],
+          collapseSelection: props['collapseSelection']),
   'Factory': (props) => Factory(props['pa'][0]),
   'FadeInImage': (props) => FadeInImage(
       key: props['key'],
@@ -6000,6 +6535,8 @@ Map<String, dynamic> flutterComponents = {
       height: props['height']?.toDouble(),
       fit: props['fit'],
       placeholderFit: props['placeholderFit'],
+      filterQuality: props['filterQuality'] ?? FilterQuality.low,
+      placeholderFilterQuality: props['placeholderFilterQuality'],
       alignment: props['alignment'] ?? Alignment.center,
       repeat: props['repeat'] ?? ImageRepeat.noRepeat,
       matchTextDirection: props['matchTextDirection'] ?? false),
@@ -6024,6 +6561,8 @@ Map<String, dynamic> flutterComponents = {
       height: props['height']?.toDouble(),
       fit: props['fit'],
       placeholderFit: props['placeholderFit'],
+      filterQuality: props['filterQuality'] ?? FilterQuality.low,
+      placeholderFilterQuality: props['placeholderFilterQuality'],
       alignment: props['alignment'] ?? Alignment.center,
       repeat: props['repeat'] ?? ImageRepeat.noRepeat,
       matchTextDirection: props['matchTextDirection'] ?? false,
@@ -6051,6 +6590,8 @@ Map<String, dynamic> flutterComponents = {
       height: props['height']?.toDouble(),
       fit: props['fit'],
       placeholderFit: props['placeholderFit'],
+      filterQuality: props['filterQuality'] ?? FilterQuality.low,
+      placeholderFilterQuality: props['placeholderFilterQuality'],
       alignment: props['alignment'] ?? Alignment.center,
       repeat: props['repeat'] ?? ImageRepeat.noRepeat,
       matchTextDirection: props['matchTextDirection'] ?? false,
@@ -6073,6 +6614,86 @@ Map<String, dynamic> flutterComponents = {
       Feedback.wrapForTap(props['pa'][0], props['pa'][1]),
   'FileImage': (props) =>
       FileImage(props['pa'][0], scale: props['scale']?.toDouble() ?? 1.0),
+  'FilledButton': (props) => FilledButton(
+      key: props['key'],
+      onPressed: props['onPressed'],
+      onLongPress: props['onLongPress'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      style: props['style'],
+      focusNode: props['focusNode'],
+      autofocus: props['autofocus'] ?? false,
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
+      child: props['child']),
+  'FilledButton.icon': (props) => FilledButton.icon(
+      key: props['key'],
+      onPressed: props['onPressed'],
+      onLongPress: props['onLongPress'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      style: props['style'],
+      focusNode: props['focusNode'],
+      autofocus: props['autofocus'] ?? false,
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
+      icon: props['icon'],
+      label: props['label']),
+  'FilledButton.styleFrom': (props) => FilledButton.styleFrom(
+      foregroundColor: props['foregroundColor'],
+      backgroundColor: props['backgroundColor'],
+      disabledForegroundColor: props['disabledForegroundColor'],
+      disabledBackgroundColor: props['disabledBackgroundColor'],
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      elevation: props['elevation']?.toDouble(),
+      textStyle: props['textStyle'],
+      padding: props['padding'],
+      minimumSize: props['minimumSize'],
+      fixedSize: props['fixedSize'],
+      maximumSize: props['maximumSize'],
+      side: props['side'],
+      shape: props['shape'],
+      enabledMouseCursor: props['enabledMouseCursor'],
+      disabledMouseCursor: props['disabledMouseCursor'],
+      visualDensity: props['visualDensity'],
+      tapTargetSize: props['tapTargetSize'],
+      animationDuration: props['animationDuration'],
+      enableFeedback: props['enableFeedback'],
+      alignment: props['alignment'],
+      splashFactory: props['splashFactory']),
+  'FilledButton.tonal': (props) => FilledButton.tonal(
+      key: props['key'],
+      onPressed: props['onPressed'],
+      onLongPress: props['onLongPress'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      style: props['style'],
+      focusNode: props['focusNode'],
+      autofocus: props['autofocus'] ?? false,
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
+      child: props['child']),
+  'FilledButton.tonalIcon': (props) => FilledButton.tonalIcon(
+      key: props['key'],
+      onPressed: props['onPressed'],
+      onLongPress: props['onLongPress'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      style: props['style'],
+      focusNode: props['focusNode'],
+      autofocus: props['autofocus'] ?? false,
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
+      icon: props['icon'],
+      label: props['label']),
+  'FilledButtonTheme': (props) => FilledButtonTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'FilledButtonTheme.of': (props) => FilledButtonTheme.of(props['pa'][0]),
+  'FilledButtonThemeData': (props) =>
+      FilledButtonThemeData(style: props['style']),
+  'FilledButtonThemeData.lerp': (props) => FilledButtonThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'FilterChip': (props) => FilterChip(
       key: props['key'],
       avatar: props['avatar'],
@@ -6327,7 +6948,8 @@ Map<String, dynamic> flutterComponents = {
       extendedSizeConstraints: props['extendedSizeConstraints'],
       extendedIconLabelSpacing: props['extendedIconLabelSpacing']?.toDouble(),
       extendedPadding: props['extendedPadding'],
-      extendedTextStyle: props['extendedTextStyle']),
+      extendedTextStyle: props['extendedTextStyle'],
+      mouseCursor: props['mouseCursor']),
   'FloatingActionButtonThemeData.lerp': (props) =>
       FloatingActionButtonThemeData.lerp(
           props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
@@ -6412,6 +7034,7 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       child: props['child'],
       focusNode: props['focusNode'],
+      parentNode: props['parentNode'],
       autofocus: props['autofocus'] ?? false,
       onFocusChange: props['onFocusChange'],
       onKeyEvent: props['onKeyEvent'],
@@ -6431,6 +7054,7 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       child: props['child'],
       focusNode: props['focusNode'],
+      parentNode: props['parentNode'],
       autofocus: props['autofocus'] ?? false,
       onFocusChange: props['onFocusChange'],
       includeSemantics: props['includeSemantics'] ?? true),
@@ -6455,6 +7079,7 @@ Map<String, dynamic> flutterComponents = {
   'FocusScope': (props) => FocusScope(
       key: props['key'],
       node: props['node'],
+      parentNode: props['parentNode'],
       child: props['child'],
       autofocus: props['autofocus'] ?? false,
       onFocusChange: props['onFocusChange'],
@@ -6469,6 +7094,7 @@ Map<String, dynamic> flutterComponents = {
           key: props['key'],
           child: props['child'],
           focusScopeNode: props['focusScopeNode'],
+          parentNode: props['parentNode'],
           autofocus: props['autofocus'] ?? false,
           onFocusChange: props['onFocusChange']),
   'FocusScopeNode': (props) => FocusScopeNode(
@@ -6477,12 +7103,6 @@ Map<String, dynamic> flutterComponents = {
       onKey: props['onKey'],
       skipTraversal: props['skipTraversal'] ?? false,
       canRequestFocus: props['canRequestFocus'] ?? true),
-  'FocusTrap': (props) => FocusTrap(
-      focusScopeNode: props['focusScopeNode'],
-      child: props['child'],
-      key: props['key']),
-  'FocusTrapArea': (props) => FocusTrapArea(
-      focusNode: props['focusNode'], key: props['key'], child: props['child']),
   'FocusTraversalGroup': (props) => FocusTraversalGroup(
       key: props['key'],
       policy: props['policy'],
@@ -6510,6 +7130,7 @@ Map<String, dynamic> flutterComponents = {
       onShowHoverHighlight: props['onShowHoverHighlight'],
       onFocusChange: props['onFocusChange'],
       mouseCursor: props['mouseCursor'] ?? MouseCursor.defer,
+      includeFocusSemantics: props['includeFocusSemantics'] ?? true,
       child: props['child']),
   'FollowerLayer': (props) => FollowerLayer(
       link: props['link'],
@@ -6594,6 +7215,7 @@ Map<String, dynamic> flutterComponents = {
       onWillPop: props['onWillPop'],
       onChanged: props['onChanged'],
       autovalidateMode: props['autovalidateMode']),
+  'Form.maybeOf': (props) => Form.maybeOf(props['pa'][0]),
   'Form.of': (props) => Form.of(props['pa'][0]),
   'FormField': (props) => FormField(
       key: props['key'],
@@ -6604,6 +7226,18 @@ Map<String, dynamic> flutterComponents = {
       enabled: props['enabled'] ?? true,
       autovalidateMode: props['autovalidateMode'],
       restorationId: props['restorationId']),
+  'FoundationServiceExtensions.activeDevToolsServerAddress':
+      FoundationServiceExtensions.activeDevToolsServerAddress,
+  'FoundationServiceExtensions.brightnessOverride':
+      FoundationServiceExtensions.brightnessOverride,
+  'FoundationServiceExtensions.connectedVmServiceUri':
+      FoundationServiceExtensions.connectedVmServiceUri,
+  'FoundationServiceExtensions.exit': FoundationServiceExtensions.exit,
+  'FoundationServiceExtensions.platformOverride':
+      FoundationServiceExtensions.platformOverride,
+  'FoundationServiceExtensions.reassemble':
+      FoundationServiceExtensions.reassemble,
+  'FoundationServiceExtensions.values': FoundationServiceExtensions.values,
   'FractionColumnWidth': (props) =>
       FractionColumnWidth(props['pa'][0]?.toDouble()),
   'FractionalOffset': (props) =>
@@ -6636,10 +7270,8 @@ Map<String, dynamic> flutterComponents = {
       widthFactor: props['widthFactor']?.toDouble(),
       heightFactor: props['heightFactor']?.toDouble(),
       child: props['child']),
-  'FragmentProgram.compile': (props) => FragmentProgram.compile(
-      spirv: props['spirv'], debugPrint: props['debugPrint'] ?? false),
-  'FragmentShaderManager.inkSparkle': (props) =>
-      FragmentShaderManager.inkSparkle(),
+  'FragmentProgram.fromAsset': (props) =>
+      FragmentProgram.fromAsset(props['pa'][0]),
   'FramePhase.buildFinish': FramePhase.buildFinish,
   'FramePhase.buildStart': FramePhase.buildStart,
   'FramePhase.rasterFinish': FramePhase.rasterFinish,
@@ -6663,7 +7295,8 @@ Map<String, dynamic> flutterComponents = {
       props['pa'][0]?.toDouble(),
       props['pa'][1]?.toDouble(),
       props['pa'][2]?.toDouble(),
-      tolerance: props['tolerance'] ?? Tolerance.defaultTolerance),
+      tolerance: props['tolerance'] ?? Tolerance.defaultTolerance,
+      constantDeceleration: props['constantDeceleration']?.toDouble() ?? 0),
   'FrictionSimulation.through': (props) => FrictionSimulation.through(
       props['pa'][0]?.toDouble(),
       props['pa'][1]?.toDouble(),
@@ -6746,7 +7379,8 @@ Map<String, dynamic> flutterComponents = {
       onScaleEnd: props['onScaleEnd'],
       behavior: props['behavior'],
       excludeFromSemantics: props['excludeFromSemantics'] ?? false,
-      dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start),
+      dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start,
+      supportedDevices: props['supportedDevices']),
   'GestureDisposition.accepted': GestureDisposition.accepted,
   'GestureDisposition.rejected': GestureDisposition.rejected,
   'GestureDisposition.values': GestureDisposition.values,
@@ -6770,6 +7404,10 @@ Map<String, dynamic> flutterComponents = {
           props['notificationPredicate'] ?? defaultScrollNotificationPredicate,
       child: props['child']),
   'GradientRotation': (props) => GradientRotation(props['pa'][0]?.toDouble()),
+  'GranularlyExtendSelectionEvent': (props) => GranularlyExtendSelectionEvent(
+      forward: props['forward'],
+      isEnd: props['isEnd'],
+      granularity: props['granularity']),
   'GravitySimulation': (props) => GravitySimulation(
       props['pa'][0]?.toDouble(),
       props['pa'][1]?.toDouble(),
@@ -6952,6 +7590,8 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       controller: props['controller'],
       child: props['child']),
+  'HeroControllerScope.maybeOf': (props) =>
+      HeroControllerScope.maybeOf(props['pa'][0]),
   'HeroControllerScope.none': (props) =>
       HeroControllerScope.none(key: props['key'], child: props['child']),
   'HeroControllerScope.of': (props) => HeroControllerScope.of(props['pa'][0]),
@@ -6993,16 +7633,20 @@ Map<String, dynamic> flutterComponents = {
   'Icon': (props) => Icon(props['pa'][0],
       key: props['key'],
       size: props['size']?.toDouble(),
+      fill: props['fill']?.toDouble(),
+      weight: props['weight']?.toDouble(),
+      grade: props['grade']?.toDouble(),
+      opticalSize: props['opticalSize']?.toDouble(),
       color: props['color'],
+      shadows: as<Shadow>(props['shadows']),
       semanticLabel: props['semanticLabel'],
-      textDirection: props['textDirection'],
-      shadows: as<Shadow>(props['shadows'])),
+      textDirection: props['textDirection']),
   'IconButton': (props) => IconButton(
       key: props['key'],
       iconSize: props['iconSize']?.toDouble(),
       visualDensity: props['visualDensity'],
-      padding: props['padding'] ?? const EdgeInsets.all(8.0),
-      alignment: props['alignment'] ?? Alignment.center,
+      padding: props['padding'],
+      alignment: props['alignment'],
       splashRadius: props['splashRadius']?.toDouble(),
       color: props['color'],
       focusColor: props['focusColor'],
@@ -7015,7 +7659,7 @@ Map<String, dynamic> flutterComponents = {
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       tooltip: props['tooltip'],
-      enableFeedback: props['enableFeedback'] ?? true,
+      enableFeedback: props['enableFeedback'],
       constraints: props['constraints'],
       style: props['style'],
       isSelected: props['isSelected'],
@@ -7035,17 +7679,24 @@ Map<String, dynamic> flutterComponents = {
       minimumSize: props['minimumSize'],
       fixedSize: props['fixedSize'],
       maximumSize: props['maximumSize'],
+      iconSize: props['iconSize']?.toDouble(),
       side: props['side'],
       shape: props['shape'],
-      padding: props['padding'] ?? const EdgeInsets.all(8.0),
+      padding: props['padding'],
       enabledMouseCursor: props['enabledMouseCursor'],
       disabledMouseCursor: props['disabledMouseCursor'],
       visualDensity: props['visualDensity'],
       tapTargetSize: props['tapTargetSize'],
       animationDuration: props['animationDuration'],
-      enableFeedback: props['enableFeedback'] ?? true,
-      alignment: props['alignment'] ?? Alignment.center,
+      enableFeedback: props['enableFeedback'],
+      alignment: props['alignment'],
       splashFactory: props['splashFactory']),
+  'IconButtonTheme': (props) => IconButtonTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'IconButtonTheme.of': (props) => IconButtonTheme.of(props['pa'][0]),
+  'IconButtonThemeData': (props) => IconButtonThemeData(style: props['style']),
+  'IconButtonThemeData.lerp': (props) => IconButtonThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'IconDataProperty': (props) => IconDataProperty(
       props['pa'][0], props['pa'][1],
       ifNull: props['ifNull'],
@@ -7058,9 +7709,13 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'], data: props['data'], child: props['child']),
   'IconTheme.of': (props) => IconTheme.of(props['pa'][0]),
   'IconThemeData': (props) => IconThemeData(
+      size: props['size']?.toDouble(),
+      fill: props['fill']?.toDouble(),
+      weight: props['weight']?.toDouble(),
+      grade: props['grade']?.toDouble(),
+      opticalSize: props['opticalSize']?.toDouble(),
       color: props['color'],
       opacity: props['opacity']?.toDouble(),
-      size: props['size']?.toDouble(),
       shadows: as<Shadow>(props['shadows'])),
   'IconThemeData.fallback': (props) => const IconThemeData.fallback(),
   'IconThemeData.lerp': (props) => IconThemeData.lerp(
@@ -7568,6 +8223,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.arrow_left_outlined': Icons.arrow_left_outlined,
   'Icons.arrow_left_rounded': Icons.arrow_left_rounded,
   'Icons.arrow_left_sharp': Icons.arrow_left_sharp,
+  'Icons.arrow_outward': Icons.arrow_outward,
+  'Icons.arrow_outward_outlined': Icons.arrow_outward_outlined,
+  'Icons.arrow_outward_rounded': Icons.arrow_outward_rounded,
+  'Icons.arrow_outward_sharp': Icons.arrow_outward_sharp,
   'Icons.arrow_right': Icons.arrow_right,
   'Icons.arrow_right_alt': Icons.arrow_right_alt,
   'Icons.arrow_right_alt_outlined': Icons.arrow_right_alt_outlined,
@@ -7597,6 +8256,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.assessment_rounded': Icons.assessment_rounded,
   'Icons.assessment_sharp': Icons.assessment_sharp,
   'Icons.assignment': Icons.assignment,
+  'Icons.assignment_add': Icons.assignment_add,
   'Icons.assignment_ind': Icons.assignment_ind,
   'Icons.assignment_ind_outlined': Icons.assignment_ind_outlined,
   'Icons.assignment_ind_rounded': Icons.assignment_ind_rounded,
@@ -7620,6 +8280,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.assignment_turned_in_outlined': Icons.assignment_turned_in_outlined,
   'Icons.assignment_turned_in_rounded': Icons.assignment_turned_in_rounded,
   'Icons.assignment_turned_in_sharp': Icons.assignment_turned_in_sharp,
+  'Icons.assist_walker': Icons.assist_walker,
+  'Icons.assist_walker_outlined': Icons.assist_walker_outlined,
+  'Icons.assist_walker_rounded': Icons.assist_walker_rounded,
+  'Icons.assist_walker_sharp': Icons.assist_walker_sharp,
   'Icons.assistant': Icons.assistant,
   'Icons.assistant_direction': Icons.assistant_direction,
   'Icons.assistant_direction_outlined': Icons.assistant_direction_outlined,
@@ -7773,6 +8437,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.bar_chart_outlined': Icons.bar_chart_outlined,
   'Icons.bar_chart_rounded': Icons.bar_chart_rounded,
   'Icons.bar_chart_sharp': Icons.bar_chart_sharp,
+  'Icons.barcode_reader': Icons.barcode_reader,
   'Icons.batch_prediction': Icons.batch_prediction,
   'Icons.batch_prediction_outlined': Icons.batch_prediction_outlined,
   'Icons.batch_prediction_rounded': Icons.batch_prediction_rounded,
@@ -7885,6 +8550,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.blender_outlined': Icons.blender_outlined,
   'Icons.blender_rounded': Icons.blender_rounded,
   'Icons.blender_sharp': Icons.blender_sharp,
+  'Icons.blind': Icons.blind,
+  'Icons.blind_outlined': Icons.blind_outlined,
+  'Icons.blind_rounded': Icons.blind_rounded,
+  'Icons.blind_sharp': Icons.blind_sharp,
   'Icons.blinds': Icons.blinds,
   'Icons.blinds_closed': Icons.blinds_closed,
   'Icons.blinds_closed_outlined': Icons.blinds_closed_outlined,
@@ -8653,6 +9322,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.construction_outlined': Icons.construction_outlined,
   'Icons.construction_rounded': Icons.construction_rounded,
   'Icons.construction_sharp': Icons.construction_sharp,
+  'Icons.contact_emergency': Icons.contact_emergency,
+  'Icons.contact_emergency_outlined': Icons.contact_emergency_outlined,
+  'Icons.contact_emergency_rounded': Icons.contact_emergency_rounded,
+  'Icons.contact_emergency_sharp': Icons.contact_emergency_sharp,
   'Icons.contact_mail': Icons.contact_mail,
   'Icons.contact_mail_outlined': Icons.contact_mail_outlined,
   'Icons.contact_mail_rounded': Icons.contact_mail_rounded,
@@ -8719,6 +9392,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.control_point_outlined': Icons.control_point_outlined,
   'Icons.control_point_rounded': Icons.control_point_rounded,
   'Icons.control_point_sharp': Icons.control_point_sharp,
+  'Icons.conveyor_belt': Icons.conveyor_belt,
   'Icons.cookie': Icons.cookie,
   'Icons.cookie_outlined': Icons.cookie_outlined,
   'Icons.cookie_rounded': Icons.cookie_rounded,
@@ -9061,6 +9735,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.devices_outlined': Icons.devices_outlined,
   'Icons.devices_rounded': Icons.devices_rounded,
   'Icons.devices_sharp': Icons.devices_sharp,
+  'Icons.dew_point': Icons.dew_point,
   'Icons.dialer_sip': Icons.dialer_sip,
   'Icons.dialer_sip_outlined': Icons.dialer_sip_outlined,
   'Icons.dialer_sip_rounded': Icons.dialer_sip_rounded,
@@ -9198,6 +9873,18 @@ Map<String, dynamic> flutterComponents = {
   'Icons.display_settings_outlined': Icons.display_settings_outlined,
   'Icons.display_settings_rounded': Icons.display_settings_rounded,
   'Icons.display_settings_sharp': Icons.display_settings_sharp,
+  'Icons.diversity_1': Icons.diversity_1,
+  'Icons.diversity_1_outlined': Icons.diversity_1_outlined,
+  'Icons.diversity_1_rounded': Icons.diversity_1_rounded,
+  'Icons.diversity_1_sharp': Icons.diversity_1_sharp,
+  'Icons.diversity_2': Icons.diversity_2,
+  'Icons.diversity_2_outlined': Icons.diversity_2_outlined,
+  'Icons.diversity_2_rounded': Icons.diversity_2_rounded,
+  'Icons.diversity_2_sharp': Icons.diversity_2_sharp,
+  'Icons.diversity_3': Icons.diversity_3,
+  'Icons.diversity_3_outlined': Icons.diversity_3_outlined,
+  'Icons.diversity_3_rounded': Icons.diversity_3_rounded,
+  'Icons.diversity_3_sharp': Icons.diversity_3_sharp,
   'Icons.dnd_forwardslash': Icons.dnd_forwardslash,
   'Icons.dnd_forwardslash_outlined': Icons.dnd_forwardslash_outlined,
   'Icons.dnd_forwardslash_rounded': Icons.dnd_forwardslash_rounded,
@@ -9439,6 +10126,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.edit_calendar_outlined': Icons.edit_calendar_outlined,
   'Icons.edit_calendar_rounded': Icons.edit_calendar_rounded,
   'Icons.edit_calendar_sharp': Icons.edit_calendar_sharp,
+  'Icons.edit_document': Icons.edit_document,
   'Icons.edit_location': Icons.edit_location,
   'Icons.edit_location_alt': Icons.edit_location_alt,
   'Icons.edit_location_alt_outlined': Icons.edit_location_alt_outlined,
@@ -9466,6 +10154,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.edit_road_sharp': Icons.edit_road_sharp,
   'Icons.edit_rounded': Icons.edit_rounded,
   'Icons.edit_sharp': Icons.edit_sharp,
+  'Icons.edit_square': Icons.edit_square,
   'Icons.egg': Icons.egg,
   'Icons.egg_alt': Icons.egg_alt,
   'Icons.egg_alt_outlined': Icons.egg_alt_outlined,
@@ -9745,6 +10434,26 @@ Map<String, dynamic> flutterComponents = {
   'Icons.extension_rounded': Icons.extension_rounded,
   'Icons.extension_sharp': Icons.extension_sharp,
   'Icons.face': Icons.face,
+  'Icons.face_2': Icons.face_2,
+  'Icons.face_2_outlined': Icons.face_2_outlined,
+  'Icons.face_2_rounded': Icons.face_2_rounded,
+  'Icons.face_2_sharp': Icons.face_2_sharp,
+  'Icons.face_3': Icons.face_3,
+  'Icons.face_3_outlined': Icons.face_3_outlined,
+  'Icons.face_3_rounded': Icons.face_3_rounded,
+  'Icons.face_3_sharp': Icons.face_3_sharp,
+  'Icons.face_4': Icons.face_4,
+  'Icons.face_4_outlined': Icons.face_4_outlined,
+  'Icons.face_4_rounded': Icons.face_4_rounded,
+  'Icons.face_4_sharp': Icons.face_4_sharp,
+  'Icons.face_5': Icons.face_5,
+  'Icons.face_5_outlined': Icons.face_5_outlined,
+  'Icons.face_5_rounded': Icons.face_5_rounded,
+  'Icons.face_5_sharp': Icons.face_5_sharp,
+  'Icons.face_6': Icons.face_6,
+  'Icons.face_6_outlined': Icons.face_6_outlined,
+  'Icons.face_6_rounded': Icons.face_6_rounded,
+  'Icons.face_6_sharp': Icons.face_6_sharp,
   'Icons.face_outlined': Icons.face_outlined,
   'Icons.face_retouching_natural': Icons.face_retouching_natural,
   'Icons.face_retouching_natural_outlined':
@@ -9882,6 +10591,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.file_present_rounded': Icons.file_present_rounded,
   'Icons.file_present_sharp': Icons.file_present_sharp,
   'Icons.file_upload': Icons.file_upload,
+  'Icons.file_upload_off': Icons.file_upload_off,
   'Icons.file_upload_outlined': Icons.file_upload_outlined,
   'Icons.file_upload_rounded': Icons.file_upload_rounded,
   'Icons.file_upload_sharp': Icons.file_upload_sharp,
@@ -10123,6 +10833,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.flourescent_outlined': Icons.flourescent_outlined,
   'Icons.flourescent_rounded': Icons.flourescent_rounded,
   'Icons.flourescent_sharp': Icons.flourescent_sharp,
+  'Icons.fluorescent': Icons.fluorescent,
+  'Icons.fluorescent_outlined': Icons.fluorescent_outlined,
+  'Icons.fluorescent_rounded': Icons.fluorescent_rounded,
+  'Icons.fluorescent_sharp': Icons.fluorescent_sharp,
   'Icons.flutter_dash': Icons.flutter_dash,
   'Icons.flutter_dash_outlined': Icons.flutter_dash_outlined,
   'Icons.flutter_dash_rounded': Icons.flutter_dash_rounded,
@@ -10196,6 +10910,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.fork_right_outlined': Icons.fork_right_outlined,
   'Icons.fork_right_rounded': Icons.fork_right_rounded,
   'Icons.fork_right_sharp': Icons.fork_right_sharp,
+  'Icons.forklift': Icons.forklift,
   'Icons.format_align_center': Icons.format_align_center,
   'Icons.format_align_center_outlined': Icons.format_align_center_outlined,
   'Icons.format_align_center_rounded': Icons.format_align_center_rounded,
@@ -10251,6 +10966,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.format_line_spacing_rounded': Icons.format_line_spacing_rounded,
   'Icons.format_line_spacing_sharp': Icons.format_line_spacing_sharp,
   'Icons.format_list_bulleted': Icons.format_list_bulleted,
+  'Icons.format_list_bulleted_add': Icons.format_list_bulleted_add,
   'Icons.format_list_bulleted_outlined': Icons.format_list_bulleted_outlined,
   'Icons.format_list_bulleted_rounded': Icons.format_list_bulleted_rounded,
   'Icons.format_list_bulleted_sharp': Icons.format_list_bulleted_sharp,
@@ -10379,6 +11095,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.front_hand_outlined': Icons.front_hand_outlined,
   'Icons.front_hand_rounded': Icons.front_hand_rounded,
   'Icons.front_hand_sharp': Icons.front_hand_sharp,
+  'Icons.front_loader': Icons.front_loader,
   'Icons.fullscreen': Icons.fullscreen,
   'Icons.fullscreen_exit': Icons.fullscreen_exit,
   'Icons.fullscreen_exit_outlined': Icons.fullscreen_exit_outlined,
@@ -10544,6 +11261,14 @@ Map<String, dynamic> flutterComponents = {
   'Icons.group_work_rounded': Icons.group_work_rounded,
   'Icons.group_work_sharp': Icons.group_work_sharp,
   'Icons.groups': Icons.groups,
+  'Icons.groups_2': Icons.groups_2,
+  'Icons.groups_2_outlined': Icons.groups_2_outlined,
+  'Icons.groups_2_rounded': Icons.groups_2_rounded,
+  'Icons.groups_2_sharp': Icons.groups_2_sharp,
+  'Icons.groups_3': Icons.groups_3,
+  'Icons.groups_3_outlined': Icons.groups_3_outlined,
+  'Icons.groups_3_rounded': Icons.groups_3_rounded,
+  'Icons.groups_3_sharp': Icons.groups_3_sharp,
   'Icons.groups_outlined': Icons.groups_outlined,
   'Icons.groups_rounded': Icons.groups_rounded,
   'Icons.groups_sharp': Icons.groups_sharp,
@@ -11589,6 +12314,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.lyrics_outlined': Icons.lyrics_outlined,
   'Icons.lyrics_rounded': Icons.lyrics_rounded,
   'Icons.lyrics_sharp': Icons.lyrics_sharp,
+  'Icons.macro_off': Icons.macro_off,
+  'Icons.macro_off_outlined': Icons.macro_off_outlined,
+  'Icons.macro_off_rounded': Icons.macro_off_rounded,
+  'Icons.macro_off_sharp': Icons.macro_off_sharp,
   'Icons.mail': Icons.mail,
   'Icons.mail_lock': Icons.mail_lock,
   'Icons.mail_lock_outlined': Icons.mail_lock_outlined,
@@ -11606,6 +12335,18 @@ Map<String, dynamic> flutterComponents = {
   'Icons.male_rounded': Icons.male_rounded,
   'Icons.male_sharp': Icons.male_sharp,
   'Icons.man': Icons.man,
+  'Icons.man_2': Icons.man_2,
+  'Icons.man_2_outlined': Icons.man_2_outlined,
+  'Icons.man_2_rounded': Icons.man_2_rounded,
+  'Icons.man_2_sharp': Icons.man_2_sharp,
+  'Icons.man_3': Icons.man_3,
+  'Icons.man_3_outlined': Icons.man_3_outlined,
+  'Icons.man_3_rounded': Icons.man_3_rounded,
+  'Icons.man_3_sharp': Icons.man_3_sharp,
+  'Icons.man_4': Icons.man_4,
+  'Icons.man_4_outlined': Icons.man_4_outlined,
+  'Icons.man_4_rounded': Icons.man_4_rounded,
+  'Icons.man_4_sharp': Icons.man_4_sharp,
   'Icons.man_outlined': Icons.man_outlined,
   'Icons.man_rounded': Icons.man_rounded,
   'Icons.man_sharp': Icons.man_sharp,
@@ -11955,6 +12696,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.movie_creation_outlined': Icons.movie_creation_outlined,
   'Icons.movie_creation_rounded': Icons.movie_creation_rounded,
   'Icons.movie_creation_sharp': Icons.movie_creation_sharp,
+  'Icons.movie_edit': Icons.movie_edit,
   'Icons.movie_filter': Icons.movie_filter,
   'Icons.movie_filter_outlined': Icons.movie_filter_outlined,
   'Icons.movie_filter_rounded': Icons.movie_filter_rounded,
@@ -12444,6 +13186,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.palette_outlined': Icons.palette_outlined,
   'Icons.palette_rounded': Icons.palette_rounded,
   'Icons.palette_sharp': Icons.palette_sharp,
+  'Icons.pallet': Icons.pallet,
   'Icons.pan_tool': Icons.pan_tool,
   'Icons.pan_tool_alt': Icons.pan_tool_alt,
   'Icons.pan_tool_alt_outlined': Icons.pan_tool_alt_outlined,
@@ -12638,6 +13381,18 @@ Map<String, dynamic> flutterComponents = {
   'Icons.perm_scan_wifi_rounded': Icons.perm_scan_wifi_rounded,
   'Icons.perm_scan_wifi_sharp': Icons.perm_scan_wifi_sharp,
   'Icons.person': Icons.person,
+  'Icons.person_2': Icons.person_2,
+  'Icons.person_2_outlined': Icons.person_2_outlined,
+  'Icons.person_2_rounded': Icons.person_2_rounded,
+  'Icons.person_2_sharp': Icons.person_2_sharp,
+  'Icons.person_3': Icons.person_3,
+  'Icons.person_3_outlined': Icons.person_3_outlined,
+  'Icons.person_3_rounded': Icons.person_3_rounded,
+  'Icons.person_3_sharp': Icons.person_3_sharp,
+  'Icons.person_4': Icons.person_4,
+  'Icons.person_4_outlined': Icons.person_4_outlined,
+  'Icons.person_4_rounded': Icons.person_4_rounded,
+  'Icons.person_4_sharp': Icons.person_4_sharp,
   'Icons.person_add': Icons.person_add,
   'Icons.person_add_alt': Icons.person_add_alt,
   'Icons.person_add_alt_1': Icons.person_add_alt_1,
@@ -13082,6 +13837,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.propane_tank_rounded': Icons.propane_tank_rounded,
   'Icons.propane_tank_sharp': Icons.propane_tank_sharp,
   'Icons.psychology': Icons.psychology,
+  'Icons.psychology_alt': Icons.psychology_alt,
+  'Icons.psychology_alt_outlined': Icons.psychology_alt_outlined,
+  'Icons.psychology_alt_rounded': Icons.psychology_alt_rounded,
+  'Icons.psychology_alt_sharp': Icons.psychology_alt_sharp,
   'Icons.psychology_outlined': Icons.psychology_outlined,
   'Icons.psychology_rounded': Icons.psychology_rounded,
   'Icons.psychology_sharp': Icons.psychology_sharp,
@@ -13235,6 +13994,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.real_estate_agent_outlined': Icons.real_estate_agent_outlined,
   'Icons.real_estate_agent_rounded': Icons.real_estate_agent_rounded,
   'Icons.real_estate_agent_sharp': Icons.real_estate_agent_sharp,
+  'Icons.rebase_edit': Icons.rebase_edit,
   'Icons.receipt': Icons.receipt,
   'Icons.receipt_long': Icons.receipt_long,
   'Icons.receipt_long_outlined': Icons.receipt_long_outlined,
@@ -13327,6 +14087,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.reorder_outlined': Icons.reorder_outlined,
   'Icons.reorder_rounded': Icons.reorder_rounded,
   'Icons.reorder_sharp': Icons.reorder_sharp,
+  'Icons.repartition': Icons.repartition,
+  'Icons.repartition_outlined': Icons.repartition_outlined,
+  'Icons.repartition_rounded': Icons.repartition_rounded,
+  'Icons.repartition_sharp': Icons.repartition_sharp,
   'Icons.repeat': Icons.repeat,
   'Icons.repeat_on': Icons.repeat_on,
   'Icons.repeat_on_outlined': Icons.repeat_on_outlined,
@@ -13911,6 +14675,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.severe_cold_outlined': Icons.severe_cold_outlined,
   'Icons.severe_cold_rounded': Icons.severe_cold_rounded,
   'Icons.severe_cold_sharp': Icons.severe_cold_sharp,
+  'Icons.shape_line': Icons.shape_line,
+  'Icons.shape_line_outlined': Icons.shape_line_outlined,
+  'Icons.shape_line_rounded': Icons.shape_line_rounded,
+  'Icons.shape_line_sharp': Icons.shape_line_sharp,
   'Icons.share': Icons.share,
   'Icons.share_arrival_time': Icons.share_arrival_time,
   'Icons.share_arrival_time_outlined': Icons.share_arrival_time_outlined,
@@ -13923,6 +14691,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.share_outlined': Icons.share_outlined,
   'Icons.share_rounded': Icons.share_rounded,
   'Icons.share_sharp': Icons.share_sharp,
+  'Icons.shelves': Icons.shelves,
   'Icons.shield': Icons.shield,
   'Icons.shield_moon': Icons.shield_moon,
   'Icons.shield_moon_outlined': Icons.shield_moon_outlined,
@@ -15214,6 +15983,7 @@ Map<String, dynamic> flutterComponents = {
   'Icons.trip_origin_outlined': Icons.trip_origin_outlined,
   'Icons.trip_origin_rounded': Icons.trip_origin_rounded,
   'Icons.trip_origin_sharp': Icons.trip_origin_sharp,
+  'Icons.trolley': Icons.trolley,
   'Icons.troubleshoot': Icons.troubleshoot,
   'Icons.troubleshoot_outlined': Icons.troubleshoot_outlined,
   'Icons.troubleshoot_rounded': Icons.troubleshoot_rounded,
@@ -15343,10 +16113,18 @@ Map<String, dynamic> flutterComponents = {
   'Icons.undo_rounded': Icons.undo_rounded,
   'Icons.undo_sharp': Icons.undo_sharp,
   'Icons.unfold_less': Icons.unfold_less,
+  'Icons.unfold_less_double': Icons.unfold_less_double,
+  'Icons.unfold_less_double_outlined': Icons.unfold_less_double_outlined,
+  'Icons.unfold_less_double_rounded': Icons.unfold_less_double_rounded,
+  'Icons.unfold_less_double_sharp': Icons.unfold_less_double_sharp,
   'Icons.unfold_less_outlined': Icons.unfold_less_outlined,
   'Icons.unfold_less_rounded': Icons.unfold_less_rounded,
   'Icons.unfold_less_sharp': Icons.unfold_less_sharp,
   'Icons.unfold_more': Icons.unfold_more,
+  'Icons.unfold_more_double': Icons.unfold_more_double,
+  'Icons.unfold_more_double_outlined': Icons.unfold_more_double_outlined,
+  'Icons.unfold_more_double_rounded': Icons.unfold_more_double_rounded,
+  'Icons.unfold_more_double_sharp': Icons.unfold_more_double_sharp,
   'Icons.unfold_more_outlined': Icons.unfold_more_outlined,
   'Icons.unfold_more_rounded': Icons.unfold_more_rounded,
   'Icons.unfold_more_sharp': Icons.unfold_more_sharp,
@@ -15455,6 +16233,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.video_camera_front_outlined': Icons.video_camera_front_outlined,
   'Icons.video_camera_front_rounded': Icons.video_camera_front_rounded,
   'Icons.video_camera_front_sharp': Icons.video_camera_front_sharp,
+  'Icons.video_chat': Icons.video_chat,
+  'Icons.video_chat_outlined': Icons.video_chat_outlined,
+  'Icons.video_chat_rounded': Icons.video_chat_rounded,
+  'Icons.video_chat_sharp': Icons.video_chat_sharp,
   'Icons.video_collection': Icons.video_collection,
   'Icons.video_collection_outlined': Icons.video_collection_outlined,
   'Icons.video_collection_rounded': Icons.video_collection_rounded,
@@ -15766,6 +16548,9 @@ Map<String, dynamic> flutterComponents = {
   'Icons.web_rounded': Icons.web_rounded,
   'Icons.web_sharp': Icons.web_sharp,
   'Icons.web_stories': Icons.web_stories,
+  'Icons.web_stories_outlined': Icons.web_stories_outlined,
+  'Icons.web_stories_rounded': Icons.web_stories_rounded,
+  'Icons.web_stories_sharp': Icons.web_stories_sharp,
   'Icons.webhook': Icons.webhook,
   'Icons.webhook_outlined': Icons.webhook_outlined,
   'Icons.webhook_rounded': Icons.webhook_rounded,
@@ -15782,10 +16567,6 @@ Map<String, dynamic> flutterComponents = {
   'Icons.west_outlined': Icons.west_outlined,
   'Icons.west_rounded': Icons.west_rounded,
   'Icons.west_sharp': Icons.west_sharp,
-  'Icons.whatsapp': Icons.whatsapp,
-  'Icons.whatsapp_outlined': Icons.whatsapp_outlined,
-  'Icons.whatsapp_rounded': Icons.whatsapp_rounded,
-  'Icons.whatsapp_sharp': Icons.whatsapp_sharp,
   'Icons.whatshot': Icons.whatshot,
   'Icons.whatshot_outlined': Icons.whatshot_outlined,
   'Icons.whatshot_rounded': Icons.whatshot_rounded,
@@ -15889,6 +16670,10 @@ Map<String, dynamic> flutterComponents = {
   'Icons.wine_bar_rounded': Icons.wine_bar_rounded,
   'Icons.wine_bar_sharp': Icons.wine_bar_sharp,
   'Icons.woman': Icons.woman,
+  'Icons.woman_2': Icons.woman_2,
+  'Icons.woman_2_outlined': Icons.woman_2_outlined,
+  'Icons.woman_2_rounded': Icons.woman_2_rounded,
+  'Icons.woman_2_sharp': Icons.woman_2_sharp,
   'Icons.woman_outlined': Icons.woman_outlined,
   'Icons.woman_rounded': Icons.woman_rounded,
   'Icons.woman_sharp': Icons.woman_sharp,
@@ -16081,6 +16866,8 @@ Map<String, dynamic> flutterComponents = {
       headers: props['headers'],
       cacheWidth: props['cacheWidth'],
       cacheHeight: props['cacheHeight']),
+  // 'Image.onCreate': Image.onCreate,
+  // 'Image.onDispose': Image.onDispose,
   'ImageByteFormat.png': ImageByteFormat.png,
   'ImageByteFormat.rawRgba': ImageByteFormat.rawRgba,
   'ImageByteFormat.rawStraightRgba': ImageByteFormat.rawStraightRgba,
@@ -16104,8 +16891,9 @@ Map<String, dynamic> flutterComponents = {
       height: props['height'],
       rowBytes: props['rowBytes'],
       pixelFormat: props['pixelFormat']),
-  'ImageFilterLayer': (props) =>
-      ImageFilterLayer(imageFilter: props['imageFilter']),
+  'ImageFilterLayer': (props) => ImageFilterLayer(
+      imageFilter: props['imageFilter'],
+      offset: props['offset'] ?? Offset.zero),
   'ImageFiltered': (props) => ImageFiltered(
       key: props['key'],
       imageFilter: props['imageFilter'],
@@ -16142,6 +16930,8 @@ Map<String, dynamic> flutterComponents = {
           supportedDevices: props['supportedDevices']),
   'ImmutableBuffer.fromAsset': (props) =>
       ImmutableBuffer.fromAsset(props['pa'][0]),
+  'ImmutableBuffer.fromFilePath': (props) =>
+      ImmutableBuffer.fromFilePath(props['pa'][0]),
   'ImmutableBuffer.fromUint8List': (props) =>
       ImmutableBuffer.fromUint8List(props['pa'][0]),
   'IndexedSemantics': (props) => IndexedSemantics(
@@ -16152,6 +16942,7 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       alignment: props['alignment'] ?? AlignmentDirectional.topStart,
       textDirection: props['textDirection'],
+      clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
       sizing: props['sizing'] ?? StackFit.loose,
       index: props['index'] ?? 0,
       children: as<Widget>(props['children']) ?? const <Widget>[]),
@@ -16442,6 +17233,8 @@ Map<String, dynamic> flutterComponents = {
       counterStyle: props['counterStyle'],
       filled: props['filled'] ?? false,
       fillColor: props['fillColor'],
+      activeIndicatorBorder: props['activeIndicatorBorder'],
+      outlineBorder: props['outlineBorder'],
       focusColor: props['focusColor'],
       hoverColor: props['hoverColor'],
       errorBorder: props['errorBorder'],
@@ -16477,10 +17270,13 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
       alignPanAxis: props['alignPanAxis'] ?? false,
+      panAxis: props['panAxis'] ?? PanAxis.free,
       boundaryMargin: props['boundaryMargin'] ?? EdgeInsets.zero,
       constrained: props['constrained'] ?? true,
       maxScale: props['maxScale']?.toDouble() ?? 2.5,
       minScale: props['minScale']?.toDouble() ?? 0.8,
+      interactionEndFrictionCoefficient:
+          props['interactionEndFrictionCoefficient']?.toDouble() ?? _kDrag,
       onInteractionEnd: props['onInteractionEnd'],
       onInteractionStart: props['onInteractionStart'],
       onInteractionUpdate: props['onInteractionUpdate'],
@@ -16488,14 +17284,18 @@ Map<String, dynamic> flutterComponents = {
       scaleEnabled: props['scaleEnabled'] ?? true,
       scaleFactor: props['scaleFactor']?.toDouble() ?? 200.0,
       transformationController: props['transformationController'],
+      alignment: props['alignment'],
       child: props['child']),
   'InteractiveViewer.builder': (props) => InteractiveViewer.builder(
       key: props['key'],
       clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
       alignPanAxis: props['alignPanAxis'] ?? false,
+      panAxis: props['panAxis'] ?? PanAxis.free,
       boundaryMargin: props['boundaryMargin'] ?? EdgeInsets.zero,
       maxScale: props['maxScale']?.toDouble() ?? 2.5,
       minScale: props['minScale']?.toDouble() ?? 0.8,
+      interactionEndFrictionCoefficient:
+          props['interactionEndFrictionCoefficient']?.toDouble() ?? _kDrag,
       onInteractionEnd: props['onInteractionEnd'],
       onInteractionStart: props['onInteractionStart'],
       onInteractionUpdate: props['onInteractionUpdate'],
@@ -16503,6 +17303,7 @@ Map<String, dynamic> flutterComponents = {
       scaleEnabled: props['scaleEnabled'] ?? true,
       scaleFactor: props['scaleFactor']?.toDouble() ?? 200.0,
       transformationController: props['transformationController'],
+      alignment: props['alignment'],
       builder: props['builder']),
   'Interval': (props) => Interval(
       props['pa'][0]?.toDouble(), props['pa'][1]?.toDouble(),
@@ -16644,6 +17445,7 @@ Map<String, dynamic> flutterComponents = {
       maxWidth: props['maxWidth']?.toDouble() ?? double.infinity,
       maxHeight: props['maxHeight']?.toDouble() ?? double.infinity,
       child: props['child']),
+  'LineBreak': (props) => LineBreak(props['pa'][0]),
   'LineMetrics': (props) => LineMetrics(
       hardBreak: props['hardBreak'],
       ascent: props['ascent']?.toDouble() ?? 0,
@@ -16696,10 +17498,12 @@ Map<String, dynamic> flutterComponents = {
       enabled: props['enabled'] ?? true,
       onTap: props['onTap'],
       onLongPress: props['onLongPress'],
+      onFocusChange: props['onFocusChange'],
       mouseCursor: props['mouseCursor'],
       selected: props['selected'] ?? false,
       focusColor: props['focusColor'],
       hoverColor: props['hoverColor'],
+      splashColor: props['splashColor'],
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       tileColor: props['tileColor'],
@@ -16985,8 +17789,8 @@ Map<String, dynamic> flutterComponents = {
       axis: props['axis'],
       childWhenDragging: props['childWhenDragging'],
       feedbackOffset: props['feedbackOffset'] ?? Offset.zero,
-      dragAnchor: props['dragAnchor'] ?? DragAnchor.child,
-      dragAnchorStrategy: props['dragAnchorStrategy'],
+      dragAnchorStrategy:
+          props['dragAnchorStrategy'] ?? childDragAnchorStrategy,
       maxSimultaneousDrags: props['maxSimultaneousDrags'],
       onDragStarted: props['onDragStarted'],
       onDragUpdate: props['onDragUpdate'],
@@ -17016,6 +17820,39 @@ Map<String, dynamic> flutterComponents = {
   'LongPressStartDetails': (props) => LongPressStartDetails(
       globalPosition: props['globalPosition'] ?? Offset.zero,
       localPosition: props['localPosition']),
+  'MacOSScrollViewFlingVelocityTracker': (props) =>
+      MacOSScrollViewFlingVelocityTracker(props['pa'][0]),
+  'Magnifier': (props) => Magnifier(
+      key: props['key'],
+      additionalFocalPointOffset:
+          props['additionalFocalPointOffset'] ?? Offset.zero,
+      borderRadius: props['borderRadius'] ??
+          const BorderRadius.all(Radius.circular(_borderRadius)),
+      filmColor: props['filmColor'] ?? const Color.fromARGB(8, 158, 158, 158),
+      shadows: as<BoxShadow>(props['shadows']) ??
+          const <BoxShadow>[
+            BoxShadow(
+                blurRadius: 1.5,
+                offset: Offset(0, 2),
+                spreadRadius: 0.75,
+                color: Color.fromARGB(25, 0, 0, 0))
+          ],
+      size: props['size'] ?? Magnifier.kDefaultMagnifierSize),
+  'MagnifierController': (props) =>
+      MagnifierController(animationController: props['animationController']),
+  'MagnifierController.shiftWithinBounds': (props) =>
+      MagnifierController.shiftWithinBounds(
+          rect: props['rect'], bounds: props['bounds']),
+  'MagnifierDecoration': (props) => MagnifierDecoration(
+      opacity: props['opacity']?.toDouble() ?? 1,
+      shadows: as<BoxShadow>(props['shadows']),
+      shape: props['shape'] ?? const RoundedRectangleBorder()),
+  'MagnifierInfo': (props) => MagnifierInfo(
+      globalGesturePosition: props['globalGesturePosition'],
+      caretRect: props['caretRect'],
+      fieldBounds: props['fieldBounds'],
+      currentLineBoundaries: props['currentLineBoundaries']),
+  'MagnifierInfo.empty': MagnifierInfo.empty,
   'MainAxisAlignment.center': MainAxisAlignment.center,
   'MainAxisAlignment.end': MainAxisAlignment.end,
   'MainAxisAlignment.spaceAround': MainAxisAlignment.spaceAround,
@@ -17043,6 +17880,7 @@ Map<String, dynamic> flutterComponents = {
       animationDuration: props['animationDuration'] ?? kThemeChangeDuration,
       child: props['child']),
   'Material.defaultSplashRadius': Material.defaultSplashRadius,
+  'Material.maybeOf': (props) => Material.maybeOf(props['pa'][0]),
   'Material.of': (props) => Material.of(props['pa'][0]),
   'MaterialAccentColor': (props) =>
       MaterialAccentColor(props['pa'][0], props['pa'][1]),
@@ -17067,6 +17905,9 @@ Map<String, dynamic> flutterComponents = {
       highContrastTheme: props['highContrastTheme'],
       highContrastDarkTheme: props['highContrastDarkTheme'],
       themeMode: props['themeMode'] ?? ThemeMode.system,
+      themeAnimationDuration:
+          props['themeAnimationDuration'] ?? kThemeAnimationDuration,
+      themeAnimationCurve: props['themeAnimationCurve'] ?? Curves.linear,
       locale: props['locale'],
       localizationsDelegates: props['localizationsDelegates'],
       localeListResolutionCallback: props['localeListResolutionCallback'],
@@ -17105,6 +17946,9 @@ Map<String, dynamic> flutterComponents = {
       highContrastTheme: props['highContrastTheme'],
       highContrastDarkTheme: props['highContrastDarkTheme'],
       themeMode: props['themeMode'] ?? ThemeMode.system,
+      themeAnimationDuration:
+          props['themeAnimationDuration'] ?? kThemeAnimationDuration,
+      themeAnimationCurve: props['themeAnimationCurve'] ?? Curves.linear,
       locale: props['locale'],
       localizationsDelegates: props['localizationsDelegates'],
       localeListResolutionCallback: props['localeListResolutionCallback'],
@@ -17132,6 +17976,9 @@ Map<String, dynamic> flutterComponents = {
       elevation: props['elevation']?.toDouble(),
       leading: props['leading'],
       backgroundColor: props['backgroundColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      shadowColor: props['shadowColor'],
+      dividerColor: props['dividerColor'],
       padding: props['padding'],
       leadingPadding: props['leadingPadding'],
       forceActionsBelow: props['forceActionsBelow'] ?? false,
@@ -17150,6 +17997,9 @@ Map<String, dynamic> flutterComponents = {
   'MaterialBannerTheme.of': (props) => MaterialBannerTheme.of(props['pa'][0]),
   'MaterialBannerThemeData': (props) => MaterialBannerThemeData(
       backgroundColor: props['backgroundColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      shadowColor: props['shadowColor'],
+      dividerColor: props['dividerColor'],
       contentTextStyle: props['contentTextStyle'],
       elevation: props['elevation']?.toDouble(),
       padding: props['padding'],
@@ -17198,6 +18048,7 @@ Map<String, dynamic> flutterComponents = {
       child: props['child'],
       maintainState: props['maintainState'] ?? true,
       fullscreenDialog: props['fullscreenDialog'] ?? false,
+      allowSnapshotting: props['allowSnapshotting'] ?? true,
       key: props['key'],
       name: props['name'],
       arguments: props['arguments'],
@@ -17206,7 +18057,8 @@ Map<String, dynamic> flutterComponents = {
       builder: props['builder'],
       settings: props['settings'],
       maintainState: props['maintainState'] ?? true,
-      fullscreenDialog: props['fullscreenDialog'] ?? false),
+      fullscreenDialog: props['fullscreenDialog'] ?? false,
+      allowSnapshotting: props['allowSnapshotting'] ?? true),
   'MaterialPointArcTween': (props) =>
       MaterialPointArcTween(begin: props['begin'], end: props['end']),
   'MaterialRectArcTween': (props) =>
@@ -17328,8 +18180,119 @@ Map<String, dynamic> flutterComponents = {
           const <ui.DisplayFeature>[]),
   'MediaQueryData.fromWindow': (props) =>
       MediaQueryData.fromWindow(props['pa'][0]),
+  'MemoryAllocations.instance': MemoryAllocations.instance,
   'MemoryImage': (props) =>
       MemoryImage(props['pa'][0], scale: props['scale']?.toDouble() ?? 1.0),
+  'MenuAcceleratorCallbackBinding': (props) => MenuAcceleratorCallbackBinding(
+      key: props['key'],
+      onInvoke: props['onInvoke'],
+      hasSubmenu: props['hasSubmenu'] ?? false,
+      child: props['child']),
+  'MenuAcceleratorCallbackBinding.maybeOf': (props) =>
+      MenuAcceleratorCallbackBinding.maybeOf(props['pa'][0]),
+  'MenuAcceleratorCallbackBinding.of': (props) =>
+      MenuAcceleratorCallbackBinding.of(props['pa'][0]),
+  'MenuAcceleratorLabel': (props) => MenuAcceleratorLabel(props['pa'][0],
+      key: props['key'], builder: props['builder'] ?? defaultLabelBuilder),
+  'MenuAcceleratorLabel.defaultLabelBuilder': (props) =>
+      MenuAcceleratorLabel.defaultLabelBuilder(
+          props['pa'][0], props['pa'][1], props['pa'][2]),
+  'MenuAcceleratorLabel.stripAcceleratorMarkers': (props) =>
+      MenuAcceleratorLabel.stripAcceleratorMarkers(props['pa'][0],
+          setIndex: props['setIndex']),
+  'MenuAnchor': (props) => MenuAnchor(
+      key: props['key'],
+      controller: props['controller'],
+      childFocusNode: props['childFocusNode'],
+      style: props['style'],
+      alignmentOffset: props['alignmentOffset'] ?? Offset.zero,
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      anchorTapClosesMenu: props['anchorTapClosesMenu'] ?? false,
+      onOpen: props['onOpen'],
+      onClose: props['onClose'],
+      crossAxisUnconstrained: props['crossAxisUnconstrained'] ?? true,
+      menuChildren: as<Widget>(props['menuChildren']) ?? const [],
+      builder: props['builder'],
+      child: props['child']),
+  'MenuBar': (props) => MenuBar(
+      key: props['key'],
+      style: props['style'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      controller: props['controller'],
+      children: as<Widget>(props['children']) ?? const []),
+  'MenuBarTheme': (props) => MenuBarTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'MenuBarTheme.of': (props) => MenuBarTheme.of(props['pa'][0]),
+  'MenuBarThemeData': (props) => MenuBarThemeData(style: props['style']),
+  'MenuBarThemeData.lerp': (props) => MenuBarThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'MenuButtonTheme': (props) => MenuButtonTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'MenuButtonTheme.of': (props) => MenuButtonTheme.of(props['pa'][0]),
+  'MenuButtonThemeData': (props) => MenuButtonThemeData(style: props['style']),
+  'MenuButtonThemeData.lerp': (props) => MenuButtonThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'MenuController': (props) => MenuController(),
+  'MenuItemButton': (props) => MenuItemButton(
+      key: props['key'],
+      onPressed: props['onPressed'],
+      onHover: props['onHover'],
+      requestFocusOnHover: props['requestFocusOnHover'] ?? true,
+      onFocusChange: props['onFocusChange'],
+      focusNode: props['focusNode'],
+      shortcut: props['shortcut'],
+      style: props['style'],
+      statesController: props['statesController'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      leadingIcon: props['leadingIcon'],
+      trailingIcon: props['trailingIcon'],
+      child: props['child']),
+  'MenuItemButton.styleFrom': (props) => MenuItemButton.styleFrom(
+      foregroundColor: props['foregroundColor'],
+      backgroundColor: props['backgroundColor'],
+      disabledForegroundColor: props['disabledForegroundColor'],
+      disabledBackgroundColor: props['disabledBackgroundColor'],
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      iconColor: props['iconColor'],
+      textStyle: props['textStyle'],
+      elevation: props['elevation']?.toDouble(),
+      padding: props['padding'],
+      minimumSize: props['minimumSize'],
+      fixedSize: props['fixedSize'],
+      maximumSize: props['maximumSize'],
+      enabledMouseCursor: props['enabledMouseCursor'],
+      disabledMouseCursor: props['disabledMouseCursor'],
+      side: props['side'],
+      shape: props['shape'],
+      visualDensity: props['visualDensity'],
+      tapTargetSize: props['tapTargetSize'],
+      animationDuration: props['animationDuration'],
+      enableFeedback: props['enableFeedback'],
+      alignment: props['alignment'],
+      splashFactory: props['splashFactory']),
+  'MenuStyle': (props) => MenuStyle(
+      backgroundColor: props['backgroundColor'],
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      elevation: props['elevation'],
+      padding: props['padding'],
+      minimumSize: props['minimumSize'],
+      fixedSize: props['fixedSize'],
+      maximumSize: props['maximumSize'],
+      side: props['side'],
+      shape: props['shape'],
+      mouseCursor: props['mouseCursor'],
+      visualDensity: props['visualDensity'],
+      alignment: props['alignment']),
+  'MenuStyle.lerp': (props) => MenuStyle.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'MenuTheme': (props) =>
+      MenuTheme(key: props['key'], data: props['data'], child: props['child']),
+  'MenuTheme.of': (props) => MenuTheme.of(props['pa'][0]),
+  'MenuThemeData': (props) => MenuThemeData(style: props['style']),
+  'MenuThemeData.lerp': (props) => MenuThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'MergeSemantics': (props) =>
       MergeSemantics(key: props['key'], child: props['child']),
   'MergeableMaterial': (props) => MergeableMaterial(
@@ -17366,6 +18329,23 @@ Map<String, dynamic> flutterComponents = {
       semanticsLabel: props['semanticsLabel'],
       barrierSemanticsDismissible:
           props['barrierSemanticsDismissible'] ?? true),
+  'ModalBottomSheetRoute': (props) => ModalBottomSheetRoute(
+      builder: props['builder'],
+      capturedThemes: props['capturedThemes'],
+      barrierLabel: props['barrierLabel'],
+      backgroundColor: props['backgroundColor'],
+      elevation: props['elevation']?.toDouble(),
+      shape: props['shape'],
+      clipBehavior: props['clipBehavior'],
+      constraints: props['constraints'],
+      modalBarrierColor: props['modalBarrierColor'],
+      isDismissible: props['isDismissible'] ?? true,
+      enableDrag: props['enableDrag'] ?? true,
+      isScrollControlled: props['isScrollControlled'],
+      settings: props['settings'],
+      transitionAnimationController: props['transitionAnimationController'],
+      anchorPoint: props['anchorPoint'],
+      useSafeArea: props['useSafeArea'] ?? false),
   'ModifierKey.altModifier': ModifierKey.altModifier,
   'ModifierKey.capsLockModifier': ModifierKey.capsLockModifier,
   'ModifierKey.controlModifier': ModifierKey.controlModifier,
@@ -17413,8 +18393,9 @@ Map<String, dynamic> flutterComponents = {
       destinations: as<Widget>(props['destinations']) ?? const [],
       onDestinationSelected: props['onDestinationSelected'],
       backgroundColor: props['backgroundColor'],
-      surfaceTintColor: props['surfaceTintColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       height: props['height']?.toDouble(),
       labelBehavior: props['labelBehavior']),
   'NavigationBarTheme': (props) => NavigationBarTheme(
@@ -17423,8 +18404,9 @@ Map<String, dynamic> flutterComponents = {
   'NavigationBarThemeData': (props) => NavigationBarThemeData(
       height: props['height']?.toDouble(),
       backgroundColor: props['backgroundColor'],
-      surfaceTintColor: props['surfaceTintColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       indicatorColor: props['indicatorColor'],
       indicatorShape: props['indicatorShape'],
       labelTextStyle: props['labelTextStyle'],
@@ -17446,12 +18428,44 @@ Map<String, dynamic> flutterComponents = {
       NavigationDestinationLabelBehavior.onlyShowSelected,
   'NavigationDestinationLabelBehavior.values':
       NavigationDestinationLabelBehavior.values,
+  'NavigationDrawer': (props) => NavigationDrawer(
+      key: props['key'],
+      children: as<Widget>(props['children']) ?? const [],
+      backgroundColor: props['backgroundColor'],
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      elevation: props['elevation']?.toDouble(),
+      onDestinationSelected: props['onDestinationSelected'],
+      selectedIndex: props['selectedIndex'] ?? 0),
+  'NavigationDrawerDestination': (props) => NavigationDrawerDestination(
+      key: props['key'],
+      backgroundColor: props['backgroundColor'],
+      icon: props['icon'],
+      selectedIcon: props['selectedIcon'],
+      label: props['label']),
+  'NavigationDrawerTheme': (props) => NavigationDrawerTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'NavigationDrawerTheme.of': (props) =>
+      NavigationDrawerTheme.of(props['pa'][0]),
+  'NavigationDrawerThemeData': (props) => NavigationDrawerThemeData(
+      tileHeight: props['tileHeight']?.toDouble(),
+      backgroundColor: props['backgroundColor'],
+      elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      indicatorColor: props['indicatorColor'],
+      indicatorShape: props['indicatorShape'],
+      indicatorSize: props['indicatorSize'],
+      labelTextStyle: props['labelTextStyle'],
+      iconTheme: props['iconTheme']),
+  'NavigationDrawerThemeData.lerp': (props) => NavigationDrawerThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'NavigationIndicator': (props) => NavigationIndicator(
       key: props['key'],
       animation: props['animation'],
       color: props['color'],
-      width: props['width']?.toDouble() ?? 64,
-      height: props['height']?.toDouble() ?? 32,
+      width: props['width']?.toDouble() ?? _kIndicatorWidth,
+      height: props['height']?.toDouble() ?? _kIndicatorHeight,
       borderRadius:
           props['borderRadius'] ?? const BorderRadius.all(Radius.circular(16)),
       shape: props['shape']),
@@ -17504,6 +18518,7 @@ Map<String, dynamic> flutterComponents = {
       labelType: props['labelType'],
       useIndicator: props['useIndicator'],
       indicatorColor: props['indicatorColor'],
+      indicatorShape: props['indicatorShape'],
       minWidth: props['minWidth']?.toDouble(),
       minExtendedWidth: props['minExtendedWidth']?.toDouble()),
   'NavigationRailThemeData.lerp': (props) => NavigationRailThemeData.lerp(
@@ -17528,6 +18543,7 @@ Map<String, dynamic> flutterComponents = {
       transitionDelegate: props['transitionDelegate'] ??
           const DefaultTransitionDelegate<dynamic>(),
       reportsRouteUpdateToEngine: props['reportsRouteUpdateToEngine'] ?? false,
+      clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
       observers: as<NavigatorObserver>(props['observers']) ??
           const <NavigatorObserver>[],
       requestFocus: props['requestFocus'] ?? true,
@@ -17661,6 +18677,11 @@ Map<String, dynamic> flutterComponents = {
       child: props['child'],
       onNotification: props['onNotification']),
   'NumericFocusOrder': (props) => NumericFocusOrder(props['pa'][0]?.toDouble()),
+  'ObjectCreated': (props) => ObjectCreated(
+      library: props['library'],
+      className: props['className'],
+      object: props['object']),
+  'ObjectDisposed': (props) => ObjectDisposed(object: props['object']),
   'ObjectFlagProperty': (props) => ObjectFlagProperty(
       props['pa'][0], props['pa'][1],
       ifPresent: props['ifPresent'],
@@ -17744,6 +18765,7 @@ Map<String, dynamic> flutterComponents = {
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
       icon: props['icon'],
       label: props['label']),
   'OutlinedButton.styleFrom': (props) => OutlinedButton.styleFrom(
@@ -17778,6 +18800,9 @@ Map<String, dynamic> flutterComponents = {
       OutlinedButtonThemeData(style: props['style']),
   'OutlinedButtonThemeData.lerp': (props) => OutlinedButtonThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'OvalBorder': (props) => OvalBorder(
+      side: props['side'] ?? BorderSide.none,
+      eccentricity: props['eccentricity']?.toDouble() ?? 1.0),
   'OverScrollHeaderStretchConfiguration': (props) =>
       OverScrollHeaderStretchConfiguration(
           stretchTriggerOffset:
@@ -17811,6 +18836,8 @@ Map<String, dynamic> flutterComponents = {
       initialEntries:
           as<OverlayEntry>(props['initialEntries']) ?? const <OverlayEntry>[],
       clipBehavior: props['clipBehavior'] ?? Clip.hardEdge),
+  'Overlay.maybeOf': (props) => Overlay.maybeOf(props['pa'][0],
+      rootOverlay: props['rootOverlay'] ?? false),
   'Overlay.of': (props) => Overlay.of(props['pa'][0],
       rootOverlay: props['rootOverlay'] ?? false,
       debugRequiredFor: props['debugRequiredFor']),
@@ -17862,10 +18889,12 @@ Map<String, dynamic> flutterComponents = {
       barrierColor: props['barrierColor'],
       barrierLabel: props['barrierLabel'],
       maintainState: props['maintainState'] ?? true,
-      fullscreenDialog: props['fullscreenDialog'] ?? false),
+      fullscreenDialog: props['fullscreenDialog'] ?? false,
+      allowSnapshotting: props['allowSnapshotting'] ?? true),
   'PageScrollPhysics': (props) => PageScrollPhysics(parent: props['parent']),
   'PageStorage': (props) => PageStorage(
       key: props['key'], bucket: props['bucket'], child: props['child']),
+  'PageStorage.maybeOf': (props) => PageStorage.maybeOf(props['pa'][0]),
   'PageStorage.of': (props) => PageStorage.of(props['pa'][0]),
   'PageStorageBucket': (props) => PageStorageBucket(),
   'PageStorageKey': (props) => PageStorageKey(props['pa'][0]),
@@ -17967,6 +18996,11 @@ Map<String, dynamic> flutterComponents = {
   'PaintingStyle.fill': PaintingStyle.fill,
   'PaintingStyle.stroke': PaintingStyle.stroke,
   'PaintingStyle.values': PaintingStyle.values,
+  'PanAxis.aligned': PanAxis.aligned,
+  'PanAxis.free': PanAxis.free,
+  'PanAxis.horizontal': PanAxis.horizontal,
+  'PanAxis.values': PanAxis.values,
+  'PanAxis.vertical': PanAxis.vertical,
   'PanGestureRecognizer': (props) => PanGestureRecognizer(
       debugOwner: props['debugOwner'],
       supportedDevices: props['supportedDevices']),
@@ -18021,6 +19055,7 @@ Map<String, dynamic> flutterComponents = {
       rasterizerThreshold: props['rasterizerThreshold'],
       checkerboardRasterCacheImages: props['checkerboardRasterCacheImages'],
       checkerboardOffscreenLayers: props['checkerboardOffscreenLayers']),
+  'PersistentHashMap.empty': (props) => const PersistentHashMap.empty(),
   'PersistentHeaderShowOnScreenConfiguration': (props) =>
       PersistentHeaderShowOnScreenConfiguration(
           minShowOnScreenExtent: props['minShowOnScreenExtent']?.toDouble() ??
@@ -18044,11 +19079,14 @@ Map<String, dynamic> flutterComponents = {
       color: props['color'],
       shadowColor: props['shadowColor'] ?? const Color(0xFF000000),
       child: props['child']),
+  'Picture.onCreate': Picture.onCreate,
+  'Picture.onDispose': Picture.onDispose,
   'PictureLayer': (props) => PictureLayer(props['pa'][0]),
   'PictureRecorder': (props) => PictureRecorder(),
   'PipelineOwner': (props) => PipelineOwner(
       onNeedVisualUpdate: props['onNeedVisualUpdate'],
       onSemanticsOwnerCreated: props['onSemanticsOwnerCreated'],
+      onSemanticsUpdate: props['onSemanticsUpdate'],
       onSemanticsOwnerDisposed: props['onSemanticsOwnerDisposed']),
   'PixelFormat.bgra8888': PixelFormat.bgra8888,
   'PixelFormat.rgba8888': PixelFormat.rgba8888,
@@ -18086,14 +19124,14 @@ Map<String, dynamic> flutterComponents = {
       label: props['label'],
       onOpen: props['onOpen'],
       onClose: props['onClose'],
-      menus: as<MenuItem>(props['menus']) ?? const []),
+      menus: as<PlatformMenuItem>(props['menus']) ?? const []),
   'PlatformMenu.getDescendants': (props) =>
       PlatformMenu.getDescendants(props['pa'][0]),
   'PlatformMenu.serialize': (props) =>
       PlatformMenu.serialize(props['pa'][0], props['pa'][1], props['pa'][2]),
   'PlatformMenuBar': (props) => PlatformMenuBar(
       key: props['key'],
-      menus: as<MenuItem>(props['menus']) ?? const [],
+      menus: as<PlatformMenuItem>(props['menus']) ?? const [],
       child: props['child'],
       body: props['body']),
   'PlatformMenuItem': (props) => PlatformMenuItem(
@@ -18104,7 +19142,7 @@ Map<String, dynamic> flutterComponents = {
   'PlatformMenuItem.serialize': (props) => PlatformMenuItem.serialize(
       props['pa'][0], props['pa'][1], props['pa'][2]),
   'PlatformMenuItemGroup': (props) => PlatformMenuItemGroup(
-      members: as<MenuItem>(props['members']) ?? const []),
+      members: as<PlatformMenuItem>(props['members']) ?? const []),
   'PlatformMenuItemGroup.serialize': (props) => PlatformMenuItemGroup.serialize(
       props['pa'][0], props['pa'][1],
       getId: props['getId']),
@@ -18137,6 +19175,13 @@ Map<String, dynamic> flutterComponents = {
   'PlatformRouteInformationProvider': (props) =>
       PlatformRouteInformationProvider(
           initialRouteInformation: props['initialRouteInformation']),
+  'PlatformSelectableRegionContextMenu': (props) =>
+      PlatformSelectableRegionContextMenu(
+          child: props['child'], key: props['key']),
+  'PlatformSelectableRegionContextMenu.attach': (props) =>
+      PlatformSelectableRegionContextMenu.attach(props['pa'][0]),
+  'PlatformSelectableRegionContextMenu.detach': (props) =>
+      PlatformSelectableRegionContextMenu.detach(props['pa'][0]),
   'PlatformViewHitTestBehavior.opaque': PlatformViewHitTestBehavior.opaque,
   'PlatformViewHitTestBehavior.translucent':
       PlatformViewHitTestBehavior.translucent,
@@ -18411,7 +19456,6 @@ Map<String, dynamic> flutterComponents = {
       embedderId: props['embedderId'] ?? 0),
   'PointerPanZoomEndEvent': (props) => PointerPanZoomEndEvent(
       timeStamp: props['timeStamp'] ?? Duration.zero,
-      kind: props['kind'] ?? PointerDeviceKind.mouse,
       device: props['device'] ?? 0,
       pointer: props['pointer'] ?? 0,
       position: props['position'] ?? Offset.zero,
@@ -18419,7 +19463,6 @@ Map<String, dynamic> flutterComponents = {
       synthesized: props['synthesized'] ?? false),
   'PointerPanZoomStartEvent': (props) => PointerPanZoomStartEvent(
       timeStamp: props['timeStamp'] ?? Duration.zero,
-      kind: props['kind'] ?? PointerDeviceKind.mouse,
       device: props['device'] ?? 0,
       pointer: props['pointer'] ?? 0,
       position: props['position'] ?? Offset.zero,
@@ -18427,7 +19470,6 @@ Map<String, dynamic> flutterComponents = {
       synthesized: props['synthesized'] ?? false),
   'PointerPanZoomUpdateEvent': (props) => PointerPanZoomUpdateEvent(
       timeStamp: props['timeStamp'] ?? Duration.zero,
-      kind: props['kind'] ?? PointerDeviceKind.mouse,
       device: props['device'] ?? 0,
       pointer: props['pointer'] ?? 0,
       position: props['position'] ?? Offset.zero,
@@ -18452,6 +19494,13 @@ Map<String, dynamic> flutterComponents = {
       original: props['original'],
       embedderId: props['embedderId'] ?? 0),
   'PointerRouter': (props) => PointerRouter(),
+  'PointerScaleEvent': (props) => PointerScaleEvent(
+      timeStamp: props['timeStamp'] ?? Duration.zero,
+      kind: props['kind'] ?? PointerDeviceKind.mouse,
+      device: props['device'] ?? 0,
+      position: props['position'] ?? Offset.zero,
+      embedderId: props['embedderId'] ?? 0,
+      scale: props['scale']?.toDouble() ?? 1.0),
   'PointerScrollEvent': (props) => PointerScrollEvent(
       timeStamp: props['timeStamp'] ?? Duration.zero,
       kind: props['kind'] ?? PointerDeviceKind.mouse,
@@ -18459,8 +19508,17 @@ Map<String, dynamic> flutterComponents = {
       position: props['position'] ?? Offset.zero,
       scrollDelta: props['scrollDelta'] ?? Offset.zero,
       embedderId: props['embedderId'] ?? 0),
+  'PointerScrollInertiaCancelEvent': (props) => PointerScrollInertiaCancelEvent(
+      timeStamp: props['timeStamp'] ?? Duration.zero,
+      kind: props['kind'] ?? PointerDeviceKind.mouse,
+      device: props['device'] ?? 0,
+      position: props['position'] ?? Offset.zero,
+      embedderId: props['embedderId'] ?? 0),
   'PointerSignalKind.none': PointerSignalKind.none,
+  'PointerSignalKind.scale': PointerSignalKind.scale,
   'PointerSignalKind.scroll': PointerSignalKind.scroll,
+  'PointerSignalKind.scrollInertiaCancel':
+      PointerSignalKind.scrollInertiaCancel,
   'PointerSignalKind.unknown': PointerSignalKind.unknown,
   'PointerSignalKind.values': PointerSignalKind.values,
   'PointerSignalResolver': (props) => PointerSignalResolver(),
@@ -18490,10 +19548,13 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       itemBuilder: props['itemBuilder'],
       initialValue: props['initialValue'],
+      onOpened: props['onOpened'],
       onSelected: props['onSelected'],
       onCanceled: props['onCanceled'],
       tooltip: props['tooltip'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       padding: props['padding'] ?? const EdgeInsets.all(8.0),
       child: props['child'],
       splashRadius: props['splashRadius']?.toDouble(),
@@ -18505,7 +19566,8 @@ Map<String, dynamic> flutterComponents = {
       color: props['color'],
       enableFeedback: props['enableFeedback'],
       constraints: props['constraints'],
-      position: props['position'] ?? PopupMenuPosition.over),
+      position: props['position'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none),
   'PopupMenuDivider': (props) => PopupMenuDivider(
       key: props['key'],
       height: props['height']?.toDouble() ?? _kMenuDividerHeight),
@@ -18517,6 +19579,7 @@ Map<String, dynamic> flutterComponents = {
       height: props['height']?.toDouble() ?? kMinInteractiveDimension,
       padding: props['padding'],
       textStyle: props['textStyle'],
+      labelTextStyle: props['labelTextStyle'],
       mouseCursor: props['mouseCursor'],
       child: props['child']),
   'PopupMenuPosition.over': PopupMenuPosition.over,
@@ -18529,9 +19592,13 @@ Map<String, dynamic> flutterComponents = {
       color: props['color'],
       shape: props['shape'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       textStyle: props['textStyle'],
+      labelTextStyle: props['labelTextStyle'],
       enableFeedback: props['enableFeedback'],
-      mouseCursor: props['mouseCursor']),
+      mouseCursor: props['mouseCursor'],
+      position: props['position']),
   'PopupMenuThemeData.lerp': (props) => PopupMenuThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'Positioned': (props) => Positioned(
@@ -18588,6 +19655,8 @@ Map<String, dynamic> flutterComponents = {
           props['automaticallyInheritForPlatforms'] ?? _kMobilePlatforms,
       scrollDirection: props['scrollDirection'] ?? Axis.vertical,
       child: props['child']),
+  'PrimaryScrollController.maybeOf': (props) =>
+      PrimaryScrollController.maybeOf(props['pa'][0]),
   'PrimaryScrollController.none': (props) =>
       PrimaryScrollController.none(key: props['key'], child: props['child']),
   'PrimaryScrollController.of': (props) =>
@@ -18615,6 +19684,8 @@ Map<String, dynamic> flutterComponents = {
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'ProxyAnimation': (props) =>
       ProxyAnimation((props['pa'].length > 0 ? props['pa'][0] : null)),
+  'PushTextPosition.backward': PushTextPosition.backward,
+  'PushTextPosition.forward': PushTextPosition.forward,
   'RRect.fromLTRBAndCorners': (props) => RRect.fromLTRBAndCorners(
       props['pa'][0]?.toDouble(),
       props['pa'][1]?.toDouble(),
@@ -18712,7 +19783,23 @@ Map<String, dynamic> flutterComponents = {
       selectedTileColor: props['selectedTileColor'],
       visualDensity: props['visualDensity'],
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       enableFeedback: props['enableFeedback']),
+  'RadioMenuButton': (props) => RadioMenuButton(
+      key: props['key'],
+      value: props['value'],
+      groupValue: props['groupValue'],
+      onChanged: props['onChanged'],
+      toggleable: props['toggleable'] ?? false,
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      focusNode: props['focusNode'],
+      shortcut: props['shortcut'],
+      style: props['style'],
+      statesController: props['statesController'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      trailingIcon: props['trailingIcon'],
+      child: props['child']),
   'RadioTheme': (props) =>
       RadioTheme(key: props['key'], data: props['data'], child: props['child']),
   'RadioTheme.of': (props) => RadioTheme.of(props['pa'][0]),
@@ -19043,6 +20130,13 @@ Map<String, dynamic> flutterComponents = {
       includeSemantics: props['includeSemantics'] ?? true,
       onKey: props['onKey'],
       child: props['child']),
+  'RawMagnifier': (props) => RawMagnifier(
+      key: props['key'],
+      child: props['child'],
+      decoration: props['decoration'] ?? const MagnifierDecoration(),
+      focalPointOffset: props['focalPointOffset'] ?? Offset.zero,
+      magnificationScale: props['magnificationScale']?.toDouble() ?? 1,
+      size: props['size']),
   'RawMaterialButton': (props) => RawMaterialButton(
       key: props['key'],
       onPressed: props['onPressed'],
@@ -19096,6 +20190,7 @@ Map<String, dynamic> flutterComponents = {
       scrollbarOrientation: props['scrollbarOrientation'],
       mainAxisMargin: props['mainAxisMargin']?.toDouble() ?? 0.0,
       crossAxisMargin: props['crossAxisMargin']?.toDouble() ?? 0.0,
+      padding: props['padding'],
       isAlwaysShown: props['isAlwaysShown']),
   'ReadBuffer': (props) => ReadBuffer(props['pa'][0]),
   'ReadingOrderTraversalPolicy': (props) => ReadingOrderTraversalPolicy(),
@@ -19406,6 +20501,8 @@ Map<String, dynamic> flutterComponents = {
       children: as<RenderBox>(props['children']),
       alignment: props['alignment'] ?? AlignmentDirectional.topStart,
       textDirection: props['textDirection'],
+      fit: props['fit'] ?? StackFit.loose,
+      clipBehavior: props['clipBehavior'] ?? Clip.hardEdge,
       index: props['index'] ?? 0),
   'RenderIntrinsicHeight': (props) =>
       RenderIntrinsicHeight(child: props['child']),
@@ -19610,6 +20707,15 @@ Map<String, dynamic> flutterComponents = {
           props['defaultVerticalAlignment'] ?? TableCellVerticalAlignment.top,
       textBaseline: props['textBaseline'],
       children: as<List<RenderBox>>(props['children'])),
+  'RenderTapRegion': (props) => RenderTapRegion(
+      registry: props['registry'],
+      enabled: props['enabled'] ?? true,
+      onTapOutside: props['onTapOutside'],
+      onTapInside: props['onTapInside'],
+      behavior: props['behavior'] ?? HitTestBehavior.deferToChild,
+      groupId: props['groupId'],
+      debugLabel: props['debugLabel']),
+  'RenderTapRegionSurface': (props) => RenderTapRegionSurface(),
   'RenderTransform': (props) => RenderTransform(
       transform: props['transform'],
       origin: props['origin'],
@@ -19654,6 +20760,33 @@ Map<String, dynamic> flutterComponents = {
       RenderingFlutterBinding(root: props['root']),
   'RenderingFlutterBinding.ensureInitialized': (props) =>
       RenderingFlutterBinding.ensureInitialized(),
+  'RenderingServiceExtensions.debugDisableClipLayers':
+      RenderingServiceExtensions.debugDisableClipLayers,
+  'RenderingServiceExtensions.debugDisableOpacityLayers':
+      RenderingServiceExtensions.debugDisableOpacityLayers,
+  'RenderingServiceExtensions.debugDisablePhysicalShapeLayers':
+      RenderingServiceExtensions.debugDisablePhysicalShapeLayers,
+  'RenderingServiceExtensions.debugDumpLayerTree':
+      RenderingServiceExtensions.debugDumpLayerTree,
+  'RenderingServiceExtensions.debugDumpRenderTree':
+      RenderingServiceExtensions.debugDumpRenderTree,
+  'RenderingServiceExtensions.debugDumpSemanticsTreeInInverseHitTestOrder':
+      RenderingServiceExtensions.debugDumpSemanticsTreeInInverseHitTestOrder,
+  'RenderingServiceExtensions.debugDumpSemanticsTreeInTraversalOrder':
+      RenderingServiceExtensions.debugDumpSemanticsTreeInTraversalOrder,
+  'RenderingServiceExtensions.debugPaint':
+      RenderingServiceExtensions.debugPaint,
+  'RenderingServiceExtensions.debugPaintBaselinesEnabled':
+      RenderingServiceExtensions.debugPaintBaselinesEnabled,
+  'RenderingServiceExtensions.invertOversizedImages':
+      RenderingServiceExtensions.invertOversizedImages,
+  'RenderingServiceExtensions.profileRenderObjectLayouts':
+      RenderingServiceExtensions.profileRenderObjectLayouts,
+  'RenderingServiceExtensions.profileRenderObjectPaints':
+      RenderingServiceExtensions.profileRenderObjectPaints,
+  'RenderingServiceExtensions.repaintRainbow':
+      RenderingServiceExtensions.repaintRainbow,
+  'RenderingServiceExtensions.values': RenderingServiceExtensions.values,
   'ReorderableDelayedDragStartListener': (props) =>
       ReorderableDelayedDragStartListener(
           key: props['key'],
@@ -19771,6 +20904,10 @@ Map<String, dynamic> flutterComponents = {
   'RestorableDateTimeN': (props) => RestorableDateTimeN(props['pa'][0]),
   'RestorableDouble': (props) => RestorableDouble(props['pa'][0]?.toDouble()),
   'RestorableDoubleN': (props) => RestorableDoubleN(props['pa'][0]?.toDouble()),
+  // 'RestorableEnum': (props) =>
+  //     RestorableEnum(props['pa'][0], values: props['values']),
+  // 'RestorableEnumN': (props) =>
+  //     RestorableEnumN(props['pa'][0], values: props['values']),
   'RestorableInt': (props) => RestorableInt(props['pa'][0]),
   'RestorableIntN': (props) => RestorableIntN(props['pa'][0]),
   'RestorableNum': (props) => RestorableNum<num>(props['pa'][0]),
@@ -19799,6 +20936,8 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       restorationId: props['restorationId'],
       child: props['child']),
+  'RestorationScope.maybeOf': (props) =>
+      RestorationScope.maybeOf(props['pa'][0]),
   'RestorationScope.of': (props) => RestorationScope.of(props['pa'][0]),
   'RevealedOffset': (props) => RevealedOffset(
       offset: props['offset']?.toDouble() ?? 0, rect: props['rect']),
@@ -19820,6 +20959,7 @@ Map<String, dynamic> flutterComponents = {
       selectionRegistrar: props['selectionRegistrar'],
       selectionColor: props['selectionColor']),
   'RootBackButtonDispatcher': (props) => RootBackButtonDispatcher(),
+  'RootIsolateToken.instance': RootIsolateToken.instance,
   'RootRestorationScope': (props) => RootRestorationScope(
       key: props['key'],
       restorationId: props['restorationId'],
@@ -19999,11 +21139,16 @@ Map<String, dynamic> flutterComponents = {
   'SchedulerPhase.postFrameCallbacks': SchedulerPhase.postFrameCallbacks,
   'SchedulerPhase.transientCallbacks': SchedulerPhase.transientCallbacks,
   'SchedulerPhase.values': SchedulerPhase.values,
+  'SchedulerServiceExtensions.timeDilation':
+      SchedulerServiceExtensions.timeDilation,
+  'SchedulerServiceExtensions.values': SchedulerServiceExtensions.values,
   'ScriptCategory.dense': ScriptCategory.dense,
   'ScriptCategory.englishLike': ScriptCategory.englishLike,
   'ScriptCategory.tall': ScriptCategory.tall,
   'ScriptCategory.values': ScriptCategory.values,
   'ScrollAction': (props) => ScrollAction(),
+  'ScrollAction.getDirectionalIncrement': (props) =>
+      ScrollAction.getDirectionalIncrement(props['pa'][0], props['pa'][1]),
   'ScrollAwareImageProvider': (props) => ScrollAwareImageProvider(
       context: props['context'], imageProvider: props['imageProvider']),
   'ScrollBehavior': (props) => ScrollBehavior(
@@ -20015,6 +21160,9 @@ Map<String, dynamic> flutterComponents = {
       initialScrollOffset: props['initialScrollOffset']?.toDouble() ?? 0.0,
       keepScrollOffset: props['keepScrollOffset'] ?? true,
       debugLabel: props['debugLabel']),
+  'ScrollDecelerationRate.fast': ScrollDecelerationRate.fast,
+  'ScrollDecelerationRate.normal': ScrollDecelerationRate.normal,
+  'ScrollDecelerationRate.values': ScrollDecelerationRate.values,
   'ScrollDirection.forward': ScrollDirection.forward,
   'ScrollDirection.idle': ScrollDirection.idle,
   'ScrollDirection.reverse': ScrollDirection.reverse,
@@ -20048,6 +21196,8 @@ Map<String, dynamic> flutterComponents = {
       metrics: props['metrics'], context: props['context']),
   'ScrollNotificationObserver': (props) =>
       ScrollNotificationObserver(key: props['key'], child: props['child']),
+  'ScrollNotificationObserver.maybeOf': (props) =>
+      ScrollNotificationObserver.maybeOf(props['pa'][0]),
   'ScrollNotificationObserver.of': (props) =>
       ScrollNotificationObserver.of(props['pa'][0]),
   'ScrollPhysics': (props) => ScrollPhysics(parent: props['parent']),
@@ -20109,6 +21259,7 @@ Map<String, dynamic> flutterComponents = {
       curve: props['curve'] ?? Curves.ease,
       alignmentPolicy:
           props['alignmentPolicy'] ?? ScrollPositionAlignmentPolicy.explicit),
+  'Scrollable.maybeOf': (props) => Scrollable.maybeOf(props['pa'][0]),
   'Scrollable.of': (props) => Scrollable.of(props['pa'][0]),
   'Scrollable.recommendDeferredLoadingForContext': (props) =>
       Scrollable.recommendDeferredLoadingForContext(props['pa'][0]),
@@ -20171,6 +21322,25 @@ Map<String, dynamic> flutterComponents = {
       showTrackOnHover: props['showTrackOnHover']),
   'ScrollbarThemeData.lerp': (props) => ScrollbarThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'SegmentedButton': (props) => SegmentedButton(
+      key: props['key'],
+      segments: as<ButtonSegment>(props['segments']) ?? const [],
+      selected: props['selected'],
+      onSelectionChanged: props['onSelectionChanged'],
+      multiSelectionEnabled: props['multiSelectionEnabled'] ?? false,
+      emptySelectionAllowed: props['emptySelectionAllowed'] ?? false,
+      style: props['style'],
+      showSelectedIcon: props['showSelectedIcon'] ?? true,
+      selectedIcon: props['selectedIcon']),
+  'SegmentedButtonTheme': (props) => SegmentedButtonTheme(
+      key: props['key'], data: props['data'], child: props['child']),
+  'SegmentedButtonTheme.maybeOf': (props) =>
+      SegmentedButtonTheme.maybeOf(props['pa'][0]),
+  'SegmentedButtonTheme.of': (props) => SegmentedButtonTheme.of(props['pa'][0]),
+  'SegmentedButtonThemeData': (props) => SegmentedButtonThemeData(
+      style: props['style'], selectedIcon: props['selectedIcon']),
+  'SegmentedButtonThemeData.lerp': (props) => SegmentedButtonThemeData.lerp(
+      props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'SelectAllSelectionEvent': (props) => const SelectAllSelectionEvent(),
   'SelectAllTextIntent': (props) => SelectAllTextIntent(props['pa'][0]),
   'SelectIntent': (props) => const SelectIntent(),
@@ -20178,9 +21348,18 @@ Map<String, dynamic> flutterComponents = {
       SelectWordSelectionEvent(globalPosition: props['globalPosition']),
   'SelectableRegion': (props) => SelectableRegion(
       key: props['key'],
+      contextMenuBuilder: props['contextMenuBuilder'],
       focusNode: props['focusNode'],
       selectionControls: props['selectionControls'],
-      child: props['child']),
+      child: props['child'],
+      magnifierConfiguration: props['magnifierConfiguration'] ??
+          TextMagnifierConfiguration.disabled,
+      onSelectionChanged: props['onSelectionChanged']),
+  'SelectableRegion.getSelectableButtonItems': (props) =>
+      SelectableRegion.getSelectableButtonItems(
+          selectionGeometry: props['selectionGeometry'],
+          onCopy: props['onCopy'],
+          onSelectAll: props['onSelectAll']),
   'SelectableText': (props) => SelectableText(props['pa'][0],
       key: props['key'],
       focusNode: props['focusNode'],
@@ -20210,7 +21389,10 @@ Map<String, dynamic> flutterComponents = {
       semanticsLabel: props['semanticsLabel'],
       textHeightBehavior: props['textHeightBehavior'],
       textWidthBasis: props['textWidthBasis'],
-      onSelectionChanged: props['onSelectionChanged']),
+      onSelectionChanged: props['onSelectionChanged'],
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      magnifierConfiguration: props['magnifierConfiguration']),
   'SelectableText.rich': (props) => SelectableText.rich(props['pa'][0],
       key: props['key'],
       focusNode: props['focusNode'],
@@ -20240,12 +21422,19 @@ Map<String, dynamic> flutterComponents = {
       semanticsLabel: props['semanticsLabel'],
       textHeightBehavior: props['textHeightBehavior'],
       textWidthBasis: props['textWidthBasis'],
-      onSelectionChanged: props['onSelectionChanged']),
+      onSelectionChanged: props['onSelectionChanged'],
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      magnifierConfiguration: props['magnifierConfiguration']),
   'SelectedContent': (props) => SelectedContent(plainText: props['plainText']),
   'SelectionArea': (props) => SelectionArea(
       key: props['key'],
       focusNode: props['focusNode'],
       selectionControls: props['selectionControls'],
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      magnifierConfiguration: props['magnifierConfiguration'],
+      onSelectionChanged: props['onSelectionChanged'],
       child: props['child']),
   'SelectionChangedCause.doubleTap': SelectionChangedCause.doubleTap,
   'SelectionChangedCause.drag': SelectionChangedCause.drag,
@@ -20271,11 +21460,21 @@ Map<String, dynamic> flutterComponents = {
       SelectionEdgeUpdateEvent.forStart(
           globalPosition: props['globalPosition']),
   'SelectionEventType.clear': SelectionEventType.clear,
+  'SelectionEventType.directionallyExtendSelection':
+      SelectionEventType.directionallyExtendSelection,
   'SelectionEventType.endEdgeUpdate': SelectionEventType.endEdgeUpdate,
+  'SelectionEventType.granularlyExtendSelection':
+      SelectionEventType.granularlyExtendSelection,
   'SelectionEventType.selectAll': SelectionEventType.selectAll,
   'SelectionEventType.selectWord': SelectionEventType.selectWord,
   'SelectionEventType.startEdgeUpdate': SelectionEventType.startEdgeUpdate,
   'SelectionEventType.values': SelectionEventType.values,
+  'SelectionExtendDirection.backward': SelectionExtendDirection.backward,
+  'SelectionExtendDirection.forward': SelectionExtendDirection.forward,
+  'SelectionExtendDirection.nextLine': SelectionExtendDirection.nextLine,
+  'SelectionExtendDirection.previousLine':
+      SelectionExtendDirection.previousLine,
+  'SelectionExtendDirection.values': SelectionExtendDirection.values,
   'SelectionGeometry': (props) => SelectionGeometry(
       startSelectionPoint: props['startSelectionPoint'],
       endSelectionPoint: props['endSelectionPoint'],
@@ -20307,7 +21506,9 @@ Map<String, dynamic> flutterComponents = {
       toolbarLayerLink: props['toolbarLayerLink'],
       dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start,
       onSelectionHandleTapped: props['onSelectionHandleTapped'],
-      toolbarLocation: props['toolbarLocation']),
+      toolbarLocation: props['toolbarLocation'],
+      magnifierConfiguration: props['magnifierConfiguration'] ??
+          TextMagnifierConfiguration.disabled),
   'SelectionOverlay.fadeDuration': SelectionOverlay.fadeDuration,
   'SelectionPoint': (props) => SelectionPoint(
       localPosition: props['localPosition'],
@@ -20340,6 +21541,7 @@ Map<String, dynamic> flutterComponents = {
       excludeSemantics: props['excludeSemantics'] ?? false,
       enabled: props['enabled'],
       checked: props['checked'],
+      mixed: props['mixed'],
       selected: props['selected'],
       toggled: props['toggled'],
       button: props['button'],
@@ -20469,6 +21671,7 @@ Map<String, dynamic> flutterComponents = {
   'SemanticsFlag.hasImplicitScrolling': SemanticsFlag.hasImplicitScrolling,
   'SemanticsFlag.hasToggledState': SemanticsFlag.hasToggledState,
   'SemanticsFlag.isButton': SemanticsFlag.isButton,
+  'SemanticsFlag.isCheckStateMixed': SemanticsFlag.isCheckStateMixed,
   'SemanticsFlag.isChecked': SemanticsFlag.isChecked,
   'SemanticsFlag.isEnabled': SemanticsFlag.isEnabled,
   'SemanticsFlag.isFocusable': SemanticsFlag.isFocusable,
@@ -20499,10 +21702,12 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       showOnScreen: props['showOnScreen'],
       owner: props['owner']),
-  'SemanticsOwner': (props) => SemanticsOwner(),
+  'SemanticsOwner': (props) =>
+      SemanticsOwner(onSemanticsUpdate: props['onSemanticsUpdate']),
   'SemanticsProperties': (props) => SemanticsProperties(
       enabled: props['enabled'],
       checked: props['checked'],
+      mixed: props['mixed'],
       selected: props['selected'],
       toggled: props['toggled'],
       button: props['button'],
@@ -20560,8 +21765,9 @@ Map<String, dynamic> flutterComponents = {
       onDidLoseAccessibilityFocus: props['onDidLoseAccessibilityFocus'],
       onDismiss: props['onDismiss'],
       customSemanticsActions: props['customSemanticsActions']),
-  'SemanticsService.announce': (props) =>
-      SemanticsService.announce(props['pa'][0], props['pa'][1]),
+  'SemanticsService.announce': (props) => SemanticsService.announce(
+      props['pa'][0], props['pa'][1],
+      assertiveness: props['assertiveness'] ?? Assertiveness.polite),
   'SemanticsService.tooltip': (props) =>
       SemanticsService.tooltip(props['pa'][0]),
   'SemanticsTag': (props) => SemanticsTag(props['pa'][0]),
@@ -20582,6 +21788,8 @@ Map<String, dynamic> flutterComponents = {
       localPosition: props['localPosition'],
       kind: props['kind'],
       count: props['count'] ?? 1),
+  'ServicesServiceExtensions.evict': ServicesServiceExtensions.evict,
+  'ServicesServiceExtensions.values': ServicesServiceExtensions.values,
   'ShaderMask': (props) => ShaderMask(
       key: props['key'],
       shaderCallback: props['shaderCallback'],
@@ -20636,14 +21844,17 @@ Map<String, dynamic> flutterComponents = {
   'ShortcutRegistry.maybeOf': (props) =>
       ShortcutRegistry.maybeOf(props['pa'][0]),
   'ShortcutRegistry.of': (props) => ShortcutRegistry.of(props['pa'][0]),
-  'ShortcutSerialization.character': (props) =>
-      ShortcutSerialization.character(props['pa'][0]),
+  'ShortcutSerialization.character': (props) => ShortcutSerialization.character(
+      props['pa'][0],
+      alt: props['alt'] ?? false,
+      control: props['control'] ?? false,
+      meta: props['meta'] ?? false),
   'ShortcutSerialization.modifier': (props) => ShortcutSerialization.modifier(
       props['pa'][0],
-      control: props['control'] ?? false,
-      shift: props['shift'] ?? false,
       alt: props['alt'] ?? false,
-      meta: props['meta'] ?? false),
+      control: props['control'] ?? false,
+      meta: props['meta'] ?? false,
+      shift: props['shift'] ?? false),
   'Shortcuts': (props) => Shortcuts(
       key: props['key'],
       shortcuts: props['shortcuts'],
@@ -20677,6 +21888,8 @@ Map<String, dynamic> flutterComponents = {
           const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
       backgroundColor: props['backgroundColor'],
       elevation: props['elevation']?.toDouble(),
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
       semanticLabel: props['semanticLabel'],
       clipBehavior: props['clipBehavior'] ?? Clip.none,
       shape: props['shape'],
@@ -20759,6 +21972,7 @@ Map<String, dynamic> flutterComponents = {
   'Slider': (props) => Slider(
       key: props['key'],
       value: props['value']?.toDouble() ?? 0,
+      secondaryTrackValue: props['secondaryTrackValue']?.toDouble(),
       onChanged: props['onChanged'],
       onChangeStart: props['onChangeStart'],
       onChangeEnd: props['onChangeEnd'],
@@ -20768,7 +21982,9 @@ Map<String, dynamic> flutterComponents = {
       label: props['label'],
       activeColor: props['activeColor'],
       inactiveColor: props['inactiveColor'],
+      secondaryActiveColor: props['secondaryActiveColor'],
       thumbColor: props['thumbColor'],
+      overlayColor: props['overlayColor'],
       mouseCursor: props['mouseCursor'],
       semanticFormatterCallback: props['semanticFormatterCallback'],
       focusNode: props['focusNode'],
@@ -20776,6 +21992,7 @@ Map<String, dynamic> flutterComponents = {
   'Slider.adaptive': (props) => Slider.adaptive(
       key: props['key'],
       value: props['value']?.toDouble() ?? 0,
+      secondaryTrackValue: props['secondaryTrackValue']?.toDouble(),
       onChanged: props['onChanged'],
       onChangeStart: props['onChangeStart'],
       onChangeEnd: props['onChangeEnd'],
@@ -20786,7 +22003,9 @@ Map<String, dynamic> flutterComponents = {
       mouseCursor: props['mouseCursor'],
       activeColor: props['activeColor'],
       inactiveColor: props['inactiveColor'],
+      secondaryActiveColor: props['secondaryActiveColor'],
       thumbColor: props['thumbColor'],
+      overlayColor: props['overlayColor'],
       semanticFormatterCallback: props['semanticFormatterCallback'],
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false),
@@ -20797,8 +22016,11 @@ Map<String, dynamic> flutterComponents = {
       trackHeight: props['trackHeight']?.toDouble(),
       activeTrackColor: props['activeTrackColor'],
       inactiveTrackColor: props['inactiveTrackColor'],
+      secondaryActiveTrackColor: props['secondaryActiveTrackColor'],
       disabledActiveTrackColor: props['disabledActiveTrackColor'],
       disabledInactiveTrackColor: props['disabledInactiveTrackColor'],
+      disabledSecondaryActiveTrackColor:
+          props['disabledSecondaryActiveTrackColor'],
       activeTickMarkColor: props['activeTickMarkColor'],
       inactiveTickMarkColor: props['inactiveTickMarkColor'],
       disabledActiveTickMarkColor: props['disabledActiveTickMarkColor'],
@@ -20830,6 +22052,15 @@ Map<String, dynamic> flutterComponents = {
           valueIndicatorTextStyle: props['valueIndicatorTextStyle']),
   'SliderThemeData.lerp': (props) => SliderThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'SliverAnimatedGrid': (props) => SliverAnimatedGrid(
+      key: props['key'],
+      itemBuilder: props['itemBuilder'],
+      gridDelegate: props['gridDelegate'],
+      findChildIndexCallback: props['findChildIndexCallback'],
+      initialItemCount: props['initialItemCount'] ?? 0),
+  'SliverAnimatedGrid.maybeOf': (props) =>
+      SliverAnimatedGrid.maybeOf(props['pa'][0]),
+  'SliverAnimatedGrid.of': (props) => SliverAnimatedGrid.of(props['pa'][0]),
   'SliverAnimatedList': (props) => SliverAnimatedList(
       key: props['key'],
       itemBuilder: props['itemBuilder'],
@@ -21031,6 +22262,15 @@ Map<String, dynamic> flutterComponents = {
       key: props['key'],
       delegate: props['delegate'],
       gridDelegate: props['gridDelegate']),
+  'SliverGrid.builder': (props) => SliverGrid.builder(
+      key: props['key'],
+      gridDelegate: props['gridDelegate'],
+      itemBuilder: props['itemBuilder'],
+      findChildIndexCallback: props['findChildIndexCallback'],
+      itemCount: props['itemCount'],
+      addAutomaticKeepAlives: props['addAutomaticKeepAlives'] ?? true,
+      addRepaintBoundaries: props['addRepaintBoundaries'] ?? true,
+      addSemanticIndexes: props['addSemanticIndexes'] ?? true),
   'SliverGrid.count': (props) => SliverGrid.count(
       key: props['key'],
       crossAxisCount: props['crossAxisCount'],
@@ -21159,6 +22399,12 @@ Map<String, dynamic> flutterComponents = {
       maintainSize: props['maintainSize'] ?? false,
       maintainSemantics: props['maintainSemantics'] ?? false,
       maintainInteractivity: props['maintainInteractivity'] ?? false),
+  'SliverVisibility.maintain': (props) => SliverVisibility.maintain(
+      key: props['key'],
+      sliver: props['sliver'],
+      replacementSliver:
+          props['replacementSliver'] ?? const SliverToBoxAdapter(),
+      visible: props['visible'] ?? true),
   'SlottedRenderObjectElement': (props) =>
       SlottedRenderObjectElement(props['pa'][0]),
   'SmartDashesType.disabled': SmartDashesType.disabled,
@@ -21178,6 +22424,8 @@ Map<String, dynamic> flutterComponents = {
       shape: props['shape'],
       behavior: props['behavior'],
       action: props['action'],
+      showCloseIcon: props['showCloseIcon'],
+      closeIconColor: props['closeIconColor'],
       duration: props['duration'] ?? _snackBarDisplayDuration,
       animation: props['animation'],
       onVisible: props['onVisible'],
@@ -21208,10 +22456,33 @@ Map<String, dynamic> flutterComponents = {
       contentTextStyle: props['contentTextStyle'],
       elevation: props['elevation']?.toDouble(),
       shape: props['shape'],
-      behavior: props['behavior']),
+      behavior: props['behavior'],
+      width: props['width']?.toDouble(),
+      showCloseIcon: props['showCloseIcon'],
+      closeIconColor: props['closeIconColor']),
   'SnackBarThemeData.lerp': (props) => SnackBarThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
+  'SnapshotController': (props) => SnapshotController(
+      allowSnapshotting: props['allowSnapshotting'] ?? false),
+  'SnapshotMode.forced': SnapshotMode.forced,
+  'SnapshotMode.normal': SnapshotMode.normal,
+  'SnapshotMode.permissive': SnapshotMode.permissive,
+  'SnapshotMode.values': SnapshotMode.values,
+  'SnapshotWidget': (props) => SnapshotWidget(
+      key: props['key'],
+      mode: props['mode'] ?? SnapshotMode.normal,
+      painter: props['painter'] ?? const _DefaultSnapshotPainter(),
+      autoresize: props['autoresize'] ?? false,
+      controller: props['controller'],
+      child: props['child']),
   'Spacer': (props) => Spacer(key: props['key'], flex: props['flex'] ?? 1),
+  'SpellCheckConfiguration': (props) => SpellCheckConfiguration(
+      spellCheckService: props['spellCheckService'],
+      misspelledTextStyle: props['misspelledTextStyle']),
+  'SpellCheckConfiguration.disabled': (props) =>
+      const SpellCheckConfiguration.disabled(),
+  'SpellCheckResults': (props) =>
+      SpellCheckResults(props['pa'][0], props['pa'][1]),
   'SpellOutStringAttribute': (props) =>
       SpellOutStringAttribute(range: props['range']),
   'SpringDescription': (props) => SpringDescription(
@@ -21270,6 +22541,20 @@ Map<String, dynamic> flutterComponents = {
   'StandardMethodCodec': (props) => StandardMethodCodec(
       (props['pa'].length > 0 ? props['pa'][0] : null) ??
           const StandardMessageCodec()),
+  'StarBorder': (props) => StarBorder(
+      side: props['side'] ?? BorderSide.none,
+      points: props['points']?.toDouble() ?? 5,
+      innerRadiusRatio: props['innerRadiusRatio']?.toDouble() ?? 0.4,
+      pointRounding: props['pointRounding']?.toDouble() ?? 0,
+      valleyRounding: props['valleyRounding']?.toDouble() ?? 0,
+      rotation: props['rotation']?.toDouble() ?? 0,
+      squash: props['squash']?.toDouble() ?? 0),
+  'StarBorder.polygon': (props) => StarBorder.polygon(
+      side: props['side'] ?? BorderSide.none,
+      sides: props['sides']?.toDouble() ?? 5,
+      pointRounding: props['pointRounding']?.toDouble() ?? 0,
+      rotation: props['rotation']?.toDouble() ?? 0,
+      squash: props['squash']?.toDouble() ?? 0),
   'StatefulBuilder': (props) =>
       StatefulBuilder(key: props['key'], builder: props['builder']),
   'StatefulElement': (props) => StatefulElement(props['pa'][0]),
@@ -21329,10 +22614,6 @@ Map<String, dynamic> flutterComponents = {
       ifEmpty: props['ifEmpty'],
       style: props['style'] ?? DiagnosticsTreeStyle.singleLine,
       level: props['level'] ?? DiagnosticLevel.info),
-  'StrokeAlign.center': StrokeAlign.center,
-  'StrokeAlign.inside': StrokeAlign.inside,
-  'StrokeAlign.outside': StrokeAlign.outside,
-  'StrokeAlign.values': StrokeAlign.values,
   'StrokeCap.butt': StrokeCap.butt,
   'StrokeCap.round': StrokeCap.round,
   'StrokeCap.square': StrokeCap.square,
@@ -21367,6 +22648,47 @@ Map<String, dynamic> flutterComponents = {
       forceStrutHeight: props['forceStrutHeight'],
       debugLabel: props['debugLabel'],
       package: props['package']),
+  'SubmenuButton': (props) => SubmenuButton(
+      key: props['key'],
+      onHover: props['onHover'],
+      onFocusChange: props['onFocusChange'],
+      onOpen: props['onOpen'],
+      onClose: props['onClose'],
+      style: props['style'],
+      menuStyle: props['menuStyle'],
+      alignmentOffset: props['alignmentOffset'],
+      clipBehavior: props['clipBehavior'] ?? Clip.none,
+      focusNode: props['focusNode'],
+      statesController: props['statesController'],
+      leadingIcon: props['leadingIcon'],
+      trailingIcon: props['trailingIcon'],
+      menuChildren: as<Widget>(props['menuChildren']) ?? const [],
+      child: props['child']),
+  'SubmenuButton.styleFrom': (props) => SubmenuButton.styleFrom(
+      foregroundColor: props['foregroundColor'],
+      backgroundColor: props['backgroundColor'],
+      disabledForegroundColor: props['disabledForegroundColor'],
+      disabledBackgroundColor: props['disabledBackgroundColor'],
+      shadowColor: props['shadowColor'],
+      surfaceTintColor: props['surfaceTintColor'],
+      iconColor: props['iconColor'],
+      textStyle: props['textStyle'],
+      elevation: props['elevation']?.toDouble(),
+      padding: props['padding'],
+      minimumSize: props['minimumSize'],
+      fixedSize: props['fixedSize'],
+      maximumSize: props['maximumSize'],
+      enabledMouseCursor: props['enabledMouseCursor'],
+      disabledMouseCursor: props['disabledMouseCursor'],
+      side: props['side'],
+      shape: props['shape'],
+      visualDensity: props['visualDensity'],
+      tapTargetSize: props['tapTargetSize'],
+      animationDuration: props['animationDuration'],
+      enableFeedback: props['enableFeedback'],
+      alignment: props['alignment'],
+      splashFactory: props['splashFactory']),
+  'SuggestionSpan': (props) => SuggestionSpan(props['pa'][0], props['pa'][1]),
   'Summary': (props) => Summary(props['pa'][0]),
   'SweepGradient': (props) => SweepGradient(
       center: props['center'] ?? Alignment.center,
@@ -21392,6 +22714,7 @@ Map<String, dynamic> flutterComponents = {
       onInactiveThumbImageError: props['onInactiveThumbImageError'],
       thumbColor: props['thumbColor'],
       trackColor: props['trackColor'],
+      thumbIcon: props['thumbIcon'],
       materialTapTargetSize: props['materialTapTargetSize'],
       dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start,
       mouseCursor: props['mouseCursor'],
@@ -21400,6 +22723,7 @@ Map<String, dynamic> flutterComponents = {
       overlayColor: props['overlayColor'],
       splashRadius: props['splashRadius']?.toDouble(),
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       autofocus: props['autofocus'] ?? false),
   'Switch.adaptive': (props) => Switch.adaptive(
       key: props['key'],
@@ -21416,6 +22740,7 @@ Map<String, dynamic> flutterComponents = {
       materialTapTargetSize: props['materialTapTargetSize'],
       thumbColor: props['thumbColor'],
       trackColor: props['trackColor'],
+      thumbIcon: props['thumbIcon'],
       dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start,
       mouseCursor: props['mouseCursor'],
       focusColor: props['focusColor'],
@@ -21423,6 +22748,7 @@ Map<String, dynamic> flutterComponents = {
       overlayColor: props['overlayColor'],
       splashRadius: props['splashRadius']?.toDouble(),
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       autofocus: props['autofocus'] ?? false),
   'SwitchListTile': (props) => SwitchListTile(
       key: props['key'],
@@ -21449,6 +22775,7 @@ Map<String, dynamic> flutterComponents = {
       selectedTileColor: props['selectedTileColor'],
       visualDensity: props['visualDensity'],
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       enableFeedback: props['enableFeedback'],
       hoverColor: props['hoverColor']),
   'SwitchListTile.adaptive': (props) => SwitchListTile.adaptive(
@@ -21476,6 +22803,7 @@ Map<String, dynamic> flutterComponents = {
       selectedTileColor: props['selectedTileColor'],
       visualDensity: props['visualDensity'],
       focusNode: props['focusNode'],
+      onFocusChange: props['onFocusChange'],
       enableFeedback: props['enableFeedback'],
       hoverColor: props['hoverColor']),
   'SwitchTheme': (props) => SwitchTheme(
@@ -21487,7 +22815,8 @@ Map<String, dynamic> flutterComponents = {
       materialTapTargetSize: props['materialTapTargetSize'],
       mouseCursor: props['mouseCursor'],
       overlayColor: props['overlayColor'],
-      splashRadius: props['splashRadius']?.toDouble()),
+      splashRadius: props['splashRadius']?.toDouble(),
+      thumbIcon: props['thumbIcon']),
   'SwitchThemeData.lerp': (props) => SwitchThemeData.lerp(
       props['pa'][0], props['pa'][1], props['pa'][2]?.toDouble()),
   'SynchronousFuture': (props) => SynchronousFuture(props['pa'][0]),
@@ -21503,6 +22832,7 @@ Map<String, dynamic> flutterComponents = {
   'SystemChannels.platform_views': SystemChannels.platform_views,
   'SystemChannels.restoration': SystemChannels.restoration,
   'SystemChannels.skia': SystemChannels.skia,
+  'SystemChannels.spellCheck': SystemChannels.spellCheck,
   'SystemChannels.system': SystemChannels.system,
   'SystemChannels.textInput': SystemChannels.textInput,
   'SystemChrome.latestStyle': SystemChrome.latestStyle,
@@ -21615,6 +22945,7 @@ Map<String, dynamic> flutterComponents = {
       indicatorPadding: props['indicatorPadding'] ?? EdgeInsets.zero,
       indicator: props['indicator'],
       indicatorSize: props['indicatorSize'],
+      dividerColor: props['dividerColor'],
       labelColor: props['labelColor'],
       labelStyle: props['labelStyle'],
       labelPadding: props['labelPadding'],
@@ -21633,7 +22964,9 @@ Map<String, dynamic> flutterComponents = {
   'TabBarIndicatorSize.values': TabBarIndicatorSize.values,
   'TabBarTheme': (props) => TabBarTheme(
       indicator: props['indicator'],
+      indicatorColor: props['indicatorColor'],
       indicatorSize: props['indicatorSize'],
+      dividerColor: props['dividerColor'],
       labelColor: props['labelColor'],
       labelPadding: props['labelPadding'],
       labelStyle: props['labelStyle'],
@@ -21733,6 +23066,17 @@ Map<String, dynamic> flutterComponents = {
   'TapGestureRecognizer': (props) => TapGestureRecognizer(
       debugOwner: props['debugOwner'],
       supportedDevices: props['supportedDevices']),
+  'TapRegion': (props) => TapRegion(
+      key: props['key'],
+      child: props['child'],
+      enabled: props['enabled'] ?? true,
+      behavior: props['behavior'] ?? HitTestBehavior.deferToChild,
+      onTapOutside: props['onTapOutside'],
+      onTapInside: props['onTapInside'],
+      groupId: props['groupId'],
+      debugLabel: props['debugLabel']),
+  'TapRegionSurface': (props) =>
+      TapRegionSurface(key: props['key'], child: props['child']),
   'TapSemanticEvent': (props) => const TapSemanticEvent(),
   'TapUpDetails': (props) => TapUpDetails(
       kind: props['kind'],
@@ -21821,6 +23165,7 @@ Map<String, dynamic> flutterComponents = {
       focusNode: props['focusNode'],
       autofocus: props['autofocus'] ?? false,
       clipBehavior: props['clipBehavior'] ?? Clip.none,
+      statesController: props['statesController'],
       icon: props['icon'],
       label: props['label']),
   'TextButton.styleFrom': (props) => TextButton.styleFrom(
@@ -21830,6 +23175,8 @@ Map<String, dynamic> flutterComponents = {
       disabledBackgroundColor: props['disabledBackgroundColor'],
       shadowColor: props['shadowColor'],
       surfaceTintColor: props['surfaceTintColor'],
+      iconColor: props['iconColor'],
+      disabledIconColor: props['disabledIconColor'],
       elevation: props['elevation']?.toDouble(),
       textStyle: props['textStyle'],
       padding: props['padding'],
@@ -21955,6 +23302,7 @@ Map<String, dynamic> flutterComponents = {
       enableInteractiveSelection: props['enableInteractiveSelection'],
       selectionControls: props['selectionControls'],
       onTap: props['onTap'],
+      onTapOutside: props['onTapOutside'],
       mouseCursor: props['mouseCursor'],
       buildCounter: props['buildCounter'],
       scrollController: props['scrollController'],
@@ -21964,8 +23312,21 @@ Map<String, dynamic> flutterComponents = {
       restorationId: props['restorationId'],
       scribbleEnabled: props['scribbleEnabled'] ?? true,
       enableIMEPersonalizedLearning:
-          props['enableIMEPersonalizedLearning'] ?? true),
+          props['enableIMEPersonalizedLearning'] ?? true,
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder,
+      spellCheckConfiguration: props['spellCheckConfiguration'],
+      magnifierConfiguration: props['magnifierConfiguration']),
+  'TextField.materialMisspelledTextStyle':
+      TextField.materialMisspelledTextStyle,
   'TextField.noMaxLength': TextField.noMaxLength,
+  'TextFieldTapRegion': (props) => TextFieldTapRegion(
+      key: props['key'],
+      child: props['child'],
+      enabled: props['enabled'] ?? true,
+      onTapOutside: props['onTapOutside'],
+      onTapInside: props['onTapInside'],
+      debugLabel: props['debugLabel']),
   'TextFormField': (props) => TextFormField(
       key: props['key'],
       controller: props['controller'],
@@ -21998,6 +23359,7 @@ Map<String, dynamic> flutterComponents = {
       maxLength: props['maxLength'],
       onChanged: props['onChanged'],
       onTap: props['onTap'],
+      onTapOutside: props['onTapOutside'],
       onEditingComplete: props['onEditingComplete'],
       onFieldSubmitted: props['onFieldSubmitted'],
       onSaved: props['onSaved'],
@@ -22020,7 +23382,14 @@ Map<String, dynamic> flutterComponents = {
       restorationId: props['restorationId'],
       enableIMEPersonalizedLearning:
           props['enableIMEPersonalizedLearning'] ?? true,
-      mouseCursor: props['mouseCursor']),
+      mouseCursor: props['mouseCursor'],
+      contextMenuBuilder:
+          props['contextMenuBuilder'] ?? _defaultContextMenuBuilder),
+  'TextGranularity.character': TextGranularity.character,
+  'TextGranularity.document': TextGranularity.document,
+  'TextGranularity.line': TextGranularity.line,
+  'TextGranularity.values': TextGranularity.values,
+  'TextGranularity.word': TextGranularity.word,
   'TextHeightBehavior': (props) => TextHeightBehavior(
       applyHeightToFirstAscent: props['applyHeightToFirstAscent'] ?? true,
       applyHeightToLastDescent: props['applyHeightToLastDescent'] ?? true,
@@ -22033,9 +23402,15 @@ Map<String, dynamic> flutterComponents = {
       TextInput.finishAutofillContext(shouldSave: props['shouldSave'] ?? true),
   'TextInput.registerScribbleElement': (props) =>
       TextInput.registerScribbleElement(props['pa'][0], props['pa'][1]),
+  'TextInput.restorePlatformInputControl': (props) =>
+      TextInput.restorePlatformInputControl(),
   'TextInput.scribbleClients': TextInput.scribbleClients,
+  'TextInput.setInputControl': (props) =>
+      TextInput.setInputControl(props['pa'][0]),
   'TextInput.unregisterScribbleElement': (props) =>
       TextInput.unregisterScribbleElement(props['pa'][0]),
+  'TextInput.updateEditingValue': (props) =>
+      TextInput.updateEditingValue(props['pa'][0]),
   'TextInputAction.continueAction': TextInputAction.continueAction,
   'TextInputAction.done': TextInputAction.done,
   'TextInputAction.emergencyCall': TextInputAction.emergencyCall,
@@ -22086,6 +23461,15 @@ Map<String, dynamic> flutterComponents = {
   'TextLeadingDistribution.even': TextLeadingDistribution.even,
   'TextLeadingDistribution.proportional': TextLeadingDistribution.proportional,
   'TextLeadingDistribution.values': TextLeadingDistribution.values,
+  'TextMagnifier': (props) =>
+      TextMagnifier(key: props['key'], magnifierInfo: props['magnifierInfo']),
+  'TextMagnifier.adaptiveMagnifierConfiguration':
+      TextMagnifier.adaptiveMagnifierConfiguration,
+  'TextMagnifierConfiguration': (props) => TextMagnifierConfiguration(
+      magnifierBuilder: props['magnifierBuilder'],
+      shouldDisplayHandlesInMagnifier:
+          props['shouldDisplayHandlesInMagnifier'] ?? true),
+  'TextMagnifierConfiguration.disabled': TextMagnifierConfiguration.disabled,
   'TextOverflow.clip': TextOverflow.clip,
   'TextOverflow.ellipsis': TextOverflow.ellipsis,
   'TextOverflow.fade': TextOverflow.fade,
@@ -22102,6 +23486,33 @@ Map<String, dynamic> flutterComponents = {
       strutStyle: props['strutStyle'],
       textWidthBasis: props['textWidthBasis'] ?? TextWidthBasis.parent,
       textHeightBehavior: props['textHeightBehavior']),
+  'TextPainter.computeMaxIntrinsicWidth': (props) =>
+      TextPainter.computeMaxIntrinsicWidth(
+          text: props['text'],
+          textDirection: props['textDirection'],
+          textAlign: props['textAlign'] ?? TextAlign.start,
+          textScaleFactor: props['textScaleFactor']?.toDouble() ?? 1.0,
+          maxLines: props['maxLines'],
+          ellipsis: props['ellipsis'],
+          locale: props['locale'],
+          strutStyle: props['strutStyle'],
+          textWidthBasis: props['textWidthBasis'] ?? TextWidthBasis.parent,
+          textHeightBehavior: props['textHeightBehavior'],
+          minWidth: props['minWidth']?.toDouble() ?? 0.0,
+          maxWidth: props['maxWidth']?.toDouble() ?? double.infinity),
+  'TextPainter.computeWidth': (props) => TextPainter.computeWidth(
+      text: props['text'],
+      textDirection: props['textDirection'],
+      textAlign: props['textAlign'] ?? TextAlign.start,
+      textScaleFactor: props['textScaleFactor']?.toDouble() ?? 1.0,
+      maxLines: props['maxLines'],
+      ellipsis: props['ellipsis'],
+      locale: props['locale'],
+      strutStyle: props['strutStyle'],
+      textWidthBasis: props['textWidthBasis'] ?? TextWidthBasis.parent,
+      textHeightBehavior: props['textHeightBehavior'],
+      minWidth: props['minWidth']?.toDouble() ?? 0.0,
+      maxWidth: props['maxWidth']?.toDouble() ?? double.infinity),
   'TextParentData': (props) => TextParentData(),
   'TextPosition': (props) => TextPosition(
       offset: props['offset'],
@@ -22156,7 +23567,9 @@ Map<String, dynamic> flutterComponents = {
       selectionDelegate: props['selectionDelegate'],
       dragStartBehavior: props['dragStartBehavior'] ?? DragStartBehavior.start,
       onSelectionHandleTapped: props['onSelectionHandleTapped'],
-      clipboardStatus: props['clipboardStatus']),
+      clipboardStatus: props['clipboardStatus'],
+      contextMenuBuilder: props['contextMenuBuilder'],
+      magnifierConfiguration: props['magnifierConfiguration']),
   'TextSelectionPoint': (props) =>
       TextSelectionPoint(props['pa'][0], props['pa'][1]),
   'TextSelectionTheme': (props) => TextSelectionTheme(
@@ -22174,6 +23587,19 @@ Map<String, dynamic> flutterComponents = {
       anchorBelow: props['anchorBelow'],
       toolbarBuilder: props['toolbarBuilder'] ?? _defaultToolbarBuilder,
       children: as<Widget>(props['children']) ?? const []),
+  'TextSelectionToolbar.kHandleSize': TextSelectionToolbar.kHandleSize,
+  'TextSelectionToolbar.kToolbarContentDistanceBelow':
+      TextSelectionToolbar.kToolbarContentDistanceBelow,
+  'TextSelectionToolbarAnchors': (props) => TextSelectionToolbarAnchors(
+      primaryAnchor: props['primaryAnchor'],
+      secondaryAnchor: props['secondaryAnchor']),
+  'TextSelectionToolbarAnchors.fromSelection': (props) =>
+      TextSelectionToolbarAnchors.fromSelection(
+          renderBox: props['renderBox'],
+          startGlyphHeight: props['startGlyphHeight']?.toDouble() ?? 0,
+          endGlyphHeight: props['endGlyphHeight']?.toDouble() ?? 0,
+          selectionEndpoints:
+              as<TextSelectionPoint>(props['selectionEndpoints']) ?? const []),
   'TextSelectionToolbarLayoutDelegate': (props) =>
       TextSelectionToolbarLayoutDelegate(
           anchorAbove: props['anchorAbove'],
@@ -22324,8 +23750,6 @@ Map<String, dynamic> flutterComponents = {
       splashFactory: props['splashFactory'],
       useMaterial3: props['useMaterial3'],
       visualDensity: props['visualDensity'],
-      backgroundColor: props['backgroundColor'],
-      bottomAppBarColor: props['bottomAppBarColor'],
       brightness: props['brightness'],
       canvasColor: props['canvasColor'],
       cardColor: props['cardColor'],
@@ -22334,7 +23758,6 @@ Map<String, dynamic> flutterComponents = {
       dialogBackgroundColor: props['dialogBackgroundColor'],
       disabledColor: props['disabledColor'],
       dividerColor: props['dividerColor'],
-      errorColor: props['errorColor'],
       focusColor: props['focusColor'],
       highlightColor: props['highlightColor'],
       hintColor: props['hintColor'],
@@ -22346,18 +23769,19 @@ Map<String, dynamic> flutterComponents = {
       primarySwatch: props['primarySwatch'],
       scaffoldBackgroundColor: props['scaffoldBackgroundColor'],
       secondaryHeaderColor: props['secondaryHeaderColor'],
-      selectedRowColor: props['selectedRowColor'],
       shadowColor: props['shadowColor'],
       splashColor: props['splashColor'],
-      toggleableActiveColor: props['toggleableActiveColor'],
       unselectedWidgetColor: props['unselectedWidgetColor'],
       fontFamily: props['fontFamily'],
+      fontFamilyFallback: as<String>(props['fontFamilyFallback']),
+      package: props['package'],
       iconTheme: props['iconTheme'],
       primaryIconTheme: props['primaryIconTheme'],
       primaryTextTheme: props['primaryTextTheme'],
       textTheme: props['textTheme'],
       typography: props['typography'],
       appBarTheme: props['appBarTheme'],
+      badgeTheme: props['badgeTheme'],
       bannerTheme: props['bannerTheme'],
       bottomAppBarTheme: props['bottomAppBarTheme'],
       bottomNavigationBarTheme: props['bottomNavigationBarTheme'],
@@ -22371,16 +23795,24 @@ Map<String, dynamic> flutterComponents = {
       dialogTheme: props['dialogTheme'],
       dividerTheme: props['dividerTheme'],
       drawerTheme: props['drawerTheme'],
+      dropdownMenuTheme: props['dropdownMenuTheme'],
       elevatedButtonTheme: props['elevatedButtonTheme'],
       expansionTileTheme: props['expansionTileTheme'],
+      filledButtonTheme: props['filledButtonTheme'],
       floatingActionButtonTheme: props['floatingActionButtonTheme'],
+      iconButtonTheme: props['iconButtonTheme'],
       listTileTheme: props['listTileTheme'],
+      menuBarTheme: props['menuBarTheme'],
+      menuButtonTheme: props['menuButtonTheme'],
+      menuTheme: props['menuTheme'],
       navigationBarTheme: props['navigationBarTheme'],
+      navigationDrawerTheme: props['navigationDrawerTheme'],
       navigationRailTheme: props['navigationRailTheme'],
       outlinedButtonTheme: props['outlinedButtonTheme'],
       popupMenuTheme: props['popupMenuTheme'],
       progressIndicatorTheme: props['progressIndicatorTheme'],
       radioTheme: props['radioTheme'],
+      segmentedButtonTheme: props['segmentedButtonTheme'],
       sliderTheme: props['sliderTheme'],
       snackBarTheme: props['snackBarTheme'],
       switchTheme: props['switchTheme'],
@@ -22397,7 +23829,12 @@ Map<String, dynamic> flutterComponents = {
       buttonColor: props['buttonColor'],
       fixTextFieldOutlineLabel: props['fixTextFieldOutlineLabel'],
       primaryColorBrightness: props['primaryColorBrightness'],
-      androidOverscrollIndicator: props['androidOverscrollIndicator']),
+      androidOverscrollIndicator: props['androidOverscrollIndicator'],
+      toggleableActiveColor: props['toggleableActiveColor'],
+      selectedRowColor: props['selectedRowColor'],
+      errorColor: props['errorColor'],
+      backgroundColor: props['backgroundColor'],
+      bottomAppBarColor: props['bottomAppBarColor']),
   'ThemeData.dark': (props) =>
       ThemeData.dark(useMaterial3: props['useMaterial3']),
   'ThemeData.estimateBrightnessForColor': (props) =>
@@ -22426,15 +23863,12 @@ Map<String, dynamic> flutterComponents = {
       splashFactory: props['splashFactory'],
       useMaterial3: props['useMaterial3'],
       visualDensity: props['visualDensity'],
-      backgroundColor: props['backgroundColor'],
-      bottomAppBarColor: props['bottomAppBarColor'],
       canvasColor: props['canvasColor'],
       cardColor: props['cardColor'],
       colorScheme: props['colorScheme'],
       dialogBackgroundColor: props['dialogBackgroundColor'],
       disabledColor: props['disabledColor'],
       dividerColor: props['dividerColor'],
-      errorColor: props['errorColor'],
       focusColor: props['focusColor'],
       highlightColor: props['highlightColor'],
       hintColor: props['hintColor'],
@@ -22445,10 +23879,8 @@ Map<String, dynamic> flutterComponents = {
       primaryColorLight: props['primaryColorLight'],
       scaffoldBackgroundColor: props['scaffoldBackgroundColor'],
       secondaryHeaderColor: props['secondaryHeaderColor'],
-      selectedRowColor: props['selectedRowColor'],
       shadowColor: props['shadowColor'],
       splashColor: props['splashColor'],
-      toggleableActiveColor: props['toggleableActiveColor'],
       unselectedWidgetColor: props['unselectedWidgetColor'],
       iconTheme: props['iconTheme'],
       primaryIconTheme: props['primaryIconTheme'],
@@ -22456,6 +23888,7 @@ Map<String, dynamic> flutterComponents = {
       textTheme: props['textTheme'],
       typography: props['typography'],
       appBarTheme: props['appBarTheme'],
+      badgeTheme: props['badgeTheme'],
       bannerTheme: props['bannerTheme'],
       bottomAppBarTheme: props['bottomAppBarTheme'],
       bottomNavigationBarTheme: props['bottomNavigationBarTheme'],
@@ -22469,16 +23902,24 @@ Map<String, dynamic> flutterComponents = {
       dialogTheme: props['dialogTheme'],
       dividerTheme: props['dividerTheme'],
       drawerTheme: props['drawerTheme'],
+      dropdownMenuTheme: props['dropdownMenuTheme'],
       elevatedButtonTheme: props['elevatedButtonTheme'],
       expansionTileTheme: props['expansionTileTheme'],
+      filledButtonTheme: props['filledButtonTheme'],
       floatingActionButtonTheme: props['floatingActionButtonTheme'],
+      iconButtonTheme: props['iconButtonTheme'],
       listTileTheme: props['listTileTheme'],
+      menuBarTheme: props['menuBarTheme'],
+      menuButtonTheme: props['menuButtonTheme'],
+      menuTheme: props['menuTheme'],
       navigationBarTheme: props['navigationBarTheme'],
+      navigationDrawerTheme: props['navigationDrawerTheme'],
       navigationRailTheme: props['navigationRailTheme'],
       outlinedButtonTheme: props['outlinedButtonTheme'],
       popupMenuTheme: props['popupMenuTheme'],
       progressIndicatorTheme: props['progressIndicatorTheme'],
       radioTheme: props['radioTheme'],
+      segmentedButtonTheme: props['segmentedButtonTheme'],
       sliderTheme: props['sliderTheme'],
       snackBarTheme: props['snackBarTheme'],
       switchTheme: props['switchTheme'],
@@ -22495,7 +23936,12 @@ Map<String, dynamic> flutterComponents = {
       buttonColor: props['buttonColor'],
       fixTextFieldOutlineLabel: props['fixTextFieldOutlineLabel'],
       primaryColorBrightness: props['primaryColorBrightness'],
-      androidOverscrollIndicator: props['androidOverscrollIndicator']),
+      androidOverscrollIndicator: props['androidOverscrollIndicator'],
+      toggleableActiveColor: props['toggleableActiveColor'],
+      selectedRowColor: props['selectedRowColor'],
+      errorColor: props['errorColor'],
+      backgroundColor: props['backgroundColor'],
+      bottomAppBarColor: props['bottomAppBarColor']),
   'ThemeDataTween': (props) =>
       ThemeDataTween(begin: props['begin'], end: props['end']),
   'ThemeMode.dark': ThemeMode.dark,
@@ -22633,11 +24079,6 @@ Map<String, dynamic> flutterComponents = {
       velocity: props['velocity']?.toDouble() ?? _epsilonDefault),
   'Tolerance.defaultTolerance': Tolerance.defaultTolerance,
   'ToolbarItemsParentData': (props) => ToolbarItemsParentData(),
-  'ToolbarOptions': (props) => ToolbarOptions(
-      copy: props['copy'] ?? false,
-      cut: props['cut'] ?? false,
-      paste: props['paste'] ?? false,
-      selectAll: props['selectAll'] ?? false),
   'Tooltip': (props) => Tooltip(
       key: props['key'],
       message: props['message'],
@@ -22787,6 +24228,7 @@ Map<String, dynamic> flutterComponents = {
       tall: props['tall']),
   'Typography.material2021': (props) => Typography.material2021(
       platform: props['platform'] ?? TargetPlatform.android,
+      colorScheme: props['colorScheme'] ?? const ColorScheme.light(),
       black: props['black'],
       white: props['white'],
       englishLike: props['englishLike'],
@@ -22823,6 +24265,7 @@ Map<String, dynamic> flutterComponents = {
           const BorderRadius.only(
               topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
   'UnderlineTabIndicator': (props) => UnderlineTabIndicator(
+      borderRadius: props['borderRadius'],
       borderSide: props['borderSide'] ??
           const BorderSide(width: 2.0, color: Colors.white),
       insets: props['insets'] ?? EdgeInsets.zero),
@@ -22939,6 +24382,11 @@ Map<String, dynamic> flutterComponents = {
       maintainSize: props['maintainSize'] ?? false,
       maintainSemantics: props['maintainSemantics'] ?? false,
       maintainInteractivity: props['maintainInteractivity'] ?? false),
+  'Visibility.maintain': (props) => Visibility.maintain(
+      key: props['key'],
+      child: props['child'],
+      replacement: props['replacement'] ?? const SizedBox.shrink(),
+      visible: props['visible'] ?? true),
   'VisualDensity': (props) => VisualDensity(
       horizontal: props['horizontal']?.toDouble() ?? 0.0,
       vertical: props['vertical']?.toDouble() ?? 0.0),
@@ -22953,6 +24401,71 @@ Map<String, dynamic> flutterComponents = {
   'VisualDensity.standard': VisualDensity.standard,
   'VoidCallbackAction': (props) => VoidCallbackAction(),
   'VoidCallbackIntent': (props) => VoidCallbackIntent(props['pa'][0]),
+  'WhitespaceBoundary': (props) => WhitespaceBoundary(props['pa'][0]),
+  'WidgetInspectorServiceExtensions.addPubRootDirectories':
+      WidgetInspectorServiceExtensions.addPubRootDirectories,
+  'WidgetInspectorServiceExtensions.disposeAllGroups':
+      WidgetInspectorServiceExtensions.disposeAllGroups,
+  'WidgetInspectorServiceExtensions.disposeGroup':
+      WidgetInspectorServiceExtensions.disposeGroup,
+  'WidgetInspectorServiceExtensions.disposeId':
+      WidgetInspectorServiceExtensions.disposeId,
+  'WidgetInspectorServiceExtensions.getChildren':
+      WidgetInspectorServiceExtensions.getChildren,
+  'WidgetInspectorServiceExtensions.getChildrenDetailsSubtree':
+      WidgetInspectorServiceExtensions.getChildrenDetailsSubtree,
+  'WidgetInspectorServiceExtensions.getChildrenSummaryTree':
+      WidgetInspectorServiceExtensions.getChildrenSummaryTree,
+  'WidgetInspectorServiceExtensions.getDetailsSubtree':
+      WidgetInspectorServiceExtensions.getDetailsSubtree,
+  'WidgetInspectorServiceExtensions.getLayoutExplorerNode':
+      WidgetInspectorServiceExtensions.getLayoutExplorerNode,
+  'WidgetInspectorServiceExtensions.getParentChain':
+      WidgetInspectorServiceExtensions.getParentChain,
+  'WidgetInspectorServiceExtensions.getProperties':
+      WidgetInspectorServiceExtensions.getProperties,
+  'WidgetInspectorServiceExtensions.getPubRootDirectories':
+      WidgetInspectorServiceExtensions.getPubRootDirectories,
+  'WidgetInspectorServiceExtensions.getRootRenderObject':
+      WidgetInspectorServiceExtensions.getRootRenderObject,
+  'WidgetInspectorServiceExtensions.getRootWidget':
+      WidgetInspectorServiceExtensions.getRootWidget,
+  'WidgetInspectorServiceExtensions.getRootWidgetSummaryTree':
+      WidgetInspectorServiceExtensions.getRootWidgetSummaryTree,
+  'WidgetInspectorServiceExtensions.getRootWidgetSummaryTreeWithPreviews':
+      WidgetInspectorServiceExtensions.getRootWidgetSummaryTreeWithPreviews,
+  'WidgetInspectorServiceExtensions.getSelectedRenderObject':
+      WidgetInspectorServiceExtensions.getSelectedRenderObject,
+  'WidgetInspectorServiceExtensions.getSelectedSummaryWidget':
+      WidgetInspectorServiceExtensions.getSelectedSummaryWidget,
+  'WidgetInspectorServiceExtensions.getSelectedWidget':
+      WidgetInspectorServiceExtensions.getSelectedWidget,
+  'WidgetInspectorServiceExtensions.isWidgetCreationTracked':
+      WidgetInspectorServiceExtensions.isWidgetCreationTracked,
+  'WidgetInspectorServiceExtensions.isWidgetTreeReady':
+      WidgetInspectorServiceExtensions.isWidgetTreeReady,
+  'WidgetInspectorServiceExtensions.removePubRootDirectories':
+      WidgetInspectorServiceExtensions.removePubRootDirectories,
+  'WidgetInspectorServiceExtensions.screenshot':
+      WidgetInspectorServiceExtensions.screenshot,
+  'WidgetInspectorServiceExtensions.setFlexFactor':
+      WidgetInspectorServiceExtensions.setFlexFactor,
+  'WidgetInspectorServiceExtensions.setFlexFit':
+      WidgetInspectorServiceExtensions.setFlexFit,
+  'WidgetInspectorServiceExtensions.setFlexProperties':
+      WidgetInspectorServiceExtensions.setFlexProperties,
+  'WidgetInspectorServiceExtensions.setSelectionById':
+      WidgetInspectorServiceExtensions.setSelectionById,
+  'WidgetInspectorServiceExtensions.show':
+      WidgetInspectorServiceExtensions.show,
+  'WidgetInspectorServiceExtensions.structuredErrors':
+      WidgetInspectorServiceExtensions.structuredErrors,
+  'WidgetInspectorServiceExtensions.trackRebuildDirtyWidgets':
+      WidgetInspectorServiceExtensions.trackRebuildDirtyWidgets,
+  'WidgetInspectorServiceExtensions.trackRepaintWidgets':
+      WidgetInspectorServiceExtensions.trackRepaintWidgets,
+  'WidgetInspectorServiceExtensions.values':
+      WidgetInspectorServiceExtensions.values,
   'WidgetOrderTraversalPolicy': (props) => WidgetOrderTraversalPolicy(),
   'WidgetSpan': (props) => WidgetSpan(
       child: props['child'],
@@ -23040,9 +24553,27 @@ Map<String, dynamic> flutterComponents = {
   'WidgetsFlutterBinding': (props) => WidgetsFlutterBinding(),
   'WidgetsFlutterBinding.ensureInitialized': (props) =>
       WidgetsFlutterBinding.ensureInitialized(),
+  'WidgetsServiceExtensions.debugAllowBanner':
+      WidgetsServiceExtensions.debugAllowBanner,
+  'WidgetsServiceExtensions.debugDumpApp':
+      WidgetsServiceExtensions.debugDumpApp,
+  'WidgetsServiceExtensions.didSendFirstFrameEvent':
+      WidgetsServiceExtensions.didSendFirstFrameEvent,
+  'WidgetsServiceExtensions.didSendFirstFrameRasterizedEvent':
+      WidgetsServiceExtensions.didSendFirstFrameRasterizedEvent,
+  'WidgetsServiceExtensions.fastReassemble':
+      WidgetsServiceExtensions.fastReassemble,
+  'WidgetsServiceExtensions.profileUserWidgetBuilds':
+      WidgetsServiceExtensions.profileUserWidgetBuilds,
+  'WidgetsServiceExtensions.profileWidgetBuilds':
+      WidgetsServiceExtensions.profileWidgetBuilds,
+  'WidgetsServiceExtensions.showPerformanceOverlay':
+      WidgetsServiceExtensions.showPerformanceOverlay,
+  'WidgetsServiceExtensions.values': WidgetsServiceExtensions.values,
   'WillPopScope': (props) => WillPopScope(
       key: props['key'], child: props['child'], onWillPop: props['onWillPop']),
   'WindowPadding.zero': WindowPadding.zero,
+  'WordBoundary': (props) => WordBoundary(props['pa'][0]),
   'Wrap': (props) => Wrap(
       key: props['key'],
       direction: props['direction'] ?? Axis.horizontal,
@@ -23100,6 +24631,14 @@ Map<String, bool> flutterMapping = {
   'Actions.maybeInvoke': false,
   'Actions.of': false,
   'ActivateIntent': false,
+  'AdaptiveTextSelectionToolbar': true,
+  'AdaptiveTextSelectionToolbar.buttonItems': true,
+  'AdaptiveTextSelectionToolbar.editable': true,
+  'AdaptiveTextSelectionToolbar.editableText': true,
+  'AdaptiveTextSelectionToolbar.getAdaptiveButtons': false,
+  'AdaptiveTextSelectionToolbar.getButtonLabel': false,
+  'AdaptiveTextSelectionToolbar.selectable': true,
+  'AdaptiveTextSelectionToolbar.selectableRegion': true,
   'AlertDialog': true,
   'Align': true,
   'AlignTransition': true,
@@ -23149,6 +24688,9 @@ Map<String, bool> flutterMapping = {
   'AnimatedCrossFade.defaultLayoutBuilder': false,
   'AnimatedDefaultTextStyle': true,
   'AnimatedFractionallySizedBox': true,
+  'AnimatedGrid': true,
+  'AnimatedGrid.maybeOf': false,
+  'AnimatedGrid.of': false,
   'AnimatedIcon': true,
   'AnimatedList': true,
   'AnimatedList.maybeOf': false,
@@ -23198,6 +24740,9 @@ Map<String, bool> flutterMapping = {
   'AppLifecycleState.values': false,
   'ApplicationSwitcherDescription': false,
   'AspectRatio': true,
+  'Assertiveness.assertive': false,
+  'Assertiveness.polite': false,
+  'Assertiveness.values': false,
   'AssetBundleImageKey': false,
   'AssetImage': false,
   'AsyncSnapshot.nothing': false,
@@ -23217,6 +24762,7 @@ Map<String, bool> flutterMapping = {
   'AutofillContextAction.commit': false,
   'AutofillContextAction.values': false,
   'AutofillGroup': true,
+  'AutofillGroup.maybeOf': false,
   'AutofillGroup.of': false,
   'AutofillHints.addressCity': false,
   'AutofillHints.addressCityAndState': false,
@@ -23303,6 +24849,14 @@ Map<String, bool> flutterMapping = {
   'BackButtonListener': true,
   'BackdropFilter': true,
   'BackdropFilterLayer': false,
+  'BackgroundIsolateBinaryMessenger': false,
+  'BackgroundIsolateBinaryMessenger.instance': false,
+  'Badge': true,
+  'Badge.count': true,
+  'BadgeTheme': true,
+  'BadgeTheme.of': false,
+  'BadgeThemeData': false,
+  'BadgeThemeData.lerp': false,
   'BallisticScrollActivity': false,
   'Banner': true,
   'BannerLocation.bottomEnd': false,
@@ -23382,6 +24936,9 @@ Map<String, bool> flutterMapping = {
   'BorderSide.lerp': false,
   'BorderSide.merge': false,
   'BorderSide.none': false,
+  'BorderSide.strokeAlignCenter': false,
+  'BorderSide.strokeAlignInside': false,
+  'BorderSide.strokeAlignOutside': false,
   'BorderStyle.none': false,
   'BorderStyle.solid': false,
   'BorderStyle.values': false,
@@ -23463,6 +25020,7 @@ Map<String, bool> flutterMapping = {
   'ButtonBarTheme.of': false,
   'ButtonBarThemeData': false,
   'ButtonBarThemeData.lerp': false,
+  'ButtonSegment': false,
   'ButtonStyle': false,
   'ButtonStyle.lerp': false,
   'ButtonTextTheme.accent': false,
@@ -23499,9 +25057,11 @@ Map<String, bool> flutterMapping = {
   'ChannelBuffers.kControlChannelName': false,
   'ChannelBuffers.kDefaultBufferSize': false,
   'CharacterActivator': false,
+  'CharacterBoundary': false,
   'Checkbox': true,
   'Checkbox.width': false,
   'CheckboxListTile': true,
+  'CheckboxMenuButton': true,
   'CheckboxTheme': true,
   'CheckboxTheme.of': false,
   'CheckboxThemeData': false,
@@ -23657,6 +25217,15 @@ Map<String, bool> flutterMapping = {
   'ConstraintsTransformBox.widthUnconstrained': false,
   'Container': true,
   'ContainerLayer': false,
+  'ContextMenuButtonItem': false,
+  'ContextMenuButtonType.copy': false,
+  'ContextMenuButtonType.custom': false,
+  'ContextMenuButtonType.cut': false,
+  'ContextMenuButtonType.paste': false,
+  'ContextMenuButtonType.selectAll': false,
+  'ContextMenuButtonType.values': false,
+  'ContextMenuController': false,
+  'ContextMenuController.removeAny': false,
   'ContinuousRectangleBorder': false,
   'ControlsDetails': false,
   'CopySelectionTextIntent.copy': false,
@@ -23675,6 +25244,12 @@ Map<String, bool> flutterMapping = {
   'CupertinoActionSheetAction': true,
   'CupertinoActivityIndicator': true,
   'CupertinoActivityIndicator.partiallyRevealed': true,
+  'CupertinoAdaptiveTextSelectionToolbar': true,
+  'CupertinoAdaptiveTextSelectionToolbar.buttonItems': true,
+  'CupertinoAdaptiveTextSelectionToolbar.editable': true,
+  'CupertinoAdaptiveTextSelectionToolbar.editableText': true,
+  'CupertinoAdaptiveTextSelectionToolbar.getAdaptiveButtons': false,
+  'CupertinoAdaptiveTextSelectionToolbar.selectable': true,
   'CupertinoAlertDialog': true,
   'CupertinoApp': true,
   'CupertinoApp.createCupertinoHeroController': false,
@@ -23725,12 +25300,21 @@ Map<String, bool> flutterMapping = {
   'CupertinoColors.tertiarySystemGroupedBackground': false,
   'CupertinoColors.white': false,
   'CupertinoContextMenu': true,
+  'CupertinoContextMenu.animationOpensAt': false,
+  'CupertinoContextMenu.builder': true,
+  'CupertinoContextMenu.kEndBoxShadow': false,
+  'CupertinoContextMenu.kOpenBorderRadius': false,
   'CupertinoContextMenuAction': true,
   'CupertinoDatePicker': true,
   'CupertinoDatePickerMode.date': false,
   'CupertinoDatePickerMode.dateAndTime': false,
   'CupertinoDatePickerMode.time': false,
   'CupertinoDatePickerMode.values': false,
+  'CupertinoDesktopTextSelectionControls': false,
+  'CupertinoDesktopTextSelectionToolbar': true,
+  'CupertinoDesktopTextSelectionToolbarButton': true,
+  'CupertinoDesktopTextSelectionToolbarButton.buttonItem': true,
+  'CupertinoDesktopTextSelectionToolbarButton.text': true,
   'CupertinoDialogAction': true,
   'CupertinoDialogRoute': false,
   'CupertinoDynamicColor': false,
@@ -25067,6 +26651,15 @@ Map<String, bool> flutterMapping = {
   'CupertinoIcons.zoom_in': false,
   'CupertinoIcons.zoom_out': false,
   'CupertinoIcons.zzz': false,
+  'CupertinoListSection': true,
+  'CupertinoListSection.insetGrouped': true,
+  'CupertinoListSectionType.base': false,
+  'CupertinoListSectionType.insetGrouped': false,
+  'CupertinoListSectionType.values': false,
+  'CupertinoListTile': true,
+  'CupertinoListTile.notched': true,
+  'CupertinoListTileChevron': true,
+  'CupertinoMagnifier': true,
   'CupertinoModalPopupRoute': false,
   'CupertinoNavigationBar': true,
   'CupertinoNavigationBarBackButton': true,
@@ -25099,10 +26692,15 @@ Map<String, bool> flutterMapping = {
   'CupertinoTabView': true,
   'CupertinoTextField': true,
   'CupertinoTextField.borderless': true,
+  'CupertinoTextField.cupertinoMisspelledTextStyle': false,
   'CupertinoTextFormFieldRow': true,
+  'CupertinoTextMagnifier': true,
   'CupertinoTextSelectionControls': false,
   'CupertinoTextSelectionToolbar': true,
+  'CupertinoTextSelectionToolbar.kToolbarScreenPadding': false,
   'CupertinoTextSelectionToolbarButton': true,
+  'CupertinoTextSelectionToolbarButton.buttonItem': true,
+  'CupertinoTextSelectionToolbarButton.getButtonLabel': false,
   'CupertinoTextSelectionToolbarButton.text': true,
   'CupertinoTextThemeData': false,
   'CupertinoTheme': true,
@@ -25180,6 +26778,11 @@ Map<String, bool> flutterMapping = {
   'CustomSemanticsAction.getIdentifier': false,
   'CustomSemanticsAction.overridingAction': false,
   'CustomSingleChildLayout': true,
+  'DartPerformanceMode.balanced': false,
+  'DartPerformanceMode.latency': false,
+  'DartPerformanceMode.memory': false,
+  'DartPerformanceMode.throughput': false,
+  'DartPerformanceMode.values': false,
   'DartPluginRegistrant': false,
   'DartPluginRegistrant.ensureInitialized': false,
   'DataCell': false,
@@ -25247,12 +26850,17 @@ Map<String, bool> flutterMapping = {
   'DefaultMaterialLocalizations.load': false,
   'DefaultPlatformMenuDelegate': false,
   'DefaultSelectionStyle': true,
+  'DefaultSelectionStyle.defaultColor': false,
   'DefaultSelectionStyle.fallback': true,
   'DefaultSelectionStyle.of': true,
+  'DefaultSpellCheckService': false,
+  'DefaultSpellCheckService.mergeResults': false,
   'DefaultTabController': true,
+  'DefaultTabController.maybeOf': false,
   'DefaultTabController.of': false,
   'DefaultTextEditingShortcuts': true,
   'DefaultTextHeightBehavior': true,
+  'DefaultTextHeightBehavior.maybeOf': false,
   'DefaultTextHeightBehavior.of': false,
   'DefaultTextStyle': true,
   'DefaultTextStyle.fallback': true,
@@ -25269,6 +26877,10 @@ Map<String, bool> flutterMapping = {
   'DeleteCharacterIntent': false,
   'DeleteToLineBreakIntent': false,
   'DeleteToNextWordBoundaryIntent': false,
+  'DesktopTextSelectionControls': false,
+  'DesktopTextSelectionToolbar': true,
+  'DesktopTextSelectionToolbarButton': true,
+  'DesktopTextSelectionToolbarButton.text': true,
   'DesktopTextSelectionToolbarLayoutDelegate': false,
   'DeviceGestureSettings': false,
   'DeviceGestureSettings.fromWindow': false,
@@ -25311,6 +26923,7 @@ Map<String, bool> flutterMapping = {
   'DiagnosticsTreeStyle.values': false,
   'DiagnosticsTreeStyle.whitespace': false,
   'Dialog': true,
+  'Dialog.fullscreen': true,
   'DialogRoute': false,
   'DialogTheme': false,
   'DialogTheme.lerp': false,
@@ -25321,6 +26934,7 @@ Map<String, bool> flutterMapping = {
   'Directionality': true,
   'Directionality.maybeOf': false,
   'Directionality.of': false,
+  'DirectionallyExtendSelectionEvent': false,
   'DismissDirection.down': false,
   'DismissDirection.endToStart': false,
   'DismissDirection.horizontal': false,
@@ -25330,6 +26944,7 @@ Map<String, bool> flutterMapping = {
   'DismissDirection.values': false,
   'DismissDirection.vertical': false,
   'DismissIntent': false,
+  'DismissMenuAction': false,
   'DismissUpdateDetails': false,
   'Dismissible': true,
   'DisplayFeature': false,
@@ -25356,7 +26971,30 @@ Map<String, bool> flutterMapping = {
   'DoNothingAndStopPropagationIntent': false,
   'DoNothingAndStopPropagationTextIntent': false,
   'DoNothingIntent': false,
+  'DocumentBoundary': false,
   'DocumentationIcon': false,
+  'DomCSSStyleDeclaration': false,
+  'DomCSSStyleSheet': false,
+  'DomDocument': false,
+  'DomElement': false,
+  'DomEvent': false,
+  'DomEventTarget': false,
+  'DomHTMLDivElement': false,
+  'DomHTMLElement': false,
+  'DomHTMLHeadElement': false,
+  'DomHTMLStyleElement': false,
+  'DomMediaQueryList': false,
+  'DomMouseEvent': false,
+  'DomNavigator': false,
+  'DomNode': false,
+  'DomProgressEvent': false,
+  'DomRange': false,
+  'DomSelection': false,
+  'DomStyleSheet': false,
+  'DomTokenList': false,
+  'DomUIEvent': false,
+  'DomWindow': false,
+  'DomXMLHttpRequest': false,
   'DoubleProperty': false,
   'DoubleProperty.lazy': false,
   'DoubleTapGestureRecognizer': false,
@@ -25382,17 +27020,27 @@ Map<String, bool> flutterMapping = {
   'DrawerAlignment.start': false,
   'DrawerAlignment.values': false,
   'DrawerController': true,
+  'DrawerController.maybeOf': true,
+  'DrawerController.of': true,
   'DrawerHeader': true,
   'DrawerTheme': true,
   'DrawerTheme.of': false,
   'DrawerThemeData': false,
   'DrawerThemeData.lerp': false,
   'DrivenScrollActivity': false,
+  'DropSliderValueIndicatorShape': false,
   'DropdownButton': true,
   'DropdownButtonFormField': true,
   'DropdownButtonHideUnderline': true,
   'DropdownButtonHideUnderline.at': false,
+  'DropdownMenu': true,
+  'DropdownMenuEntry': false,
   'DropdownMenuItem': true,
+  'DropdownMenuTheme': true,
+  'DropdownMenuTheme.maybeOf': false,
+  'DropdownMenuTheme.of': false,
+  'DropdownMenuThemeData': false,
+  'DropdownMenuThemeData.lerp': false,
   'DualTransitionBuilder': true,
   'EagerGestureRecognizer': false,
   'EdgeDraggingAutoScroller': false,
@@ -25407,11 +27055,13 @@ Map<String, bool> flutterMapping = {
   'EdgeInsetsDirectional.fromSTEB': false,
   'EdgeInsetsDirectional.lerp': false,
   'EdgeInsetsDirectional.only': false,
+  'EdgeInsetsDirectional.symmetric': false,
   'EdgeInsetsDirectional.zero': false,
   'EdgeInsetsGeometryTween': false,
   'EdgeInsetsTween': false,
   'EditableText': true,
   'EditableText.debugDeterministicCursor': false,
+  'EditableText.getEditableButtonItems': false,
   'ElasticInCurve': false,
   'ElasticInOutCurve': false,
   'ElasticOutCurve': false,
@@ -25426,6 +27076,7 @@ Map<String, bool> flutterMapping = {
   'ElevationOverlay.applySurfaceTint': false,
   'ElevationOverlay.colorWithOverlay': false,
   'ElevationOverlay.overlayColor': false,
+  'EmptyTextSelectionControls': false,
   'EnumProperty': false,
   'ErrorDescription': false,
   'ErrorHint': false,
@@ -25453,11 +27104,13 @@ Map<String, bool> flutterMapping = {
   'ExpansionTileThemeData': false,
   'ExpansionTileThemeData.lerp': false,
   'ExtendSelectionByCharacterIntent': false,
+  'ExtendSelectionByPageIntent': false,
   'ExtendSelectionToDocumentBoundaryIntent': false,
   'ExtendSelectionToLineBreakIntent': false,
   'ExtendSelectionToNextWordBoundaryIntent': false,
   'ExtendSelectionToNextWordBoundaryOrCaretLocationIntent': false,
   'ExtendSelectionVerticallyToAdjacentLineIntent': false,
+  'ExtendSelectionVerticallyToAdjacentPageIntent': false,
   'Factory': false,
   'FadeInImage': true,
   'FadeInImage.assetNetwork': true,
@@ -25469,6 +27122,15 @@ Map<String, bool> flutterMapping = {
   'Feedback.wrapForLongPress': false,
   'Feedback.wrapForTap': false,
   'FileImage': false,
+  'FilledButton': true,
+  'FilledButton.icon': true,
+  'FilledButton.styleFrom': false,
+  'FilledButton.tonal': true,
+  'FilledButton.tonalIcon': true,
+  'FilledButtonTheme': true,
+  'FilledButtonTheme.of': false,
+  'FilledButtonThemeData': false,
+  'FilledButtonThemeData.lerp': false,
   'FilterChip': true,
   'FilterQuality.high': false,
   'FilterQuality.low': false,
@@ -25561,8 +27223,6 @@ Map<String, bool> flutterMapping = {
   'FocusScope.of': false,
   'FocusScope.withExternalFocusNode': true,
   'FocusScopeNode': false,
-  'FocusTrap': true,
-  'FocusTrapArea': true,
   'FocusTraversalGroup': true,
   'FocusTraversalGroup.maybeOf': false,
   'FocusTraversalGroup.of': false,
@@ -25620,8 +27280,16 @@ Map<String, bool> flutterMapping = {
   'ForcePressDetails': false,
   'ForcePressGestureRecognizer': false,
   'Form': true,
+  'Form.maybeOf': false,
   'Form.of': false,
   'FormField': true,
+  'FoundationServiceExtensions.activeDevToolsServerAddress': false,
+  'FoundationServiceExtensions.brightnessOverride': false,
+  'FoundationServiceExtensions.connectedVmServiceUri': false,
+  'FoundationServiceExtensions.exit': false,
+  'FoundationServiceExtensions.platformOverride': false,
+  'FoundationServiceExtensions.reassemble': false,
+  'FoundationServiceExtensions.values': false,
   'FractionColumnWidth': false,
   'FractionalOffset': false,
   'FractionalOffset.bottomCenter': false,
@@ -25639,8 +27307,7 @@ Map<String, bool> flutterMapping = {
   'FractionalOffsetTween': false,
   'FractionalTranslation': true,
   'FractionallySizedBox': true,
-  'FragmentProgram.compile': false,
-  'FragmentShaderManager.inkSparkle': false,
+  'FragmentProgram.fromAsset': false,
   'FramePhase.buildFinish': false,
   'FramePhase.buildStart': false,
   'FramePhase.rasterFinish': false,
@@ -25675,6 +27342,7 @@ Map<String, bool> flutterMapping = {
   'GlobalObjectKey': false,
   'GlowingOverscrollIndicator': true,
   'GradientRotation': false,
+  'GranularlyExtendSelectionEvent': false,
   'GravitySimulation': false,
   'GridPaper': true,
   'GridTile': true,
@@ -25711,6 +27379,7 @@ Map<String, bool> flutterMapping = {
   'Hero': true,
   'HeroController': false,
   'HeroControllerScope': true,
+  'HeroControllerScope.maybeOf': false,
   'HeroControllerScope.none': true,
   'HeroControllerScope.of': false,
   'HeroFlightDirection.pop': false,
@@ -25736,6 +27405,10 @@ Map<String, bool> flutterMapping = {
   'Icon': true,
   'IconButton': true,
   'IconButton.styleFrom': false,
+  'IconButtonTheme': true,
+  'IconButtonTheme.of': false,
+  'IconButtonThemeData': false,
+  'IconButtonThemeData.lerp': false,
   'IconDataProperty': false,
   'IconTheme': true,
   'IconTheme.merge': false,
@@ -26221,6 +27894,10 @@ Map<String, bool> flutterMapping = {
   'Icons.arrow_left_outlined': false,
   'Icons.arrow_left_rounded': false,
   'Icons.arrow_left_sharp': false,
+  'Icons.arrow_outward': false,
+  'Icons.arrow_outward_outlined': false,
+  'Icons.arrow_outward_rounded': false,
+  'Icons.arrow_outward_sharp': false,
   'Icons.arrow_right': false,
   'Icons.arrow_right_alt': false,
   'Icons.arrow_right_alt_outlined': false,
@@ -26250,6 +27927,7 @@ Map<String, bool> flutterMapping = {
   'Icons.assessment_rounded': false,
   'Icons.assessment_sharp': false,
   'Icons.assignment': false,
+  'Icons.assignment_add': false,
   'Icons.assignment_ind': false,
   'Icons.assignment_ind_outlined': false,
   'Icons.assignment_ind_rounded': false,
@@ -26273,6 +27951,10 @@ Map<String, bool> flutterMapping = {
   'Icons.assignment_turned_in_outlined': false,
   'Icons.assignment_turned_in_rounded': false,
   'Icons.assignment_turned_in_sharp': false,
+  'Icons.assist_walker': false,
+  'Icons.assist_walker_outlined': false,
+  'Icons.assist_walker_rounded': false,
+  'Icons.assist_walker_sharp': false,
   'Icons.assistant': false,
   'Icons.assistant_direction': false,
   'Icons.assistant_direction_outlined': false,
@@ -26426,6 +28108,7 @@ Map<String, bool> flutterMapping = {
   'Icons.bar_chart_outlined': false,
   'Icons.bar_chart_rounded': false,
   'Icons.bar_chart_sharp': false,
+  'Icons.barcode_reader': false,
   'Icons.batch_prediction': false,
   'Icons.batch_prediction_outlined': false,
   'Icons.batch_prediction_rounded': false,
@@ -26538,6 +28221,10 @@ Map<String, bool> flutterMapping = {
   'Icons.blender_outlined': false,
   'Icons.blender_rounded': false,
   'Icons.blender_sharp': false,
+  'Icons.blind': false,
+  'Icons.blind_outlined': false,
+  'Icons.blind_rounded': false,
+  'Icons.blind_sharp': false,
   'Icons.blinds': false,
   'Icons.blinds_closed': false,
   'Icons.blinds_closed_outlined': false,
@@ -27300,6 +28987,10 @@ Map<String, bool> flutterMapping = {
   'Icons.construction_outlined': false,
   'Icons.construction_rounded': false,
   'Icons.construction_sharp': false,
+  'Icons.contact_emergency': false,
+  'Icons.contact_emergency_outlined': false,
+  'Icons.contact_emergency_rounded': false,
+  'Icons.contact_emergency_sharp': false,
   'Icons.contact_mail': false,
   'Icons.contact_mail_outlined': false,
   'Icons.contact_mail_rounded': false,
@@ -27364,6 +29055,7 @@ Map<String, bool> flutterMapping = {
   'Icons.control_point_outlined': false,
   'Icons.control_point_rounded': false,
   'Icons.control_point_sharp': false,
+  'Icons.conveyor_belt': false,
   'Icons.cookie': false,
   'Icons.cookie_outlined': false,
   'Icons.cookie_rounded': false,
@@ -27704,6 +29396,7 @@ Map<String, bool> flutterMapping = {
   'Icons.devices_outlined': false,
   'Icons.devices_rounded': false,
   'Icons.devices_sharp': false,
+  'Icons.dew_point': false,
   'Icons.dialer_sip': false,
   'Icons.dialer_sip_outlined': false,
   'Icons.dialer_sip_rounded': false,
@@ -27832,6 +29525,18 @@ Map<String, bool> flutterMapping = {
   'Icons.display_settings_outlined': false,
   'Icons.display_settings_rounded': false,
   'Icons.display_settings_sharp': false,
+  'Icons.diversity_1': false,
+  'Icons.diversity_1_outlined': false,
+  'Icons.diversity_1_rounded': false,
+  'Icons.diversity_1_sharp': false,
+  'Icons.diversity_2': false,
+  'Icons.diversity_2_outlined': false,
+  'Icons.diversity_2_rounded': false,
+  'Icons.diversity_2_sharp': false,
+  'Icons.diversity_3': false,
+  'Icons.diversity_3_outlined': false,
+  'Icons.diversity_3_rounded': false,
+  'Icons.diversity_3_sharp': false,
   'Icons.dnd_forwardslash': false,
   'Icons.dnd_forwardslash_outlined': false,
   'Icons.dnd_forwardslash_rounded': false,
@@ -28066,6 +29771,7 @@ Map<String, bool> flutterMapping = {
   'Icons.edit_calendar_outlined': false,
   'Icons.edit_calendar_rounded': false,
   'Icons.edit_calendar_sharp': false,
+  'Icons.edit_document': false,
   'Icons.edit_location': false,
   'Icons.edit_location_alt': false,
   'Icons.edit_location_alt_outlined': false,
@@ -28093,6 +29799,7 @@ Map<String, bool> flutterMapping = {
   'Icons.edit_road_sharp': false,
   'Icons.edit_rounded': false,
   'Icons.edit_sharp': false,
+  'Icons.edit_square': false,
   'Icons.egg': false,
   'Icons.egg_alt': false,
   'Icons.egg_alt_outlined': false,
@@ -28370,6 +30077,26 @@ Map<String, bool> flutterMapping = {
   'Icons.extension_rounded': false,
   'Icons.extension_sharp': false,
   'Icons.face': false,
+  'Icons.face_2': false,
+  'Icons.face_2_outlined': false,
+  'Icons.face_2_rounded': false,
+  'Icons.face_2_sharp': false,
+  'Icons.face_3': false,
+  'Icons.face_3_outlined': false,
+  'Icons.face_3_rounded': false,
+  'Icons.face_3_sharp': false,
+  'Icons.face_4': false,
+  'Icons.face_4_outlined': false,
+  'Icons.face_4_rounded': false,
+  'Icons.face_4_sharp': false,
+  'Icons.face_5': false,
+  'Icons.face_5_outlined': false,
+  'Icons.face_5_rounded': false,
+  'Icons.face_5_sharp': false,
+  'Icons.face_6': false,
+  'Icons.face_6_outlined': false,
+  'Icons.face_6_rounded': false,
+  'Icons.face_6_sharp': false,
   'Icons.face_outlined': false,
   'Icons.face_retouching_natural': false,
   'Icons.face_retouching_natural_outlined': false,
@@ -28505,6 +30232,7 @@ Map<String, bool> flutterMapping = {
   'Icons.file_present_rounded': false,
   'Icons.file_present_sharp': false,
   'Icons.file_upload': false,
+  'Icons.file_upload_off': false,
   'Icons.file_upload_outlined': false,
   'Icons.file_upload_rounded': false,
   'Icons.file_upload_sharp': false,
@@ -28746,6 +30474,10 @@ Map<String, bool> flutterMapping = {
   'Icons.flourescent_outlined': false,
   'Icons.flourescent_rounded': false,
   'Icons.flourescent_sharp': false,
+  'Icons.fluorescent': false,
+  'Icons.fluorescent_outlined': false,
+  'Icons.fluorescent_rounded': false,
+  'Icons.fluorescent_sharp': false,
   'Icons.flutter_dash': false,
   'Icons.flutter_dash_outlined': false,
   'Icons.flutter_dash_rounded': false,
@@ -28819,6 +30551,7 @@ Map<String, bool> flutterMapping = {
   'Icons.fork_right_outlined': false,
   'Icons.fork_right_rounded': false,
   'Icons.fork_right_sharp': false,
+  'Icons.forklift': false,
   'Icons.format_align_center': false,
   'Icons.format_align_center_outlined': false,
   'Icons.format_align_center_rounded': false,
@@ -28872,6 +30605,7 @@ Map<String, bool> flutterMapping = {
   'Icons.format_line_spacing_rounded': false,
   'Icons.format_line_spacing_sharp': false,
   'Icons.format_list_bulleted': false,
+  'Icons.format_list_bulleted_add': false,
   'Icons.format_list_bulleted_outlined': false,
   'Icons.format_list_bulleted_rounded': false,
   'Icons.format_list_bulleted_sharp': false,
@@ -28991,6 +30725,7 @@ Map<String, bool> flutterMapping = {
   'Icons.front_hand_outlined': false,
   'Icons.front_hand_rounded': false,
   'Icons.front_hand_sharp': false,
+  'Icons.front_loader': false,
   'Icons.fullscreen': false,
   'Icons.fullscreen_exit': false,
   'Icons.fullscreen_exit_outlined': false,
@@ -29156,6 +30891,14 @@ Map<String, bool> flutterMapping = {
   'Icons.group_work_rounded': false,
   'Icons.group_work_sharp': false,
   'Icons.groups': false,
+  'Icons.groups_2': false,
+  'Icons.groups_2_outlined': false,
+  'Icons.groups_2_rounded': false,
+  'Icons.groups_2_sharp': false,
+  'Icons.groups_3': false,
+  'Icons.groups_3_outlined': false,
+  'Icons.groups_3_rounded': false,
+  'Icons.groups_3_sharp': false,
   'Icons.groups_outlined': false,
   'Icons.groups_rounded': false,
   'Icons.groups_sharp': false,
@@ -30183,6 +31926,10 @@ Map<String, bool> flutterMapping = {
   'Icons.lyrics_outlined': false,
   'Icons.lyrics_rounded': false,
   'Icons.lyrics_sharp': false,
+  'Icons.macro_off': false,
+  'Icons.macro_off_outlined': false,
+  'Icons.macro_off_rounded': false,
+  'Icons.macro_off_sharp': false,
   'Icons.mail': false,
   'Icons.mail_lock': false,
   'Icons.mail_lock_outlined': false,
@@ -30200,6 +31947,18 @@ Map<String, bool> flutterMapping = {
   'Icons.male_rounded': false,
   'Icons.male_sharp': false,
   'Icons.man': false,
+  'Icons.man_2': false,
+  'Icons.man_2_outlined': false,
+  'Icons.man_2_rounded': false,
+  'Icons.man_2_sharp': false,
+  'Icons.man_3': false,
+  'Icons.man_3_outlined': false,
+  'Icons.man_3_rounded': false,
+  'Icons.man_3_sharp': false,
+  'Icons.man_4': false,
+  'Icons.man_4_outlined': false,
+  'Icons.man_4_rounded': false,
+  'Icons.man_4_sharp': false,
   'Icons.man_outlined': false,
   'Icons.man_rounded': false,
   'Icons.man_sharp': false,
@@ -30548,6 +32307,7 @@ Map<String, bool> flutterMapping = {
   'Icons.movie_creation_outlined': false,
   'Icons.movie_creation_rounded': false,
   'Icons.movie_creation_sharp': false,
+  'Icons.movie_edit': false,
   'Icons.movie_filter': false,
   'Icons.movie_filter_outlined': false,
   'Icons.movie_filter_rounded': false,
@@ -31033,6 +32793,7 @@ Map<String, bool> flutterMapping = {
   'Icons.palette_outlined': false,
   'Icons.palette_rounded': false,
   'Icons.palette_sharp': false,
+  'Icons.pallet': false,
   'Icons.pan_tool': false,
   'Icons.pan_tool_alt': false,
   'Icons.pan_tool_alt_outlined': false,
@@ -31214,6 +32975,18 @@ Map<String, bool> flutterMapping = {
   'Icons.perm_scan_wifi_rounded': false,
   'Icons.perm_scan_wifi_sharp': false,
   'Icons.person': false,
+  'Icons.person_2': false,
+  'Icons.person_2_outlined': false,
+  'Icons.person_2_rounded': false,
+  'Icons.person_2_sharp': false,
+  'Icons.person_3': false,
+  'Icons.person_3_outlined': false,
+  'Icons.person_3_rounded': false,
+  'Icons.person_3_sharp': false,
+  'Icons.person_4': false,
+  'Icons.person_4_outlined': false,
+  'Icons.person_4_rounded': false,
+  'Icons.person_4_sharp': false,
   'Icons.person_add': false,
   'Icons.person_add_alt': false,
   'Icons.person_add_alt_1': false,
@@ -31641,6 +33414,10 @@ Map<String, bool> flutterMapping = {
   'Icons.propane_tank_rounded': false,
   'Icons.propane_tank_sharp': false,
   'Icons.psychology': false,
+  'Icons.psychology_alt': false,
+  'Icons.psychology_alt_outlined': false,
+  'Icons.psychology_alt_rounded': false,
+  'Icons.psychology_alt_sharp': false,
   'Icons.psychology_outlined': false,
   'Icons.psychology_rounded': false,
   'Icons.psychology_sharp': false,
@@ -31792,6 +33569,7 @@ Map<String, bool> flutterMapping = {
   'Icons.real_estate_agent_outlined': false,
   'Icons.real_estate_agent_rounded': false,
   'Icons.real_estate_agent_sharp': false,
+  'Icons.rebase_edit': false,
   'Icons.receipt': false,
   'Icons.receipt_long': false,
   'Icons.receipt_long_outlined': false,
@@ -31884,6 +33662,10 @@ Map<String, bool> flutterMapping = {
   'Icons.reorder_outlined': false,
   'Icons.reorder_rounded': false,
   'Icons.reorder_sharp': false,
+  'Icons.repartition': false,
+  'Icons.repartition_outlined': false,
+  'Icons.repartition_rounded': false,
+  'Icons.repartition_sharp': false,
   'Icons.repeat': false,
   'Icons.repeat_on': false,
   'Icons.repeat_on_outlined': false,
@@ -32448,6 +34230,10 @@ Map<String, bool> flutterMapping = {
   'Icons.severe_cold_outlined': false,
   'Icons.severe_cold_rounded': false,
   'Icons.severe_cold_sharp': false,
+  'Icons.shape_line': false,
+  'Icons.shape_line_outlined': false,
+  'Icons.shape_line_rounded': false,
+  'Icons.shape_line_sharp': false,
   'Icons.share': false,
   'Icons.share_arrival_time': false,
   'Icons.share_arrival_time_outlined': false,
@@ -32460,6 +34246,7 @@ Map<String, bool> flutterMapping = {
   'Icons.share_outlined': false,
   'Icons.share_rounded': false,
   'Icons.share_sharp': false,
+  'Icons.shelves': false,
   'Icons.shield': false,
   'Icons.shield_moon': false,
   'Icons.shield_moon_outlined': false,
@@ -33695,6 +35482,7 @@ Map<String, bool> flutterMapping = {
   'Icons.trip_origin_outlined': false,
   'Icons.trip_origin_rounded': false,
   'Icons.trip_origin_sharp': false,
+  'Icons.trolley': false,
   'Icons.troubleshoot': false,
   'Icons.troubleshoot_outlined': false,
   'Icons.troubleshoot_rounded': false,
@@ -33824,10 +35612,18 @@ Map<String, bool> flutterMapping = {
   'Icons.undo_rounded': false,
   'Icons.undo_sharp': false,
   'Icons.unfold_less': false,
+  'Icons.unfold_less_double': false,
+  'Icons.unfold_less_double_outlined': false,
+  'Icons.unfold_less_double_rounded': false,
+  'Icons.unfold_less_double_sharp': false,
   'Icons.unfold_less_outlined': false,
   'Icons.unfold_less_rounded': false,
   'Icons.unfold_less_sharp': false,
   'Icons.unfold_more': false,
+  'Icons.unfold_more_double': false,
+  'Icons.unfold_more_double_outlined': false,
+  'Icons.unfold_more_double_rounded': false,
+  'Icons.unfold_more_double_sharp': false,
   'Icons.unfold_more_outlined': false,
   'Icons.unfold_more_rounded': false,
   'Icons.unfold_more_sharp': false,
@@ -33935,6 +35731,10 @@ Map<String, bool> flutterMapping = {
   'Icons.video_camera_front_outlined': false,
   'Icons.video_camera_front_rounded': false,
   'Icons.video_camera_front_sharp': false,
+  'Icons.video_chat': false,
+  'Icons.video_chat_outlined': false,
+  'Icons.video_chat_rounded': false,
+  'Icons.video_chat_sharp': false,
   'Icons.video_collection': false,
   'Icons.video_collection_outlined': false,
   'Icons.video_collection_rounded': false,
@@ -34246,6 +36046,9 @@ Map<String, bool> flutterMapping = {
   'Icons.web_rounded': false,
   'Icons.web_sharp': false,
   'Icons.web_stories': false,
+  'Icons.web_stories_outlined': false,
+  'Icons.web_stories_rounded': false,
+  'Icons.web_stories_sharp': false,
   'Icons.webhook': false,
   'Icons.webhook_outlined': false,
   'Icons.webhook_rounded': false,
@@ -34262,10 +36065,6 @@ Map<String, bool> flutterMapping = {
   'Icons.west_outlined': false,
   'Icons.west_rounded': false,
   'Icons.west_sharp': false,
-  'Icons.whatsapp': false,
-  'Icons.whatsapp_outlined': false,
-  'Icons.whatsapp_rounded': false,
-  'Icons.whatsapp_sharp': false,
   'Icons.whatshot': false,
   'Icons.whatshot_outlined': false,
   'Icons.whatshot_rounded': false,
@@ -34366,6 +36165,10 @@ Map<String, bool> flutterMapping = {
   'Icons.wine_bar_rounded': false,
   'Icons.wine_bar_sharp': false,
   'Icons.woman': false,
+  'Icons.woman_2': false,
+  'Icons.woman_2_outlined': false,
+  'Icons.woman_2_rounded': false,
+  'Icons.woman_2_sharp': false,
   'Icons.woman_outlined': false,
   'Icons.woman_rounded': false,
   'Icons.woman_sharp': false,
@@ -34446,6 +36249,8 @@ Map<String, bool> flutterMapping = {
   'Image.file': true,
   'Image.memory': true,
   'Image.network': true,
+  'Image.onCreate': false,
+  'Image.onDispose': false,
   'ImageByteFormat.png': false,
   'ImageByteFormat.rawRgba': false,
   'ImageByteFormat.rawStraightRgba': false,
@@ -34472,6 +36277,7 @@ Map<String, bool> flutterMapping = {
   'ImageStreamListener': false,
   'ImmediateMultiDragGestureRecognizer': false,
   'ImmutableBuffer.fromAsset': false,
+  'ImmutableBuffer.fromFilePath': false,
   'ImmutableBuffer.fromUint8List': false,
   'IndexedSemantics': true,
   'IndexedSlot': false,
@@ -34568,6 +36374,7 @@ Map<String, bool> flutterMapping = {
   'LicenseRegistry.addLicense': false,
   'LicenseRegistry.licenses': false,
   'LimitedBox': true,
+  'LineBreak': false,
   'LineMetrics': false,
   'LinearGradient': false,
   'LinearGradient.lerp': false,
@@ -34618,6 +36425,13 @@ Map<String, bool> flutterMapping = {
   'LongPressMoveUpdateDetails': false,
   'LongPressSemanticsEvent': false,
   'LongPressStartDetails': false,
+  'MacOSScrollViewFlingVelocityTracker': false,
+  'Magnifier': true,
+  'MagnifierController': false,
+  'MagnifierController.shiftWithinBounds': false,
+  'MagnifierDecoration': false,
+  'MagnifierInfo': false,
+  'MagnifierInfo.empty': false,
   'MainAxisAlignment.center': false,
   'MainAxisAlignment.end': false,
   'MainAxisAlignment.spaceAround': false,
@@ -34631,6 +36445,7 @@ Map<String, bool> flutterMapping = {
   'MaskFilter.blur': false,
   'Material': true,
   'Material.defaultSplashRadius': false,
+  'Material.maybeOf': false,
   'Material.of': false,
   'MaterialAccentColor': false,
   'MaterialApp': true,
@@ -34707,7 +36522,33 @@ Map<String, bool> flutterMapping = {
   'MediaQuery.textScaleFactorOf': false,
   'MediaQueryData': false,
   'MediaQueryData.fromWindow': false,
+  'MemoryAllocations.instance': false,
   'MemoryImage': false,
+  'MenuAcceleratorCallbackBinding': true,
+  'MenuAcceleratorCallbackBinding.maybeOf': true,
+  'MenuAcceleratorCallbackBinding.of': true,
+  'MenuAcceleratorLabel': true,
+  'MenuAcceleratorLabel.defaultLabelBuilder': false,
+  'MenuAcceleratorLabel.stripAcceleratorMarkers': false,
+  'MenuAnchor': true,
+  'MenuBar': true,
+  'MenuBarTheme': true,
+  'MenuBarTheme.of': false,
+  'MenuBarThemeData': false,
+  'MenuBarThemeData.lerp': false,
+  'MenuButtonTheme': true,
+  'MenuButtonTheme.of': false,
+  'MenuButtonThemeData': false,
+  'MenuButtonThemeData.lerp': false,
+  'MenuController': false,
+  'MenuItemButton': true,
+  'MenuItemButton.styleFrom': false,
+  'MenuStyle': false,
+  'MenuStyle.lerp': false,
+  'MenuTheme': true,
+  'MenuTheme.of': false,
+  'MenuThemeData': false,
+  'MenuThemeData.lerp': false,
   'MergeSemantics': true,
   'MergeableMaterial': true,
   'MessageProperty': false,
@@ -34717,6 +36558,7 @@ Map<String, bool> flutterMapping = {
   'MinColumnWidth': false,
   'MissingPluginException': false,
   'ModalBarrier': true,
+  'ModalBottomSheetRoute': false,
   'ModifierKey.altModifier': false,
   'ModifierKey.capsLockModifier': false,
   'ModifierKey.controlModifier': false,
@@ -34745,6 +36587,12 @@ Map<String, bool> flutterMapping = {
   'NavigationDestinationLabelBehavior.alwaysShow': false,
   'NavigationDestinationLabelBehavior.onlyShowSelected': false,
   'NavigationDestinationLabelBehavior.values': false,
+  'NavigationDrawer': true,
+  'NavigationDrawerDestination': true,
+  'NavigationDrawerTheme': true,
+  'NavigationDrawerTheme.of': false,
+  'NavigationDrawerThemeData': false,
+  'NavigationDrawerThemeData.lerp': false,
   'NavigationIndicator': true,
   'NavigationMode.directional': false,
   'NavigationMode.traditional': false,
@@ -34806,6 +36654,8 @@ Map<String, bool> flutterMapping = {
   'NoSplash.splashFactory': false,
   'NotificationListener': true,
   'NumericFocusOrder': false,
+  'ObjectCreated': false,
+  'ObjectDisposed': false,
   'ObjectFlagProperty': false,
   'ObjectFlagProperty.has': false,
   'ObjectKey': false,
@@ -34840,6 +36690,7 @@ Map<String, bool> flutterMapping = {
   'OutlinedButtonTheme.of': false,
   'OutlinedButtonThemeData': false,
   'OutlinedButtonThemeData.lerp': false,
+  'OvalBorder': false,
   'OverScrollHeaderStretchConfiguration': false,
   'OverflowBar': true,
   'OverflowBarAlignment.center': false,
@@ -34848,6 +36699,7 @@ Map<String, bool> flutterMapping = {
   'OverflowBarAlignment.values': false,
   'OverflowBox': true,
   'Overlay': true,
+  'Overlay.maybeOf': false,
   'Overlay.of': false,
   'OverlayEntry': false,
   'OverlayVisibilityMode.always': false,
@@ -34865,6 +36717,7 @@ Map<String, bool> flutterMapping = {
   'PageRouteBuilder': false,
   'PageScrollPhysics': false,
   'PageStorage': true,
+  'PageStorage.maybeOf': false,
   'PageStorage.of': false,
   'PageStorageBucket': false,
   'PageStorageKey': false,
@@ -34883,6 +36736,11 @@ Map<String, bool> flutterMapping = {
   'PaintingStyle.fill': false,
   'PaintingStyle.stroke': false,
   'PaintingStyle.values': false,
+  'PanAxis.aligned': false,
+  'PanAxis.free': false,
+  'PanAxis.horizontal': false,
+  'PanAxis.values': false,
+  'PanAxis.vertical': false,
   'PanGestureRecognizer': false,
   'ParagraphBuilder': false,
   'ParagraphConstraints': false,
@@ -34906,9 +36764,12 @@ Map<String, bool> flutterMapping = {
   'PathOperation.xor': false,
   'PercentProperty': false,
   'PerformanceOverlayLayer': false,
+  'PersistentHashMap.empty': false,
   'PersistentHeaderShowOnScreenConfiguration': false,
   'PhysicalModel': true,
   'PhysicalShape': true,
+  'Picture.onCreate': false,
+  'Picture.onDispose': false,
   'PictureLayer': false,
   'PictureRecorder': false,
   'PipelineOwner': false,
@@ -34953,6 +36814,9 @@ Map<String, bool> flutterMapping = {
   'PlatformProvidedMenuItemType.values': false,
   'PlatformProvidedMenuItemType.zoomWindow': false,
   'PlatformRouteInformationProvider': false,
+  'PlatformSelectableRegionContextMenu': true,
+  'PlatformSelectableRegionContextMenu.attach': false,
+  'PlatformSelectableRegionContextMenu.detach': false,
   'PlatformViewHitTestBehavior.opaque': false,
   'PlatformViewHitTestBehavior.translucent': false,
   'PlatformViewHitTestBehavior.transparent': false,
@@ -35007,9 +36871,13 @@ Map<String, bool> flutterMapping = {
   'PointerPanZoomUpdateEvent': false,
   'PointerRemovedEvent': false,
   'PointerRouter': false,
+  'PointerScaleEvent': false,
   'PointerScrollEvent': false,
+  'PointerScrollInertiaCancelEvent': false,
   'PointerSignalKind.none': false,
+  'PointerSignalKind.scale': false,
   'PointerSignalKind.scroll': false,
+  'PointerSignalKind.scrollInertiaCancel': false,
   'PointerSignalKind.unknown': false,
   'PointerSignalKind.values': false,
   'PointerSignalResolver': false,
@@ -35036,6 +36904,7 @@ Map<String, bool> flutterMapping = {
   'PreviousFocusAction': false,
   'PreviousFocusIntent': false,
   'PrimaryScrollController': true,
+  'PrimaryScrollController.maybeOf': false,
   'PrimaryScrollController.none': true,
   'PrimaryScrollController.of': false,
   'PrimaryScrollController.shouldInherit': false,
@@ -35050,6 +36919,8 @@ Map<String, bool> flutterMapping = {
   'ProgressIndicatorThemeData': false,
   'ProgressIndicatorThemeData.lerp': false,
   'ProxyAnimation': false,
+  'PushTextPosition.backward': false,
+  'PushTextPosition.forward': false,
   'RRect.fromLTRBAndCorners': false,
   'RRect.fromLTRBR': false,
   'RRect.fromLTRBXY': false,
@@ -35064,6 +36935,7 @@ Map<String, bool> flutterMapping = {
   'RadialGradient.lerp': false,
   'Radio': true,
   'RadioListTile': true,
+  'RadioMenuButton': true,
   'RadioTheme': true,
   'RadioTheme.of': false,
   'RadioThemeData': false,
@@ -35183,6 +37055,7 @@ Map<String, bool> flutterMapping = {
   'RawKeyUpEvent': false,
   'RawKeyboard.instance': false,
   'RawKeyboardListener': true,
+  'RawMagnifier': true,
   'RawMaterialButton': true,
   'RawScrollbar': true,
   'ReadBuffer': false,
@@ -35310,6 +37183,8 @@ Map<String, bool> flutterMapping = {
   'RenderStack.getIntrinsicDimension': false,
   'RenderStack.layoutPositionedChild': false,
   'RenderTable': false,
+  'RenderTapRegion': false,
+  'RenderTapRegionSurface': false,
   'RenderTransform': false,
   'RenderUiKitView': false,
   'RenderView': false,
@@ -35319,6 +37194,21 @@ Map<String, bool> flutterMapping = {
   'RenderWrap': false,
   'RenderingFlutterBinding': false,
   'RenderingFlutterBinding.ensureInitialized': false,
+  'RenderingServiceExtensions.debugDisableClipLayers': false,
+  'RenderingServiceExtensions.debugDisableOpacityLayers': false,
+  'RenderingServiceExtensions.debugDisablePhysicalShapeLayers': false,
+  'RenderingServiceExtensions.debugDumpLayerTree': false,
+  'RenderingServiceExtensions.debugDumpRenderTree': false,
+  'RenderingServiceExtensions.debugDumpSemanticsTreeInInverseHitTestOrder':
+      false,
+  'RenderingServiceExtensions.debugDumpSemanticsTreeInTraversalOrder': false,
+  'RenderingServiceExtensions.debugPaint': false,
+  'RenderingServiceExtensions.debugPaintBaselinesEnabled': false,
+  'RenderingServiceExtensions.invertOversizedImages': false,
+  'RenderingServiceExtensions.profileRenderObjectLayouts': false,
+  'RenderingServiceExtensions.profileRenderObjectPaints': false,
+  'RenderingServiceExtensions.repaintRainbow': false,
+  'RenderingServiceExtensions.values': false,
   'ReorderableDelayedDragStartListener': true,
   'ReorderableDragStartListener': true,
   'ReorderableList': true,
@@ -35342,6 +37232,8 @@ Map<String, bool> flutterMapping = {
   'RestorableDateTimeN': false,
   'RestorableDouble': false,
   'RestorableDoubleN': false,
+  'RestorableEnum': false,
+  'RestorableEnumN': false,
   'RestorableInt': false,
   'RestorableIntN': false,
   'RestorableNum': false,
@@ -35357,12 +37249,14 @@ Map<String, bool> flutterMapping = {
   'RestorationBucket.root': false,
   'RestorationManager': false,
   'RestorationScope': true,
+  'RestorationScope.maybeOf': false,
   'RestorationScope.of': false,
   'RevealedOffset': false,
   'ReverseAnimation': false,
   'ReverseTween': false,
   'RichText': true,
   'RootBackButtonDispatcher': false,
+  'RootIsolateToken.instance': false,
   'RootRestorationScope': true,
   'RotatedBox': true,
   'RotationTransition': true,
@@ -35418,16 +37312,22 @@ Map<String, bool> flutterMapping = {
   'SchedulerPhase.postFrameCallbacks': false,
   'SchedulerPhase.transientCallbacks': false,
   'SchedulerPhase.values': false,
+  'SchedulerServiceExtensions.timeDilation': false,
+  'SchedulerServiceExtensions.values': false,
   'ScriptCategory.dense': false,
   'ScriptCategory.englishLike': false,
   'ScriptCategory.tall': false,
   'ScriptCategory.values': false,
   'ScrollAction': false,
+  'ScrollAction.getDirectionalIncrement': false,
   'ScrollAwareImageProvider': false,
   'ScrollBehavior': false,
   'ScrollConfiguration': true,
   'ScrollConfiguration.of': false,
   'ScrollController': false,
+  'ScrollDecelerationRate.fast': false,
+  'ScrollDecelerationRate.normal': false,
+  'ScrollDecelerationRate.values': false,
   'ScrollDirection.forward': false,
   'ScrollDirection.idle': false,
   'ScrollDirection.reverse': false,
@@ -35444,6 +37344,7 @@ Map<String, bool> flutterMapping = {
   'ScrollIntent': false,
   'ScrollMetricsNotification': false,
   'ScrollNotificationObserver': true,
+  'ScrollNotificationObserver.maybeOf': false,
   'ScrollNotificationObserver.of': false,
   'ScrollPhysics': false,
   'ScrollPositionAlignmentPolicy.explicit': false,
@@ -35460,6 +37361,7 @@ Map<String, bool> flutterMapping = {
   'ScrollViewKeyboardDismissBehavior.values': false,
   'Scrollable': true,
   'Scrollable.ensureVisible': false,
+  'Scrollable.maybeOf': false,
   'Scrollable.of': false,
   'Scrollable.recommendDeferredLoadingForContext': false,
   'ScrollableDetails': false,
@@ -35474,11 +37376,18 @@ Map<String, bool> flutterMapping = {
   'ScrollbarTheme.of': false,
   'ScrollbarThemeData': false,
   'ScrollbarThemeData.lerp': false,
+  'SegmentedButton': true,
+  'SegmentedButtonTheme': true,
+  'SegmentedButtonTheme.maybeOf': false,
+  'SegmentedButtonTheme.of': false,
+  'SegmentedButtonThemeData': false,
+  'SegmentedButtonThemeData.lerp': false,
   'SelectAllSelectionEvent': false,
   'SelectAllTextIntent': false,
   'SelectIntent': false,
   'SelectWordSelectionEvent': false,
   'SelectableRegion': true,
+  'SelectableRegion.getSelectableButtonItems': false,
   'SelectableText': true,
   'SelectableText.rich': true,
   'SelectedContent': false,
@@ -35498,11 +37407,18 @@ Map<String, bool> flutterMapping = {
   'SelectionEdgeUpdateEvent.forEnd': false,
   'SelectionEdgeUpdateEvent.forStart': false,
   'SelectionEventType.clear': false,
+  'SelectionEventType.directionallyExtendSelection': false,
   'SelectionEventType.endEdgeUpdate': false,
+  'SelectionEventType.granularlyExtendSelection': false,
   'SelectionEventType.selectAll': false,
   'SelectionEventType.selectWord': false,
   'SelectionEventType.startEdgeUpdate': false,
   'SelectionEventType.values': false,
+  'SelectionExtendDirection.backward': false,
+  'SelectionExtendDirection.forward': false,
+  'SelectionExtendDirection.nextLine': false,
+  'SelectionExtendDirection.previousLine': false,
+  'SelectionExtendDirection.values': false,
   'SelectionGeometry': false,
   'SelectionOverlay': false,
   'SelectionOverlay.fadeDuration': false,
@@ -35554,6 +37470,7 @@ Map<String, bool> flutterMapping = {
   'SemanticsFlag.hasImplicitScrolling': false,
   'SemanticsFlag.hasToggledState': false,
   'SemanticsFlag.isButton': false,
+  'SemanticsFlag.isCheckStateMixed': false,
   'SemanticsFlag.isChecked': false,
   'SemanticsFlag.isEnabled': false,
   'SemanticsFlag.isFocusable': false,
@@ -35588,6 +37505,8 @@ Map<String, bool> flutterMapping = {
   'SerialTapDownDetails': false,
   'SerialTapGestureRecognizer': false,
   'SerialTapUpDetails': false,
+  'ServicesServiceExtensions.evict': false,
+  'ServicesServiceExtensions.values': false,
   'ShaderMask': true,
   'ShaderMaskLayer': false,
   'Shadow': false,
@@ -35650,6 +37569,9 @@ Map<String, bool> flutterMapping = {
   'SliderThemeData': false,
   'SliderThemeData.fromPrimaryColors': false,
   'SliderThemeData.lerp': false,
+  'SliverAnimatedGrid': true,
+  'SliverAnimatedGrid.maybeOf': false,
+  'SliverAnimatedGrid.of': false,
   'SliverAnimatedList': true,
   'SliverAnimatedList.maybeOf': false,
   'SliverAnimatedList.of': false,
@@ -35668,6 +37590,7 @@ Map<String, bool> flutterMapping = {
   'SliverGeometry': false,
   'SliverGeometry.zero': false,
   'SliverGrid': true,
+  'SliverGrid.builder': true,
   'SliverGrid.count': true,
   'SliverGrid.extent': true,
   'SliverGridDelegateWithFixedCrossAxisCount': false,
@@ -35701,6 +37624,7 @@ Map<String, bool> flutterMapping = {
   'SliverSafeArea': true,
   'SliverToBoxAdapter': true,
   'SliverVisibility': true,
+  'SliverVisibility.maintain': true,
   'SlottedRenderObjectElement': false,
   'SmartDashesType.disabled': false,
   'SmartDashesType.enabled': false,
@@ -35723,7 +37647,16 @@ Map<String, bool> flutterMapping = {
   'SnackBarClosedReason.values': false,
   'SnackBarThemeData': false,
   'SnackBarThemeData.lerp': false,
+  'SnapshotController': false,
+  'SnapshotMode.forced': false,
+  'SnapshotMode.normal': false,
+  'SnapshotMode.permissive': false,
+  'SnapshotMode.values': false,
+  'SnapshotWidget': true,
   'Spacer': true,
+  'SpellCheckConfiguration': false,
+  'SpellCheckConfiguration.disabled': false,
+  'SpellCheckResults': false,
   'SpellOutStringAttribute': false,
   'SpringDescription': false,
   'SpringDescription.withDampingRatio': false,
@@ -35747,6 +37680,8 @@ Map<String, bool> flutterMapping = {
   'StadiumBorder': false,
   'StandardMessageCodec': false,
   'StandardMethodCodec': false,
+  'StarBorder': false,
+  'StarBorder.polygon': false,
   'StatefulBuilder': true,
   'StatefulElement': false,
   'StatelessElement': false,
@@ -35770,10 +37705,6 @@ Map<String, bool> flutterMapping = {
   'StretchingOverscrollIndicator': true,
   'StringCodec': false,
   'StringProperty': false,
-  'StrokeAlign.center': false,
-  'StrokeAlign.inside': false,
-  'StrokeAlign.outside': false,
-  'StrokeAlign.values': false,
   'StrokeCap.butt': false,
   'StrokeCap.round': false,
   'StrokeCap.square': false,
@@ -35785,6 +37716,9 @@ Map<String, bool> flutterMapping = {
   'StrutStyle': false,
   'StrutStyle.disabled': false,
   'StrutStyle.fromTextStyle': false,
+  'SubmenuButton': true,
+  'SubmenuButton.styleFrom': false,
+  'SuggestionSpan': false,
   'Summary': false,
   'SweepGradient': false,
   'SweepGradient.lerp': false,
@@ -35809,6 +37743,7 @@ Map<String, bool> flutterMapping = {
   'SystemChannels.platform_views': false,
   'SystemChannels.restoration': false,
   'SystemChannels.skia': false,
+  'SystemChannels.spellCheck': false,
   'SystemChannels.system': false,
   'SystemChannels.textInput': false,
   'SystemChrome.latestStyle': false,
@@ -35905,6 +37840,8 @@ Map<String, bool> flutterMapping = {
   'Tangent.fromAngle': false,
   'TapDownDetails': false,
   'TapGestureRecognizer': false,
+  'TapRegion': true,
+  'TapRegionSurface': true,
   'TapSemanticEvent': false,
   'TapUpDetails': false,
   'TargetPlatform.android': false,
@@ -35970,15 +37907,25 @@ Map<String, bool> flutterMapping = {
   'TextEditingValue.empty': false,
   'TextEditingValue.fromJSON': false,
   'TextField': true,
+  'TextField.materialMisspelledTextStyle': false,
   'TextField.noMaxLength': false,
+  'TextFieldTapRegion': true,
   'TextFormField': true,
+  'TextGranularity.character': false,
+  'TextGranularity.document': false,
+  'TextGranularity.line': false,
+  'TextGranularity.values': false,
+  'TextGranularity.word': false,
   'TextHeightBehavior': false,
   'TextInput.attach': false,
   'TextInput.ensureInitialized': false,
   'TextInput.finishAutofillContext': false,
   'TextInput.registerScribbleElement': false,
+  'TextInput.restorePlatformInputControl': false,
   'TextInput.scribbleClients': false,
+  'TextInput.setInputControl': false,
   'TextInput.unregisterScribbleElement': false,
+  'TextInput.updateEditingValue': false,
   'TextInputAction.continueAction': false,
   'TextInputAction.done': false,
   'TextInputAction.emergencyCall': false,
@@ -36010,12 +37957,18 @@ Map<String, bool> flutterMapping = {
   'TextLeadingDistribution.even': false,
   'TextLeadingDistribution.proportional': false,
   'TextLeadingDistribution.values': false,
+  'TextMagnifier': true,
+  'TextMagnifier.adaptiveMagnifierConfiguration': false,
+  'TextMagnifierConfiguration': false,
+  'TextMagnifierConfiguration.disabled': false,
   'TextOverflow.clip': false,
   'TextOverflow.ellipsis': false,
   'TextOverflow.fade': false,
   'TextOverflow.values': false,
   'TextOverflow.visible': false,
   'TextPainter': false,
+  'TextPainter.computeMaxIntrinsicWidth': false,
+  'TextPainter.computeWidth': false,
   'TextParentData': false,
   'TextPosition': false,
   'TextRange': false,
@@ -36037,6 +37990,10 @@ Map<String, bool> flutterMapping = {
   'TextSelectionThemeData': false,
   'TextSelectionThemeData.lerp': false,
   'TextSelectionToolbar': true,
+  'TextSelectionToolbar.kHandleSize': false,
+  'TextSelectionToolbar.kToolbarContentDistanceBelow': false,
+  'TextSelectionToolbarAnchors': false,
+  'TextSelectionToolbarAnchors.fromSelection': false,
   'TextSelectionToolbarLayoutDelegate': false,
   'TextSelectionToolbarTextButton': true,
   'TextSelectionToolbarTextButton.getPadding': false,
@@ -36118,7 +38075,6 @@ Map<String, bool> flutterMapping = {
   'Tolerance': false,
   'Tolerance.defaultTolerance': false,
   'ToolbarItemsParentData': false,
-  'ToolbarOptions': false,
   'Tooltip': true,
   'Tooltip.dismissAllToolTips': false,
   'TooltipSemanticsEvent': false,
@@ -36223,6 +38179,7 @@ Map<String, bool> flutterMapping = {
   'Viewport': true,
   'Viewport.getDefaultCrossAxisDirection': false,
   'Visibility': true,
+  'Visibility.maintain': true,
   'VisualDensity': false,
   'VisualDensity.adaptivePlatformDensity': false,
   'VisualDensity.comfortable': false,
@@ -36233,6 +38190,40 @@ Map<String, bool> flutterMapping = {
   'VisualDensity.standard': false,
   'VoidCallbackAction': false,
   'VoidCallbackIntent': false,
+  'WhitespaceBoundary': false,
+  'WidgetInspectorServiceExtensions.addPubRootDirectories': false,
+  'WidgetInspectorServiceExtensions.disposeAllGroups': false,
+  'WidgetInspectorServiceExtensions.disposeGroup': false,
+  'WidgetInspectorServiceExtensions.disposeId': false,
+  'WidgetInspectorServiceExtensions.getChildren': false,
+  'WidgetInspectorServiceExtensions.getChildrenDetailsSubtree': false,
+  'WidgetInspectorServiceExtensions.getChildrenSummaryTree': false,
+  'WidgetInspectorServiceExtensions.getDetailsSubtree': false,
+  'WidgetInspectorServiceExtensions.getLayoutExplorerNode': false,
+  'WidgetInspectorServiceExtensions.getParentChain': false,
+  'WidgetInspectorServiceExtensions.getProperties': false,
+  'WidgetInspectorServiceExtensions.getPubRootDirectories': false,
+  'WidgetInspectorServiceExtensions.getRootRenderObject': false,
+  'WidgetInspectorServiceExtensions.getRootWidget': false,
+  'WidgetInspectorServiceExtensions.getRootWidgetSummaryTree': false,
+  'WidgetInspectorServiceExtensions.getRootWidgetSummaryTreeWithPreviews':
+      false,
+  'WidgetInspectorServiceExtensions.getSelectedRenderObject': false,
+  'WidgetInspectorServiceExtensions.getSelectedSummaryWidget': false,
+  'WidgetInspectorServiceExtensions.getSelectedWidget': false,
+  'WidgetInspectorServiceExtensions.isWidgetCreationTracked': false,
+  'WidgetInspectorServiceExtensions.isWidgetTreeReady': false,
+  'WidgetInspectorServiceExtensions.removePubRootDirectories': false,
+  'WidgetInspectorServiceExtensions.screenshot': false,
+  'WidgetInspectorServiceExtensions.setFlexFactor': false,
+  'WidgetInspectorServiceExtensions.setFlexFit': false,
+  'WidgetInspectorServiceExtensions.setFlexProperties': false,
+  'WidgetInspectorServiceExtensions.setSelectionById': false,
+  'WidgetInspectorServiceExtensions.show': false,
+  'WidgetInspectorServiceExtensions.structuredErrors': false,
+  'WidgetInspectorServiceExtensions.trackRebuildDirtyWidgets': false,
+  'WidgetInspectorServiceExtensions.trackRepaintWidgets': false,
+  'WidgetInspectorServiceExtensions.values': false,
   'WidgetOrderTraversalPolicy': false,
   'WidgetSpan': false,
   'WidgetToRenderBoxAdapter': true,
@@ -36245,8 +38236,18 @@ Map<String, bool> flutterMapping = {
   'WidgetsApp.showPerformanceOverlayOverride': false,
   'WidgetsFlutterBinding': false,
   'WidgetsFlutterBinding.ensureInitialized': false,
+  'WidgetsServiceExtensions.debugAllowBanner': false,
+  'WidgetsServiceExtensions.debugDumpApp': false,
+  'WidgetsServiceExtensions.didSendFirstFrameEvent': false,
+  'WidgetsServiceExtensions.didSendFirstFrameRasterizedEvent': false,
+  'WidgetsServiceExtensions.fastReassemble': false,
+  'WidgetsServiceExtensions.profileUserWidgetBuilds': false,
+  'WidgetsServiceExtensions.profileWidgetBuilds': false,
+  'WidgetsServiceExtensions.showPerformanceOverlay': false,
+  'WidgetsServiceExtensions.values': false,
   'WillPopScope': true,
   'WindowPadding.zero': false,
+  'WordBoundary': false,
   'Wrap': true,
   'WrapAlignment.center': false,
   'WrapAlignment.end': false,
@@ -36264,3 +38265,88 @@ Map<String, bool> flutterMapping = {
   'YearPicker': true,
   'ZoomPageTransitionsBuilder': false,
 };
+
+Widget _defaultPreviewBuilder(
+    BuildContext context, Animation<double> animation, Widget child) {
+  return FittedBox(
+    fit: BoxFit.cover,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12.0 * animation.value),
+      child: child,
+    ),
+  );
+}
+
+Widget _defaultContextMenuBuilder(
+    BuildContext context, EditableTextState editableTextState) {
+  return CupertinoAdaptiveTextSelectionToolbar.editableText(
+    editableTextState: editableTextState,
+  );
+}
+
+Widget defaultLabelBuilder(
+  BuildContext context,
+  String label,
+  int index,
+) {
+  if (index < 0) {
+    return Text(label);
+  }
+  final TextStyle defaultStyle = DefaultTextStyle.of(context).style;
+  final Characters characters = label.characters;
+  return RichText(
+    text: TextSpan(
+      children: <TextSpan>[
+        if (index > 0)
+          TextSpan(
+              text: characters.getRange(0, index).toString(),
+              style: defaultStyle),
+        TextSpan(
+          text: characters.getRange(index, index + 1).toString(),
+          style: defaultStyle.copyWith(decoration: TextDecoration.underline),
+        ),
+        if (index < characters.length - 1)
+          TextSpan(
+              text: characters.getRange(index + 1).toString(),
+              style: defaultStyle),
+      ],
+    ),
+  );
+}
+
+
+class _DefaultSnapshotPainter implements SnapshotPainter {
+  const _DefaultSnapshotPainter();
+
+  @override
+  void addListener(ui.VoidCallback listener) { }
+
+  @override
+  void dispose() { }
+
+  @override
+  bool get hasListeners => false;
+
+  @override
+  void notifyListeners() { }
+
+  @override
+  void paint(PaintingContext context, ui.Offset offset, ui.Size size, PaintingContextCallback painter) {
+    painter(context, offset);
+  }
+
+  @override
+  void paintSnapshot(PaintingContext context, ui.Offset offset, ui.Size size, ui.Image image, Size sourceSize, double pixelRatio) {
+    final Rect src = Rect.fromLTWH(0, 0, sourceSize.width, sourceSize.height);
+    final Rect dst = Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height);
+    final Paint paint = Paint()
+      ..filterQuality = FilterQuality.low;
+    context.canvas.drawImageRect(image, src, dst, paint);
+  }
+
+  @override
+  void removeListener(ui.VoidCallback listener) { }
+
+  @override
+  bool shouldRepaint(covariant _DefaultSnapshotPainter oldPainter) => false;
+}

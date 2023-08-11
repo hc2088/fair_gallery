@@ -1,5 +1,5 @@
-// flutterVersion = '3.3.9'
-// dartVersion = '2.18.5'
+// flutterVersion = '3.7.12'
+// dartVersion = '2.19.6'
 // widgetCount = 56
 // apiCount = 154
 // ignore_for_file: unused_import, unnecessary_import, implementation_imports, unused_shown_name, deprecated_member_use, prefer_single_quotes, unused_element, unused_field, duplicate_import, prefer_const_constructors, invalid_use_of_visible_for_testing_member
@@ -148,8 +148,8 @@ import 'package:fair/fair.dart';
 
 int _kDefaultSemanticIndexCallback(Widget _, int localIndex) => localIndex;
 
-const String flutterVersion = '3.3.9';
-const String dartVersion = '2.18.5';
+const String flutterVersion = '3.7.12';
+const String dartVersion = '2.19.6';
 const int widgetCount = 56;
 const int apiCount = 154;
 

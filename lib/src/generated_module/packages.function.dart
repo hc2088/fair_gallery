@@ -1,5 +1,5 @@
-// flutterVersion = '3.3.9'
-// dartVersion = '2.18.5'
+// flutterVersion = '3.7.12'
+// dartVersion = '2.19.6'
 // functionCount = 55
 // ignore_for_file: deprecated_member_use, prefer_single_quotes, unused_element, unused_field, unused_import, unnecessary_import, implementation_imports, unused_shown_name, prefer_function_declarations_over_variables, void_checks, duplicate_import, no_duplicate_case_values
 import 'package:extended_text_library/extended_text_library.dart'
@@ -266,6 +266,18 @@ mixin PackagesFunctionDynamicWidgetBuilder on DynamicWidgetBuilder {
             );
           };
           return builder;
+        // typedef TaskCallback<out T> = FutureOr<T> Function()
+        // package:flutter/src/scheduler/binding.dart
+        case 'FutureOr<Object> Function()':
+          FutureOr<Object> Function() builder = () {
+            return pa0Value(
+              FunctionDomain.getBody(map),
+              methodMap,
+              context,
+              domain,
+            );
+          };
+          return builder;
         // typedef InitGestureConfigHandler = GestureConfig Function(ExtendedImageState state)
         // package:extended_image/src/typedef.dart
         case 'GestureConfig Function(ExtendedImageState)':
@@ -312,18 +324,6 @@ mixin PackagesFunctionDynamicWidgetBuilder on DynamicWidgetBuilder {
                 {functionPaParameters[0]: p0, 'state': state},
                 parent: domain,
               ),
-            );
-          };
-          return builder;
-        // typedef TaskCallback<out T> = T Function()
-        // package:flutter/src/scheduler/binding.dart
-        case 'dynamic Function()':
-          dynamic Function() builder = () {
-            return pa0Value(
-              FunctionDomain.getBody(map),
-              methodMap,
-              context,
-              domain,
             );
           };
           return builder;
