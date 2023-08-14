@@ -104,6 +104,8 @@ dependency_overrides:
       path: dart2js      
   # 如果你是 3.3.0 以下的版本，需要 override collection
   collection: 1.17.0
+
+  # 如果是3.7.0 以上的版本，需要固定dart_style 和analyzer版本避免升级，因为dart2.19以上版本有问题，dart2js库转换异常
   analyzer: 5.6.0
   dart_style: 2.2.5
   # fair:
